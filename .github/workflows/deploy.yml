@@ -48,12 +48,17 @@ jobs:
     needs: build-and-push
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
+    env:
+      WEBHOOK_URL: ${{ secrets.RAILWAY_DEPLOY_WEBHOOK }}
 
     steps:
       - name: Trigger Railway deployment
-        if: ${{ secrets.RAILWAY_DEPLOY_WEBHOOK != '' }}
         run: |
-          curl -X POST "${{ secrets.RAILWAY_DEPLOY_WEBHOOK }}" \
-            -H "Content-Type: application/json" \
-            --fail
-        continue-on-error: true
+          if [ -n "$WEBHOOK_URL" ]; then
+            curl -X POST "$WEBHOOK_URL" \
+              -H "Content-Type: application/json" \
+              --fail
+            echo "Railway deployment triggered."
+          else
+            echo "RAILWAY_DEPLOY_WEBHOOK not set — skipping deploy trigger."
+          fi
