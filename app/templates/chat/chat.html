@@ -1,0 +1,417 @@
+{% extends 'base.html' %}
+{% block title %}Chat — {{ session.title }}{% endblock %}
+
+{% block content %}
+
+{# Breadcrumb #}
+<div class="mb-4 text-sm text-slate-500 flex items-center gap-2">
+  <a href="{{ url_for('sessions.dashboard') }}"
+     class="text-blue-600 hover:underline">Dashboard</a>
+  <span>/</span>
+  <a href="{{ url_for('sessions.detail', session_id=session.id) }}"
+     class="text-blue-600 hover:underline">{{ session.title }}</a>
+  <span>/</span>
+  <span>Chat</span>
+</div>
+
+{# Emergency banner (shown if session is safety-flagged) #}
+{% if session.safety_flagged %}
+<div class="bg-red-600 text-white rounded-lg px-4 py-3 mb-4 text-sm font-semibold">
+  🚨 A previous message triggered an emergency safety alert.
+  If you are in danger, call emergency services (911 / 999 / 112) immediately.
+</div>
+{% endif %}
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+
+  {# ── LEFT: Chat panel ─────────────────────────────────────────────────── #}
+  <div class="lg:col-span-2 flex flex-col">
+
+    {# Header #}
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm
+                px-5 py-3 mb-3 flex items-center justify-between">
+      <div>
+        <h1 class="font-semibold text-slate-800">💬 Document Chat</h1>
+        <p class="text-xs text-slate-400 mt-0.5">
+          Answers are grounded in your uploaded documents with citations.
+        </p>
+      </div>
+
+      {# Scope toggle #}
+      <label class="flex items-center gap-2 text-xs text-slate-600 cursor-pointer">
+        <input type="checkbox" id="privateOnlyToggle" checked
+               class="rounded text-blue-600 focus:ring-blue-500">
+        <span>My docs only</span>
+      </label>
+    </div>
+
+    {% if not has_docs %}
+    {# No docs warning #}
+    <div class="bg-amber-50 border border-amber-200 rounded-xl p-5 mb-3 text-sm">
+      <p class="font-semibold text-amber-800 mb-1">
+        ⚠ No confirmed document chunks found.
+      </p>
+      <p class="text-amber-700">
+        The chat assistant answers only from your uploaded documents.
+        Please
+        <a href="{{ url_for('intake.intake_form', session_id=session.id) }}"
+           class="underline">upload a PDF</a>
+        and confirm the extracted text before chatting.
+      </p>
+    </div>
+    {% endif %}
+
+    {# Message history #}
+    <div id="chatHistory"
+         class="flex-1 bg-white rounded-xl border border-slate-200 shadow-sm
+                p-4 mb-3 space-y-4 overflow-y-auto"
+         style="min-height: 380px; max-height: 480px;">
+
+      {% if not messages_with_citations %}
+      <div class="text-center text-slate-400 text-sm py-12">
+        <div class="text-3xl mb-2">💬</div>
+        Ask a question about your uploaded documents.
+        <br>Every answer will include citations.
+      </div>
+      {% endif %}
+
+      {% for item in messages_with_citations %}
+      {% set msg = item.msg %}
+
+        {% if msg.role == 'user' %}
+        {# User bubble #}
+        <div class="flex justify-end">
+          <div class="chat-bubble-user px-4 py-2.5 max-w-lg">
+            <p class="text-sm text-slate-700">{{ msg.content }}</p>
+            <p class="text-xs text-slate-400 mt-1 text-right">
+              {{ msg.created_at[11:16] }}
+            </p>
+          </div>
+        </div>
+
+        {% else %}
+        {# Assistant bubble #}
+        <div class="flex justify-start">
+          <div class="chat-bubble-assistant px-4 py-2.5 max-w-lg w-full">
+
+            {% if msg.safety_triggered %}
+            <div class="flex items-start gap-2 mb-1">
+              <span class="text-red-600 font-bold text-sm">🚨</span>
+              <p class="text-sm text-red-700 font-medium">{{ msg.content }}</p>
+            </div>
+            {% else %}
+            <p class="text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">
+              {{ msg.content }}
+            </p>
+            {% endif %}
+
+            {# Inline citations #}
+            {% if item.citations %}
+            <div class="mt-2 pt-2 border-t border-slate-200">
+              <p class="text-xs font-semibold text-slate-400 uppercase
+                        tracking-wide mb-1">Sources</p>
+              {% for c in item.citations %}
+              <div class="text-xs text-slate-500 mb-1">
+                <span class="font-semibold text-blue-600">
+                  {{ c.citation_label }}
+                </span>
+                {{ c.source_doc_name }}
+                <span class="text-slate-400">
+                  — "{{ c.chunk.chunk_text[:100] }}…"
+                </span>
+              </div>
+              {% endfor %}
+            </div>
+            {% endif %}
+
+            <p class="text-xs text-slate-400 mt-1">
+              {{ msg.created_at[11:16] }}
+            </p>
+          </div>
+        </div>
+        {% endif %}
+
+      {% endfor %}
+
+      {# Typing indicator (hidden by default) #}
+      <div id="typingIndicator" class="hidden flex justify-start">
+        <div class="chat-bubble-assistant px-4 py-3">
+          <div class="flex items-center gap-1">
+            <div class="w-2 h-2 bg-slate-400 rounded-full animate-bounce"
+                 style="animation-delay: 0ms"></div>
+            <div class="w-2 h-2 bg-slate-400 rounded-full animate-bounce"
+                 style="animation-delay: 150ms"></div>
+            <div class="w-2 h-2 bg-slate-400 rounded-full animate-bounce"
+                 style="animation-delay: 300ms"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    {# Input row #}
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-3">
+      <div class="flex gap-2">
+        <textarea id="chatInput"
+                  placeholder="Ask a question about your documents…"
+                  rows="2"
+                  class="flex-1 border border-slate-300 rounded-lg px-3 py-2
+                         text-sm text-slate-800 focus:outline-none
+                         focus:ring-2 focus:ring-blue-500 resize-none"
+        ></textarea>
+        <button id="sendBtn"
+                onclick="sendMessage()"
+                class="bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300
+                       text-white font-semibold px-4 py-2 rounded-lg
+                       transition-colors text-sm self-end">
+          Send
+        </button>
+      </div>
+      <p class="text-xs text-slate-400 mt-1.5 px-1">
+        Press <kbd class="bg-slate-100 px-1 rounded">Enter</kbd> to send,
+        <kbd class="bg-slate-100 px-1 rounded">Shift+Enter</kbd> for new line.
+        Max 2000 characters.
+      </p>
+    </div>
+
+  </div>
+
+  {# ── RIGHT: Citations panel ───────────────────────────────────────────── #}
+  <div class="lg:col-span-1">
+
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4
+                sticky top-4">
+      <h2 class="font-semibold text-slate-700 text-sm mb-3">
+        📎 Live Citations
+      </h2>
+      <div id="citationsPanel"
+           class="space-y-3 text-xs text-slate-500 max-h-96 overflow-y-auto">
+        <p class="text-slate-400 italic">
+          Citations from the latest response will appear here.
+        </p>
+      </div>
+    </div>
+
+    {# Quick links #}
+    <div class="mt-4 space-y-2">
+      <a href="{{ url_for('retrieve.results', session_id=session.id) }}"
+         class="flex items-center gap-2 text-sm text-slate-600 hover:text-blue-600
+                bg-white border border-slate-200 rounded-lg px-3 py-2
+                transition-colors">
+        <span>🔍</span> View Condition Results
+      </a>
+      <a href="{{ url_for('reports.report_page', session_id=session.id) }}"
+         class="flex items-center gap-2 text-sm text-slate-600 hover:text-blue-600
+                bg-white border border-slate-200 rounded-lg px-3 py-2
+                transition-colors">
+        <span>📋</span> Generate Report
+      </a>
+    </div>
+
+  </div>
+</div>
+
+
+<script>
+// ── CSRF token from meta or hidden input ──────────────────────────────────────
+// Flask-WTF attaches it to forms; for AJAX we read it from the cookie or
+// we render it inline here.
+const CSRF_TOKEN = "{{ csrf_token() }}";
+const SESSION_ID = {{ session.id }};
+
+const chatHistory     = document.getElementById('chatHistory');
+const chatInput       = document.getElementById('chatInput');
+const sendBtn         = document.getElementById('sendBtn');
+const typingIndicator = document.getElementById('typingIndicator');
+const citationsPanel  = document.getElementById('citationsPanel');
+const privateToggle   = document.getElementById('privateOnlyToggle');
+
+// ── Enter key to send ─────────────────────────────────────────────────────────
+chatInput.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+});
+
+// ── Scroll to bottom ──────────────────────────────────────────────────────────
+function scrollToBottom() {
+  chatHistory.scrollTop = chatHistory.scrollHeight;
+}
+scrollToBottom();
+
+// ── Append a bubble to the chat history ──────────────────────────────────────
+function appendBubble(role, content, citations, safetyTriggered) {
+  const wrapper = document.createElement('div');
+  wrapper.className = role === 'user'
+    ? 'flex justify-end'
+    : 'flex justify-start';
+
+  const now = new Date().toTimeString().slice(0, 5);
+
+  let citationHTML = '';
+  if (citations && citations.length > 0) {
+    citationHTML = `
+      <div class="mt-2 pt-2 border-t border-slate-200">
+        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">
+          Sources
+        </p>
+        ${citations.map(c => `
+          <div class="text-xs text-slate-500 mb-1">
+            <span class="font-semibold text-blue-600">${c.label}</span>
+            ${escapeHtml(c.source_doc)}
+            <span class="text-slate-400">— "${escapeHtml(c.excerpt.slice(0, 100))}…"</span>
+          </div>
+        `).join('')}
+      </div>`;
+  }
+
+  const bubbleClass = role === 'user'
+    ? 'chat-bubble-user px-4 py-2.5 max-w-lg'
+    : 'chat-bubble-assistant px-4 py-2.5 max-w-lg w-full';
+
+  const textClass = safetyTriggered
+    ? 'text-sm text-red-700 font-medium'
+    : 'text-sm text-slate-700 leading-relaxed whitespace-pre-wrap';
+
+  const prefix = safetyTriggered ? '🚨 ' : '';
+
+  wrapper.innerHTML = `
+    <div class="${bubbleClass}">
+      <p class="${textClass}">${prefix}${escapeHtml(content)}</p>
+      ${citationHTML}
+      <p class="text-xs text-slate-400 mt-1 ${role === 'user' ? 'text-right' : ''}">
+        ${now}
+      </p>
+    </div>`;
+
+  // Remove the "no messages" placeholder if present
+  const placeholder = chatHistory.querySelector('.text-center');
+  if (placeholder) placeholder.remove();
+
+  chatHistory.insertBefore(wrapper, typingIndicator);
+  scrollToBottom();
+}
+
+// ── Update citations panel ────────────────────────────────────────────────────
+function updateCitationsPanel(citations) {
+  if (!citations || citations.length === 0) {
+    citationsPanel.innerHTML =
+      '<p class="text-slate-400 italic">No citations for this response.</p>';
+    return;
+  }
+
+  citationsPanel.innerHTML = citations.map(c => `
+    <div class="border border-slate-200 rounded-lg p-2">
+      <div class="flex items-center gap-1 mb-1">
+        <span class="font-bold text-blue-600">${c.label}</span>
+        <span class="text-slate-600 font-medium truncate">${escapeHtml(c.source_doc)}</span>
+      </div>
+      <p class="text-slate-500 leading-relaxed">
+        "${escapeHtml(c.excerpt.slice(0, 200))}…"
+      </p>
+    </div>
+  `).join('');
+}
+
+// ── XSS guard ─────────────────────────────────────────────────────────────────
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+// ── Send message ──────────────────────────────────────────────────────────────
+async function sendMessage() {
+  const text = chatInput.value.trim();
+  if (!text) return;
+  if (text.length > 2000) {
+    alert('Message too long — maximum 2000 characters.');
+    return;
+  }
+
+  // Disable input while waiting
+  chatInput.value  = '';
+  sendBtn.disabled = true;
+  chatInput.disabled = true;
+
+  // Show user bubble
+  appendBubble('user', text, [], false);
+
+  // Show typing indicator
+  typingIndicator.classList.remove('hidden');
+  scrollToBottom();
+
+  try {
+    const response = await fetch(`/chat/${SESSION_ID}/message`, {
+      method:  'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken':  CSRF_TOKEN,
+      },
+      body: JSON.stringify({
+        message:          text,
+        use_private_only: privateToggle.checked,
+      }),
+    });
+
+    const data = await response.json();
+
+    typingIndicator.classList.add('hidden');
+
+    if (data.error) {
+      appendBubble('assistant', `Error: ${data.error}`, [], false);
+      return;
+    }
+
+    // Show safety banner if triggered
+    if (data.safety_triggered) {
+      showEmergencyBanner(data.emergency_message);
+    }
+
+    appendBubble(
+      'assistant',
+      data.answer,
+      data.citations,
+      data.safety_triggered
+    );
+
+    updateCitationsPanel(data.citations);
+
+  } catch (err) {
+    typingIndicator.classList.add('hidden');
+    appendBubble(
+      'assistant',
+      'Something went wrong. Please try again.',
+      [], false
+    );
+  } finally {
+    sendBtn.disabled   = false;
+    chatInput.disabled = false;
+    chatInput.focus();
+  }
+}
+
+// ── Emergency banner ──────────────────────────────────────────────────────────
+function showEmergencyBanner(message) {
+  const existing = document.getElementById('dynamicEmergencyBanner');
+  if (existing) return;
+
+  const banner = document.createElement('div');
+  banner.id = 'dynamicEmergencyBanner';
+  banner.className =
+    'fixed top-0 left-0 right-0 z-50 bg-red-600 text-white text-center ' +
+    'py-4 px-6 font-semibold text-sm shadow-lg';
+  banner.innerHTML = `
+    🚨 ${escapeHtml(message)} —
+    <strong>Call emergency services (911 / 999 / 112) immediately.</strong>
+    <button onclick="this.parentElement.remove()"
+            class="ml-4 underline text-white text-xs">Dismiss</button>`;
+  document.body.prepend(banner);
+}
+</script>
+
+{% endblock %}

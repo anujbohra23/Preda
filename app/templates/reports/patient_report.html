@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 11pt;
+      color: #1e293b;
+      line-height: 1.6;
+      padding: 40px 50px;
+    }
+    .header {
+      border-bottom: 3px solid #2563eb;
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+    }
+    .header h1 {
+      font-size: 20pt;
+      color: #1e40af;
+      margin-bottom: 4px;
+    }
+    .header .meta {
+      font-size: 9pt;
+      color: #64748b;
+    }
+    .disclaimer {
+      background: #fef3c7;
+      border: 1px solid #f59e0b;
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-size: 9pt;
+      color: #92400e;
+      margin-bottom: 24px;
+    }
+    h2 {
+      font-size: 13pt;
+      color: #1e40af;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 6px;
+      margin: 24px 0 12px 0;
+    }
+    h3 {
+      font-size: 11pt;
+      color: #334155;
+      margin: 12px 0 6px 0;
+    }
+    .intake-grid {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 6px 12px;
+      font-size: 10pt;
+    }
+    .intake-label {
+      color: #64748b;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 8pt;
+      letter-spacing: 0.05em;
+      padding-top: 2px;
+    }
+    .disease-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+      page-break-inside: avoid;
+    }
+    .disease-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 6px;
+    }
+    .disease-name {
+      font-weight: 700;
+      color: #1e293b;
+      font-size: 11pt;
+    }
+    .disease-score {
+      background: #dbeafe;
+      color: #1d4ed8;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 9pt;
+      font-weight: 600;
+    }
+    .disease-icd {
+      font-size: 8pt;
+      color: #94a3b8;
+      margin-bottom: 4px;
+    }
+    .disease-desc {
+      font-size: 9.5pt;
+      color: #475569;
+    }
+    .match-terms {
+      margin-top: 6px;
+      font-size: 8.5pt;
+      color: #64748b;
+    }
+    .tag {
+      display: inline-block;
+      background: #fef9c3;
+      color: #854d0e;
+      border-radius: 3px;
+      padding: 1px 5px;
+      margin: 1px 2px;
+      font-size: 8pt;
+    }
+    .urgent-box {
+      background: #fef2f2;
+      border: 1px solid #fca5a5;
+      border-radius: 6px;
+      padding: 12px 14px;
+    }
+    .urgent-box ul, .questions ul {
+      padding-left: 16px;
+      margin-top: 6px;
+    }
+    .urgent-box li, .questions li {
+      margin-bottom: 4px;
+      font-size: 10pt;
+    }
+    .questions {
+      background: #f0fdf4;
+      border: 1px solid #86efac;
+      border-radius: 6px;
+      padding: 12px 14px;
+    }
+    .citations {
+      font-size: 8.5pt;
+      color: #64748b;
+    }
+    .citation-item {
+      margin-bottom: 4px;
+      padding-left: 8px;
+      border-left: 2px solid #cbd5e1;
+    }
+    .footer {
+      border-top: 1px solid #e2e8f0;
+      margin-top: 32px;
+      padding-top: 12px;
+      font-size: 8pt;
+      color: #94a3b8;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  {# Header #}
+  <div class="header">
+    <h1>⚕ Patient Health Summary</h1>
+    <div class="meta">
+      Session: {{ session_title }} &nbsp;|&nbsp;
+      Generated: {{ generated_at }} &nbsp;|&nbsp;
+      Session ID: {{ session_id }}
+    </div>
+  </div>
+
+  {# Disclaimer #}
+  <div class="disclaimer">
+    <strong>⚠ NOT MEDICAL ADVICE.</strong>
+    This document is for informational purposes only and does not constitute
+    a medical diagnosis, prescription, or treatment recommendation.
+    Always consult a qualified healthcare professional before making
+    any health decisions.
+  </div>
+
+  {# Intake #}
+  <h2>Your Reported Symptoms</h2>
+  <div class="intake-grid">
+    {% for key, value in intake.items() %}
+      {% if value %}
+      <div class="intake-label">{{ key | replace('_',' ') | title }}</div>
+      <div>{{ value }}</div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  {# Top conditions #}
+  <h2>Possible Conditions to Discuss with Your Doctor</h2>
+  <p style="font-size:9.5pt; color:#64748b; margin-bottom:12px;">
+    These are the top {{ top_diseases|length }} informational matches
+    based on your symptoms. A higher percentage means more symptom overlap —
+    it does <strong>not</strong> mean you have that condition.
+  </p>
+
+  {% for d in top_diseases %}
+  <div class="disease-card">
+    <div class="disease-header">
+      <div>
+        <span style="color:#94a3b8; font-size:9pt; margin-right:6px;">
+          #{{ d.rank }}
+        </span>
+        <span class="disease-name">{{ d.disease_name }}</span>
+      </div>
+      <span class="disease-score">
+        {{ (d.similarity_score * 100) | round(1) }}% match
+      </span>
+    </div>
+    {% if d.icd_code %}
+    <div class="disease-icd">ICD: {{ d.icd_code }}</div>
+    {% endif %}
+    {% if d.short_desc %}
+    <div class="disease-desc">{{ d.short_desc }}</div>
+    {% endif %}
+    {% if d.matching_phrases %}
+    <div class="match-terms">
+      Matched terms:
+      {% for phrase in d.matching_phrases %}
+        <span class="tag">{{ phrase }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+  {% endfor %}
+
+  {# When to seek urgent care #}
+  <h2>When to Seek Urgent Care</h2>
+  <div class="urgent-box">
+    <strong style="color:#b91c1c;">
+      Call emergency services (911 / 999 / 112) immediately if you experience:
+    </strong>
+    <ul>
+      <li>Chest pain, pressure, or tightness</li>
+      <li>Difficulty breathing or shortness of breath</li>
+      <li>Sudden severe headache unlike any before</li>
+      <li>Facial drooping, arm weakness, or slurred speech</li>
+      <li>Thoughts of harming yourself or others</li>
+      <li>Severe allergic reaction (throat swelling, difficulty swallowing)</li>
+    </ul>
+  </div>
+
+  {# Questions to ask your doctor #}
+  <h2>Questions to Ask Your Doctor</h2>
+  <div class="questions">
+    <ul>
+      {% if top_diseases %}
+      <li>
+        "Could my symptoms be related to
+        {{ top_diseases[0].disease_name }}?"
+      </li>
+      {% endif %}
+      <li>"What tests would help clarify what's causing my symptoms?"</li>
+      {% if intake.get('medications') %}
+      <li>"Are there any interactions between my current medications and
+          these possible conditions?"</li>
+      {% endif %}
+      {% if intake.get('allergies') %}
+      <li>"How might my allergies affect my treatment options?"</li>
+      {% endif %}
+      <li>"How urgent is it to investigate these symptoms further?"</li>
+      <li>"Are there lifestyle changes that might help?"</li>
+    </ul>
+  </div>
+
+  {# Citations #}
+  {% if citations %}
+  <h2>Document Sources</h2>
+  <div class="citations">
+    {% for c in citations %}
+    <div class="citation-item">
+      <strong>{{ c.label }}</strong>
+      {{ c.source_doc }}
+      {% if c.excerpt %}
+        — "{{ c.excerpt[:150] }}…"
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {# Footer #}
+  <div class="footer">
+    Generated by HealthAssist MVP — Informational Tool Only &nbsp;|&nbsp;
+    This is NOT a medical diagnosis &nbsp;|&nbsp;
+    {{ generated_at }}
+  </div>
+
+</body>
+</html>

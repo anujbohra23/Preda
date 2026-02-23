@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+{% block title %}{{ s.title }}{% endblock %}
+
+{% block content %}
+
+{# ── Breadcrumb ───────────────────────────────────────────────────────────── #}
+<div class="mb-6 flex items-center gap-2 text-sm text-slate-500">
+  <a href="{{ url_for('sessions.dashboard') }}"
+     class="text-blue-600 hover:underline">Dashboard</a>
+  <span>/</span>
+  <span class="text-slate-700 font-medium">{{ s.title }}</span>
+</div>
+
+{# ── Session header ───────────────────────────────────────────────────────── #}
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6 mb-6">
+  <div class="flex items-start justify-between">
+    <div>
+      <h1 class="text-xl font-bold text-slate-800 mb-1">{{ s.title }}</h1>
+      <div class="flex items-center gap-2">
+        <span class="text-xs px-2 py-0.5 rounded-full font-medium
+          {% if s.status == 'intake' %}bg-slate-100 text-slate-600
+          {% elif s.status == 'reviewing' %}bg-amber-100 text-amber-700
+          {% elif s.status == 'results' %}bg-blue-100 text-blue-700
+          {% elif s.status == 'chat' %}bg-purple-100 text-purple-700
+          {% elif s.status == 'report' %}bg-green-100 text-green-700
+          {% else %}bg-slate-100 text-slate-500{% endif %}">
+          {{ s.status | capitalize }}
+        </span>
+        <span class="text-xs text-slate-400">Created {{ s.created_at[:10] }}</span>
+        {% if s.safety_flagged %}
+          <span class="text-xs px-2 py-0.5 rounded-full bg-red-100 text-red-700 font-medium">
+            ⚠ Safety Flag Active
+          </span>
+        {% endif %}
+      </div>
+    </div>
+
+    {# Next action button based on status #}
+    <div>
+      {% if s.status == 'intake' %}
+        <a href="{{ url_for('intake.intake_form', session_id=s.id) }}"
+           class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold
+                  px-4 py-2 rounded-md transition-colors">
+          Fill Intake Form →
+        </a>
+      {% elif s.status == 'reviewing' %}
+        <a href="{{ url_for('upload.review', session_id=s.id) }}"
+           class="bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold
+                  px-4 py-2 rounded-md transition-colors">
+          Review Extraction →
+        </a>
+      {% elif s.status == 'results' %}
+        <a href="{{ url_for('retrieve.results', session_id=s.id) }}"
+           class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold
+                  px-4 py-2 rounded-md transition-colors">
+          View Results →
+        </a>
+      {% elif s.status in ['results', 'chat', 'report'] %}
+        <a href="{{ url_for('chat.chat_page', session_id=s.id) }}"
+           class="bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold
+                  px-4 py-2 rounded-md transition-colors">
+          Open Chat →
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{# ── Intake summary ───────────────────────────────────────────────────────── #}
+{% if intake %}
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6 mb-6">
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="font-semibold text-slate-800">📋 Intake Summary</h2>
+    <a href="{{ url_for('intake.intake_form', session_id=s.id) }}"
+       class="text-xs text-blue-600 hover:underline">Edit</a>
+  </div>
+  <dl class="grid grid-cols-1 md:grid-cols-2 gap-3">
+    {% for key, value in intake.items() %}
+      {% if value %}
+      <div>
+        <dt class="text-xs font-semibold text-slate-400 uppercase tracking-wide">
+          {{ key | replace('_', ' ') | title }}
+        </dt>
+        <dd class="text-sm text-slate-700 mt-0.5">{{ value }}</dd>
+      </div>
+      {% endif %}
+    {% endfor %}
+  </dl>
+</div>
+{% endif %}
+
+{# ── Uploads ──────────────────────────────────────────────────────────────── #}
+{% if uploads %}
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6 mb-6">
+  <h2 class="font-semibold text-slate-800 mb-4">📄 Uploaded Documents</h2>
+  <ul class="space-y-2">
+    {% for u in uploads %}
+    <li class="flex items-center justify-between text-sm">
+      <span class="text-slate-700">{{ u.original_name }}</span>
+      <span class="text-xs px-2 py-0.5 rounded-full
+        {% if u.upload_status == 'reviewed' %}bg-green-100 text-green-700
+        {% elif u.upload_status == 'extracted' %}bg-blue-100 text-blue-700
+        {% elif u.upload_status == 'failed' %}bg-red-100 text-red-700
+        {% else %}bg-slate-100 text-slate-500{% endif %}">
+        {{ u.upload_status | capitalize }}
+      </span>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+
+{# ── Top conditions ───────────────────────────────────────────────────────── #}
+{% if diseases %}
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6 mb-6">
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="font-semibold text-slate-800">🔍 Top Conditions Found</h2>
+    <a href="{{ url_for('retrieve.results', session_id=s.id) }}"
+       class="text-xs text-blue-600 hover:underline">View All</a>
+  </div>
+  <ol class="space-y-2">
+    {% for d in diseases[:5] %}
+    <li class="flex items-center justify-between text-sm">
+      <span class="text-slate-700">
+        <span class="font-medium text-slate-500 mr-2">#{{ d.rank }}</span>
+        {{ d.disease.disease_name }}
+        {% if d.disease.icd_code %}
+          <span class="text-xs text-slate-400">({{ d.disease.icd_code }})</span>
+        {% endif %}
+      </span>
+      <span class="text-xs bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full">
+        {{ (d.similarity_score * 100) | round(1) }}%
+      </span>
+    </li>
+    {% endfor %}
+  </ol>
+</div>
+{% endif %}
+
+{# ── Reports ──────────────────────────────────────────────────────────────── #}
+{% if reports %}
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6 mb-6">
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="font-semibold text-slate-800">📋 Generated Reports</h2>
+    <a href="{{ url_for('reports.report_page', session_id=s.id) }}"
+       class="text-xs text-blue-600 hover:underline">View Reports</a>
+  </div>
+  <ul class="space-y-2">
+    {% for r in reports %}
+    <li class="text-sm text-slate-700">
+      {{ r.report_type | capitalize }} report —
+      <span class="text-slate-400 text-xs">{{ r.generated_at[:10] }}</span>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+
+{# ── Action bar ───────────────────────────────────────────────────────────── #}
+<div class="flex flex-wrap gap-3 mt-2">
+  <a href="{{ url_for('intake.intake_form', session_id=s.id) }}"
+     class="text-sm bg-white border border-slate-300 hover:bg-slate-50
+            text-slate-700 px-4 py-2 rounded-md transition-colors">
+    📋 Edit Intake
+  </a>
+  {% if s.status not in ['intake'] %}
+  <a href="{{ url_for('retrieve.results', session_id=s.id) }}"
+     class="text-sm bg-white border border-slate-300 hover:bg-slate-50
+            text-slate-700 px-4 py-2 rounded-md transition-colors">
+    🔍 View Results
+  </a>
+  <a href="{{ url_for('chat.chat_page', session_id=s.id) }}"
+     class="text-sm bg-white border border-slate-300 hover:bg-slate-50
+            text-slate-700 px-4 py-2 rounded-md transition-colors">
+    💬 Chat
+  </a>
+  <a href="{{ url_for('reports.report_page', session_id=s.id) }}"
+     class="text-sm bg-white border border-slate-300 hover:bg-slate-50
+            text-slate-700 px-4 py-2 rounded-md transition-colors">
+    📄 Reports
+  </a>
+  {% endif %}
+</div>
+
+{% endblock %}

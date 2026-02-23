@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 10.5pt;
+      color: #1e293b;
+      line-height: 1.5;
+      padding: 40px 50px;
+    }
+    .header {
+      border-bottom: 3px solid #059669;
+      padding-bottom: 16px;
+      margin-bottom: 20px;
+    }
+    .header h1 { font-size: 18pt; color: #065f46; margin-bottom: 4px; }
+    .header .meta { font-size: 8.5pt; color: #64748b; }
+    .big-disclaimer {
+      background: #fef2f2;
+      border: 2px solid #dc2626;
+      border-radius: 6px;
+      padding: 12px 14px;
+      margin-bottom: 20px;
+      font-size: 9pt;
+      color: #7f1d1d;
+    }
+    h2 {
+      font-size: 12pt;
+      color: #065f46;
+      border-bottom: 1px solid #d1fae5;
+      padding-bottom: 5px;
+      margin: 20px 0 10px 0;
+    }
+    .field-grid {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 5px 12px;
+      font-size: 9.5pt;
+    }
+    .field-label {
+      color: #64748b;
+      font-weight: 700;
+      font-size: 8pt;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding-top: 1px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 9pt;
+      margin-top: 8px;
+    }
+    th {
+      background: #f0fdf4;
+      color: #065f46;
+      font-size: 8pt;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 6px 8px;
+      text-align: left;
+      border-bottom: 1px solid #d1fae5;
+    }
+    td {
+      padding: 6px 8px;
+      border-bottom: 1px solid #f1f5f9;
+      vertical-align: top;
+    }
+    tr:nth-child(even) td { background: #f8fafc; }
+    .score-high { color: #1d4ed8; font-weight: 700; }
+    .score-mid  { color: #d97706; font-weight: 600; }
+    .score-low  { color: #94a3b8; }
+    .tag {
+      display: inline-block;
+      background: #fef9c3;
+      color: #854d0e;
+      border-radius: 3px;
+      padding: 1px 4px;
+      font-size: 7.5pt;
+      margin: 1px;
+    }
+    .finding {
+      border-left: 3px solid #6ee7b7;
+      padding: 8px 12px;
+      margin-bottom: 8px;
+      background: #f0fdf4;
+      font-size: 9.5pt;
+    }
+    .citations {
+      font-size: 8pt;
+      color: #64748b;
+    }
+    .citation-item {
+      border-left: 2px solid #cbd5e1;
+      padding-left: 8px;
+      margin-bottom: 3px;
+    }
+    .footer {
+      border-top: 1px solid #e2e8f0;
+      margin-top: 28px;
+      padding-top: 10px;
+      font-size: 7.5pt;
+      color: #94a3b8;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>💊 Informational Pharmacy Summary</h1>
+    <div class="meta">
+      Session: {{ session_title }} &nbsp;|&nbsp;
+      Generated: {{ generated_at }} &nbsp;|&nbsp;
+      ID: {{ session_id }}
+    </div>
+  </div>
+
+  <div class="big-disclaimer">
+    <strong>⛔ NOT A PRESCRIPTION. NOT A CLINICAL DIAGNOSIS.</strong><br>
+    This is an <strong>informational summary</strong> generated from
+    patient self-reported data and uploaded documents.
+    All information must be independently verified before any clinical action.
+    This document confers no prescriptive authority and should not be used
+    to make treatment decisions without professional clinical assessment.
+  </div>
+
+  {# Patient intake #}
+  <h2>Patient-Reported Intake</h2>
+  <div class="field-grid">
+    {% for key, value in intake.items() %}
+      {% if value %}
+      <div class="field-label">{{ key | replace('_',' ') | title }}</div>
+      <div>{{ value }}</div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  {# Top 10 conditions table #}
+  <h2>Top Condition Candidates (Semantic Similarity)</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:35px;">Rank</th>
+        <th>Condition</th>
+        <th style="width:45px;">ICD</th>
+        <th style="width:60px;">Score</th>
+        <th>Key Evidence Terms</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for d in top_diseases %}
+      <tr>
+        <td style="text-align:center; color:#94a3b8;">{{ d.rank }}</td>
+        <td><strong>{{ d.disease_name }}</strong></td>
+        <td style="color:#94a3b8; font-size:8pt;">{{ d.icd_code }}</td>
+        <td class="
+          {% if d.similarity_score > 30 %}score-high
+          {% elif d.similarity_score > 15 %}score-mid
+          {% else %}score-low{% endif %}">
+          {{ d.similarity_score }}%
+        </td>
+        <td>
+          {% for phrase in d.matching_phrases[:5] %}
+            <span class="tag">{{ phrase }}</span>
+          {% endfor %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <p style="font-size:8pt; color:#94a3b8; margin-top:6px;">
+    Score = semantic similarity between patient intake and condition description.
+    Higher score = greater symptom overlap. Does not indicate diagnosis probability.
+  </p>
+
+  {# RAG findings #}
+  {% if rag_findings %}
+  <h2>Document-Derived Findings (RAG)</h2>
+  {% for finding in rag_findings %}
+  <div class="finding">
+    {{ finding.content }}
+    {% if finding.citations %}
+    <span style="color:#059669; font-size:8pt;">
+      {{ finding.citations | join(' ') }}
+    </span>
+    {% endif %}
+  </div>
+  {% endfor %}
+  {% endif %}
+
+  {# Citations #}
+  {% if citations %}
+  <h2>Source Citations</h2>
+  <div class="citations">
+    {% for c in citations %}
+    <div class="citation-item">
+      <strong>{{ c.label }}</strong>
+      {{ c.source_doc }}
+      {% if c.excerpt %}— "{{ c.excerpt[:120] }}…"{% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {# Final disclaimer #}
+  <h2>Clinical Disclaimer</h2>
+  <p style="font-size:9pt; color:#475569;">
+    This summary was generated by an automated informational tool (HealthAssist MVP).
+    It is based entirely on patient self-reported symptoms and uploaded documents.
+    Reported medications and allergies have not been clinically verified.
+    Condition candidates are derived from semantic similarity matching and do not
+    represent clinical assessment, differential diagnosis, or medical opinion.
+    No prescriptive or treatment authority is implied or granted by this document.
+    All clinical decisions must be made by a licensed healthcare professional
+    following independent assessment.
+  </p>
+
+  <div class="footer">
+    HealthAssist MVP — Informational Tool Only &nbsp;|&nbsp;
+    NOT a prescription or diagnosis &nbsp;|&nbsp;
+    {{ generated_at }}
+  </div>
+
+</body>
+</html>
