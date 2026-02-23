@@ -1,0 +1,30 @@
+html { scroll-behavior: smooth; }
+
+.citation-ref {
+  color: #2563eb;
+  cursor: pointer;
+  font-size: 0.75em;
+  vertical-align: super;
+  text-decoration: none;
+}
+.citation-ref:hover { text-decoration: underline; }
+
+.match-highlight {
+  background-color: #fef08a;
+  color: #854d0e;
+  border-radius: 3px;
+  padding: 1px 4px;
+  font-size: 0.8em;
+}
+
+.chat-bubble-user {
+  background-color: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 12px 12px 4px 12px;
+}
+
+.chat-bubble-assistant {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px 12px 12px 4px;
+}
