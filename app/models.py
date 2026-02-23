@@ -67,6 +67,7 @@ class IntakeField(db.Model):
     __table_args__ = (db.UniqueConstraint('session_id', 'field_name'),)
 
 
+
 class Upload(db.Model):
     __tablename__ = 'uploads'
 
