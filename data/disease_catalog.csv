@@ -1,0 +1,52 @@
+disease_name,icd_code,short_desc
+Acute Myocardial Infarction,I21,Heart attack caused by blocked coronary artery presenting with chest pain crushing pressure left arm pain jaw pain shortness of breath sweating nausea
+Angina Pectoris,I20,Chest pain or pressure caused by reduced blood flow to heart muscle often triggered by exertion or stress relieved by rest
+Hypertensive Crisis,I16,Severely elevated blood pressure causing headache vision changes chest pain shortness of breath confusion nausea
+Heart Failure,I50,Condition where heart cannot pump enough blood causing shortness of breath fatigue leg swelling fluid retention reduced exercise tolerance
+Atrial Fibrillation,I48,Irregular rapid heart rhythm causing palpitations dizziness shortness of breath fatigue chest discomfort fainting
+Deep Vein Thrombosis,I80,Blood clot in deep vein usually leg causing swelling pain redness warmth tenderness calf pain
+Pulmonary Embolism,I26,Blood clot in lung causing sudden shortness of breath chest pain rapid heart rate coughing blood dizziness fainting
+Stroke,I63,Brain cell death due to blocked blood vessel causing sudden facial drooping arm weakness slurred speech vision loss severe headache
+Transient Ischemic Attack,G45,Temporary stroke-like episode with brief numbness weakness vision changes slurred speech resolving within 24 hours
+Migraine,G43,Recurrent severe headache often one-sided with nausea vomiting light sensitivity sound sensitivity visual aura lasting hours to days
+Tension Headache,G44,Bilateral pressing tightening headache mild to moderate intensity not worsened by activity no nausea
+Cluster Headache,G44.0,Severe one-sided headache around eye with tearing nasal congestion restlessness occurring in clusters
+Epilepsy,G40,Recurrent seizures with convulsions loss of consciousness confusion staring spells muscle jerking
+Multiple Sclerosis,G35,Demyelinating disease causing fatigue vision problems numbness tingling weakness coordination problems bladder dysfunction
+Parkinson Disease,G20,Progressive movement disorder with tremor rigidity bradykinesia postural instability shuffling gait masked face
+Type 2 Diabetes Mellitus,E11,Chronic metabolic disorder with high blood sugar causing increased thirst frequent urination fatigue blurred vision slow healing wounds
+Type 1 Diabetes Mellitus,E10,Autoimmune destruction of insulin-producing cells causing weight loss excessive thirst urination fatigue ketoacidosis
+Hypothyroidism,E03,Underactive thyroid causing fatigue weight gain cold intolerance constipation dry skin hair loss depression slow heart rate
+Hyperthyroidism,E05,Overactive thyroid causing weight loss rapid heartbeat heat intolerance sweating anxiety tremor diarrhea
+Cushing Syndrome,E24,Excess cortisol causing weight gain moon face buffalo hump stretch marks high blood pressure muscle weakness
+Anemia Iron Deficiency,D50,Low iron causing fatigue weakness pale skin shortness of breath dizziness cold hands feet brittle nails pica
+Vitamin B12 Deficiency,E53.8,Low B12 causing fatigue weakness numbness tingling balance problems memory issues depression glossitis
+Gastroesophageal Reflux Disease,K21,Acid reflux causing heartburn chest burning regurgitation sour taste hoarseness chronic cough worse lying down
+Peptic Ulcer Disease,K27,Stomach or duodenal ulcer causing burning epigastric pain nausea bloating worse with food or empty stomach
+Irritable Bowel Syndrome,K58,Functional bowel disorder with abdominal cramping bloating altered bowel habits diarrhea constipation relieved by defecation
+Crohn Disease,K50,Inflammatory bowel disease causing abdominal pain diarrhea weight loss fatigue rectal bleeding fever mouth sores
+Ulcerative Colitis,K51,Inflammatory bowel disease causing bloody diarrhea abdominal cramping urgency rectal pain weight loss fatigue
+Appendicitis,K37,Inflamed appendix causing periumbilical pain migrating to right lower quadrant nausea vomiting fever rebound tenderness
+Cholecystitis,K81,Inflamed gallbladder causing right upper quadrant pain after fatty meals nausea vomiting fever jaundice
+Pancreatitis,K85,Inflamed pancreas causing severe epigastric pain radiating to back nausea vomiting fever elevated lipase amylase
+Asthma,J45,Chronic airway inflammation causing recurrent wheezing shortness of breath chest tightness cough worse at night exercise triggered
+Chronic Obstructive Pulmonary Disease,J44,Progressive lung disease causing chronic cough sputum production shortness of breath wheezing barrel chest
+Pneumonia,J18,Lung infection causing fever cough sputum production shortness of breath chest pain fatigue
+Pulmonary Tuberculosis,A15,Mycobacterial lung infection causing chronic cough hemoptysis night sweats weight loss fever fatigue
+Urinary Tract Infection,N39.0,Bladder infection causing burning urination frequency urgency cloudy urine pelvic pain low grade fever
+Kidney Stones,N20,Renal calculi causing severe flank pain radiating to groin nausea vomiting blood in urine urinary urgency
+Chronic Kidney Disease,N18,Progressive kidney failure causing fatigue edema decreased urine output nausea hypertension anemia
+Rheumatoid Arthritis,M06,Autoimmune joint disease causing symmetric joint pain swelling morning stiffness fatigue fever rheumatoid nodules
+Osteoarthritis,M19,Degenerative joint disease causing joint pain stiffness worse with activity crepitus bony enlargement typically knees hips hands
+Systemic Lupus Erythematosus,M32,Autoimmune disease causing butterfly rash joint pain fatigue fever photosensitivity kidney problems serositis
+Gout,M10,Uric acid crystal deposition causing sudden severe joint pain swelling redness warmth typically big toe
+Fibromyalgia,M79.7,Chronic widespread musculoskeletal pain fatigue sleep disturbance cognitive difficulties tender points
+Osteoporosis,M81,Low bone density causing back pain height loss fractures from minor trauma stooped posture
+Depression Major,F32,Persistent depressed mood loss of interest fatigue sleep changes appetite changes worthlessness concentration difficulty suicidal thoughts
+Anxiety Generalized Disorder,F41.1,Excessive worry nervousness restlessness fatigue concentration difficulty irritability muscle tension sleep disturbance
+Panic Disorder,F41.0,Recurrent panic attacks with palpitations sweating trembling shortness of breath chest pain dizziness fear of dying
+Schizophrenia,F20,Psychotic disorder with hallucinations delusions disorganized thinking negative symptoms social withdrawal
+Hypothermia,T68,Abnormally low body temperature causing shivering confusion slurred speech drowsiness weak pulse
+Hyperthermia Heat Stroke,T67,Dangerously high body temperature confusion hot dry skin rapid pulse loss of consciousness organ failure
+Sepsis,A41,Life-threatening infection response causing fever chills rapid heart rate rapid breathing confusion low blood pressure organ dysfunction
+Anaphylaxis,T78.2,Severe allergic reaction causing throat swelling difficulty breathing hives low blood pressure rapid pulse vomiting collapse
