@@ -1,0 +1,75 @@
+services:
+
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB:       healthassist
+      POSTGRES_USER:     healthuser
+      POSTGRES_PASSWORD: healthpass
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U healthuser -d healthassist"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  ollama:
+    image: ollama/ollama:latest
+    restart: unless-stopped
+    volumes:
+      - ollama_data:/root/.ollama
+    ports:
+      - "11434:11434"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+    entrypoint: ["/bin/sh", "-c"]
+    command: >
+      "ollama serve &
+       OLLAMA_PID=$$!
+       echo 'Waiting for Ollama to start...'
+       sleep 8
+       echo 'Pulling llama3.2:3b...'
+       ollama pull llama3.2:3b
+       echo 'Model ready.'
+       wait $$OLLAMA_PID"
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env.docker
+    environment:
+      DATABASE_URL:    postgresql://healthuser:healthpass@db:5432/healthassist
+      OLLAMA_BASE_URL: http://ollama:11434
+      FLASK_ENV:       development
+    volumes:
+      - .:/app
+      - /app/venv
+      - uploads_data:/app/app/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+      ollama:
+        condition: service_started
+    command: >
+      sh -c "python scripts/wait_for_db.py &&
+             python scripts/init_db.py &&
+             python scripts/seed_disease_catalog.py &&
+             flask --app run:app run --host 0.0.0.0 --port 8000 --debug"
+
+volumes:
+  postgres_data:
+  ollama_data:
+  uploads_data:

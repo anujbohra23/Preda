@@ -163,8 +163,8 @@ health-assistant/
 │   └── deploy.yml               # Deploy on merge to main
 │
 ├── Dockerfile
-├── docker-compose.yml           # Local dev
-├── docker-compose.prod.yml      # Production overrides
+├── docker compose.yml           # Local dev
+├── docker compose.prod.yml      # Production overrides
 ├── .dockerignore
 ├── .env.example
 ├── requirements.txt
@@ -229,17 +229,17 @@ cp .env.example .env.docker
 
 # 3. Build and start all services
 #    First run downloads ~2GB (Ollama model) — be patient
-docker-compose up --build
+docker compose up --build
 
 # Visit http://localhost:8000
 
 # Useful commands:
-docker-compose logs -f web        # App logs
-docker-compose logs -f ollama     # LLM logs
-docker-compose exec db psql -U healthuser -d healthassist  # DB shell
-docker-compose exec web pytest tests/ -v                   # Run tests
-docker-compose down               # Stop everything
-docker-compose down -v            # Stop + delete volumes (fresh start)
+docker compose logs -f web        # App logs
+docker compose logs -f ollama     # LLM logs
+docker compose exec db psql -U healthuser -d healthassist  # DB shell
+docker compose exec web pytest tests/ -v                   # Run tests
+docker compose down               # Stop everything
+docker compose down -v            # Stop + delete volumes (fresh start)
 ```
 
 ---

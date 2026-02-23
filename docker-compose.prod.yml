@@ -1,0 +1,89 @@
+version: '3.9'
+
+# Extend the base compose file with production settings.
+# Usage: docker compose -f docker compose.yml -f docker compose.prod.yml up
+
+services:
+
+  web:
+    # Use the pre-built image from GitHub Container Registry
+    image: ghcr.io/${GITHUB_REPOSITORY}:latest
+    restart: always
+    environment:
+      FLASK_ENV: production
+    # No volume mount of source code in prod
+    volumes:
+      - uploads_data:/app/app/uploads
+    command: >
+      sh -c "python scripts/wait_for_db.py &&
+             python scripts/init_db.py &&
+             python scripts/seed_disease_catalog.py &&
+             gunicorn --bind 0.0.0.0:8000
+                      --workers 2
+                      --timeout 120
+                      --access-logfile -
+                      --error-logfile -
+                      'run:app'"
+
+  db:
+    restart: always
+    # In production, use env vars from Railway/Render — no hardcoded creds
+    environment:
+      POSTGRES_DB:       ${POSTGRES_DB}
+      POSTGRES_USER:     ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+```
+
+---
+
+## 5. `.dockerignore`
+```
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+
+# Virtual environment
+venv/
+.venv/
+env/
+
+# Local data
+app/uploads/
+data/tfidf_vectorizer.pkl
+*.db
+health.db
+instance/
+
+# Environment files
+.env
+.env.docker
+
+# Cache
+.cache/
+*.cache
+.pytest_cache/
+
+# Git
+.git/
+.gitignore
+
+# CI
+.github/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

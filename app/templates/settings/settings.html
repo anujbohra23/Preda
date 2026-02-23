@@ -91,32 +91,16 @@
     </form>
   </div>
 
-  {# ── Email status ─────────────────────────────────────────────────────── #}
+  {# ── Email status — only shown when configured ────────────────────────── #}
+  {% if smtp_configured %}
   <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
     <h2 class="font-semibold text-slate-800 mb-3">📧 Email Status</h2>
-    {% if smtp_configured %}
     <div class="flex items-center gap-2 text-sm text-green-700">
       <span class="w-2 h-2 rounded-full bg-green-500 shrink-0"></span>
       Email sending is configured and ready.
     </div>
-    {% else %}
-    <div class="flex items-center gap-2 text-sm text-amber-700 mb-3">
-      <span class="w-2 h-2 rounded-full bg-amber-400 shrink-0"></span>
-      Email sending is not configured.
-    </div>
-    <pre class="bg-slate-800 text-green-400 text-xs rounded-lg
-                px-4 py-3 overflow-x-auto leading-relaxed"
->SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-SMTP_USER=you@gmail.com
-SMTP_PASSWORD=your-app-password
-SMTP_FROM=you@gmail.com</pre>
-    <p class="text-xs text-slate-500 mt-2">
-      Add to <code class="bg-slate-100 px-1 rounded">.env</code>
-      and restart.
-    </p>
-    {% endif %}
   </div>
+  {% endif %}
 
   {# ── Account info ─────────────────────────────────────────────────────── #}
   <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">

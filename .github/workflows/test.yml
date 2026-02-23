@@ -1,0 +1,69 @@
+name: Test
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB:       healthassist_test
+          POSTGRES_USER:     healthuser
+          POSTGRES_PASSWORD: healthpass
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      DATABASE_URL:        postgresql://healthuser:healthpass@localhost:5432/healthassist_test
+      SECRET_KEY:          test-secret-key
+      FLASK_ENV:           development
+      UPLOAD_FOLDER:       app/uploads
+      OLLAMA_BASE_URL:     http://localhost:11434
+      MIN_RETRIEVAL_SCORE: "0.05"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Install test dependencies
+        run: pip install flake8 pytest pytest-flask
+
+      - name: Lint with flake8
+        run: |
+          flake8 app/ scripts/ run.py \
+            --max-line-length=100 \
+            --exclude=__pycache__,.git,venv \
+            --ignore=E501,W503
+
+      - name: Create uploads directory
+        run: mkdir -p app/uploads
+
+      - name: Initialise database
+        run: python scripts/init_db.py
+
+      - name: Seed disease catalog
+        run: python scripts/seed_disease_catalog.py
+
+      - name: Run tests
+        run: pytest tests/ -v --tb=short

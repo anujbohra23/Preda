@@ -1,15 +1,41 @@
-.env
-*.db
-uploads/*
-!uploads/.gitkeep
+cat > .gitignore << 'EOF'
+# Python
 __pycache__/
 *.pyc
 *.pyo
-.venv/
-venv/
 *.egg-info/
-dist/
-build/
-.DS_Store
-instance/
+
+# Virtual environment
+venv/
+.venv/
+
+# Environment files — never commit
+.env
+.env.docker
 .env.example
+
+# Local data
+app/uploads/
+data/tfidf_vectorizer.pkl
+*.db
+health.db
+instance/
+
+# Sentence transformer cache
+.cache/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Test artifacts
+.pytest_cache/
+.coverage
+EOF
