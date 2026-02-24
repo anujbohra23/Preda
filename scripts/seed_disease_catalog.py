@@ -85,7 +85,7 @@ def main():
                     disease_name    = row['disease_name'],
                     icd_code        = row['icd_code'],
                     short_desc      = row['short_desc'],
-                    embedding_blob  = vec.tobytes()
+                    embedding_blob=vec.tobytes()
                 ))
                 inserted += 1
 
@@ -96,3 +96,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+    

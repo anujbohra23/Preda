@@ -16,7 +16,7 @@ def wait_for_db(max_retries: int = 30, delay: int = 2):
         print('[wait_for_db] Using SQLite — skipping wait.')
         return
 
-    print(f'[wait_for_db] Waiting for PostgreSQL...')
+    print('[wait_for_db] Waiting for PostgreSQL...')
 
     for attempt in range(1, max_retries + 1):
         try:
