@@ -174,3 +174,39 @@ class AuditLog(db.Model):
     event_type   = db.Column(db.Text, nullable=False, index=True)
     event_detail = db.Column(db.Text, nullable=True)
     created_at   = db.Column(db.Text, nullable=False, default=utcnow)
+
+class Appointment(db.Model):
+    __tablename__ = 'appointments'
+
+    id                = db.Column(db.Integer, primary_key=True)
+    session_id        = db.Column(db.Integer, db.ForeignKey('sessions.id'),
+                                  nullable=False, index=True)
+    user_id           = db.Column(db.Integer, db.ForeignKey('users.id'),
+                                  nullable=False, index=True)
+    title             = db.Column(db.Text, nullable=True)
+    doctor_name       = db.Column(db.Text, nullable=True)
+    appointment_date  = db.Column(db.Text, nullable=True)
+    capture_method    = db.Column(db.Text, nullable=True)
+    audio_path        = db.Column(db.Text, nullable=True)
+    raw_transcript    = db.Column(db.Text, nullable=True)
+    summary_json      = db.Column(db.Text, nullable=True)
+    followup_date     = db.Column(db.Text, nullable=True)
+    status            = db.Column(db.Text, nullable=False, default='pending')
+    created_at        = db.Column(db.Text, nullable=False, default=utcnow)
+
+    actions = db.relationship('AppointmentAction', backref='appointment',
+                              lazy='dynamic', cascade='all, delete-orphan')
+
+
+class AppointmentAction(db.Model):
+    __tablename__ = 'appointment_actions'
+
+    id             = db.Column(db.Integer, primary_key=True)
+    appointment_id = db.Column(db.Integer, db.ForeignKey('appointments.id'),
+                               nullable=False)
+    action_type    = db.Column(db.Text, nullable=False)
+    description    = db.Column(db.Text, nullable=True)
+    detail         = db.Column(db.Text, nullable=True)
+    due_date       = db.Column(db.Text, nullable=True)
+    is_completed   = db.Column(db.Integer, nullable=False, default=0)
+    created_at     = db.Column(db.Text, nullable=False, default=utcnow)

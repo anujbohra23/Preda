@@ -1,0 +1,264 @@
+{% extends 'base.html' %}
+{% block title %}Appointment — {{ appt.title }}{% endblock %}
+{% block content %}
+
+<div class="mb-5 text-sm text-slate-500 flex items-center gap-2">
+  <a href="{{ url_for('sessions.dashboard') }}"
+     class="text-blue-600 hover:underline">Dashboard</a>
+  <span>/</span>
+  <a href="{{ url_for('appointments.list_appointments',
+                      session_id=session.id) }}"
+     class="text-blue-600 hover:underline">Appointments</a>
+  <span>/</span>
+  <span>{{ appt.title }}</span>
+</div>
+
+{% if appt.status == 'failed' %}
+<div class="bg-red-50 border border-red-200 rounded-xl px-5 py-4 mb-6
+            text-sm text-red-700">
+  ⚠️ Processing failed. Please
+  <a href="{{ url_for('appointments.manual_appointment',
+                      session_id=session.id) }}"
+     class="underline font-medium">add notes manually</a>.
+</div>
+{% endif %}
+
+{% if appt.status in ('transcribing', 'summarising') %}
+<div class="bg-blue-50 border border-blue-200 rounded-xl px-5 py-4 mb-6
+            text-sm text-blue-700">
+  ⏳ Processing appointment... Refresh in a moment.
+</div>
+{% endif %}
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
+  <div class="bg-white rounded-xl border border-slate-200 shadow-sm
+              px-5 py-4">
+    <p class="text-xs font-semibold text-slate-400 uppercase
+              tracking-wide mb-1">Doctor</p>
+    <p class="font-semibold text-slate-800">
+      {{ appt.doctor_name or '—' }}
+    </p>
+  </div>
+  <div class="bg-white rounded-xl border border-slate-200 shadow-sm
+              px-5 py-4">
+    <p class="text-xs font-semibold text-slate-400 uppercase
+              tracking-wide mb-1">Date</p>
+    <p class="font-semibold text-slate-800">
+      {{ appt.appointment_date or '—' }}
+    </p>
+  </div>
+  <div class="bg-white rounded-xl border border-slate-200 shadow-sm
+              px-5 py-4">
+    <p class="text-xs font-semibold text-slate-400 uppercase
+              tracking-wide mb-1">Captured via</p>
+    <p class="font-semibold text-slate-800 capitalize">
+      {{ appt.capture_method or '—' }}
+    </p>
+  </div>
+</div>
+
+{% if summary %}
+
+{# What the doctor said #}
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6 mb-5">
+  <h2 class="font-semibold text-slate-800 mb-3">
+    💬 What Your Doctor Said
+  </h2>
+  <p class="text-slate-700 leading-relaxed">
+    {{ summary.what_doctor_said or 'No summary available.' }}
+  </p>
+</div>
+
+{# Action Plan #}
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6 mb-5">
+  <h2 class="font-semibold text-slate-800 mb-4">✅ Your Action Plan</h2>
+
+  {# Medications #}
+  {% if actions_by_type.get('medication') %}
+  <div class="mb-5">
+    <h3 class="text-xs font-semibold text-blue-600 uppercase
+               tracking-wide mb-2">💊 Medications Prescribed</h3>
+    <div class="space-y-2">
+      {% for action in actions_by_type['medication'] %}
+      <div class="flex items-start gap-3 p-3 rounded-lg
+                  {% if action.is_completed %}bg-green-50{% else %}bg-slate-50{% endif %}">
+        <button onclick="toggleAction({{ action.id }}, this)"
+                class="shrink-0 mt-0.5 w-5 h-5 rounded border-2
+                       {% if action.is_completed %}
+                         bg-green-500 border-green-500 text-white
+                       {% else %}
+                         border-slate-300
+                       {% endif %}
+                       flex items-center justify-center text-xs
+                       transition-colors cursor-pointer">
+          {% if action.is_completed %}✓{% endif %}
+        </button>
+        <div class="{% if action.is_completed %}opacity-60 line-through{% endif %}">
+          <p class="font-medium text-slate-800 text-sm">
+            {{ action.description }}
+          </p>
+          {% if action.detail %}
+          <p class="text-xs text-slate-500 mt-0.5">{{ action.detail }}</p>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  {# Tests #}
+  {% if actions_by_type.get('test') %}
+  <div class="mb-5">
+    <h3 class="text-xs font-semibold text-purple-600 uppercase
+               tracking-wide mb-2">🧪 Tests Ordered</h3>
+    <div class="space-y-2">
+      {% for action in actions_by_type['test'] %}
+      <div class="flex items-start gap-3 p-3 rounded-lg
+                  {% if action.is_completed %}bg-green-50{% else %}bg-slate-50{% endif %}">
+        <button onclick="toggleAction({{ action.id }}, this)"
+                class="shrink-0 mt-0.5 w-5 h-5 rounded border-2
+                       {% if action.is_completed %}
+                         bg-green-500 border-green-500 text-white
+                       {% else %}
+                         border-slate-300
+                       {% endif %}
+                       flex items-center justify-center text-xs
+                       transition-colors cursor-pointer">
+          {% if action.is_completed %}✓{% endif %}
+        </button>
+        <div class="{% if action.is_completed %}opacity-60 line-through{% endif %}">
+          <p class="font-medium text-slate-800 text-sm">
+            {{ action.description }}
+          </p>
+          {% if action.detail %}
+          <p class="text-xs text-slate-500 mt-0.5">{{ action.detail }}</p>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  {# Lifestyle #}
+  {% if actions_by_type.get('lifestyle') %}
+  <div class="mb-5">
+    <h3 class="text-xs font-semibold text-green-600 uppercase
+               tracking-wide mb-2">🌱 Lifestyle Changes</h3>
+    <div class="space-y-2">
+      {% for action in actions_by_type['lifestyle'] %}
+      <div class="flex items-start gap-3 p-3 bg-slate-50 rounded-lg
+                  {% if action.is_completed %}bg-green-50{% endif %}">
+        <button onclick="toggleAction({{ action.id }}, this)"
+                class="shrink-0 mt-0.5 w-5 h-5 rounded border-2
+                       {% if action.is_completed %}
+                         bg-green-500 border-green-500 text-white
+                       {% else %}
+                         border-slate-300
+                       {% endif %}
+                       flex items-center justify-center text-xs
+                       transition-colors cursor-pointer">
+          {% if action.is_completed %}✓{% endif %}
+        </button>
+        <p class="text-sm text-slate-800
+                  {% if action.is_completed %}opacity-60 line-through{% endif %}">
+          {{ action.description }}
+        </p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  {# Warning signs #}
+  {% if actions_by_type.get('warning') %}
+  <div class="mb-5">
+    <h3 class="text-xs font-semibold text-red-600 uppercase
+               tracking-wide mb-2">⚠️ Warning Signs — Seek Help If:</h3>
+    <div class="bg-red-50 border border-red-100 rounded-lg p-4">
+      <ul class="space-y-1">
+        {% for action in actions_by_type['warning'] %}
+        <li class="text-sm text-red-700 flex items-start gap-2">
+          <span class="shrink-0">•</span>
+          {{ action.description }}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  {% endif %}
+
+  {# Follow-up #}
+  {% if actions_by_type.get('followup') %}
+  {% set fu = actions_by_type['followup'][0] %}
+  <div>
+    <h3 class="text-xs font-semibold text-amber-600 uppercase
+               tracking-wide mb-2">📅 Follow-up</h3>
+    <div class="bg-amber-50 border border-amber-200 rounded-lg p-4">
+      <p class="text-sm text-amber-800 font-medium">
+        {{ fu.description }}
+      </p>
+      {% if appt.followup_date %}
+      <p class="text-xs text-amber-600 mt-1">
+        📅 {{ appt.followup_date }}
+      </p>
+      {% endif %}
+    </div>
+  </div>
+  {% endif %}
+
+</div>
+
+{% endif %} {# end if summary #}
+
+{# Raw transcript #}
+{% if appt.raw_transcript %}
+<details class="bg-white rounded-xl border border-slate-200 shadow-sm p-5 mb-5">
+  <summary class="font-medium text-slate-700 cursor-pointer text-sm">
+    📄 View Raw Transcript / Notes
+  </summary>
+  <div class="mt-4 text-sm text-slate-600 leading-relaxed whitespace-pre-wrap
+              bg-slate-50 rounded-lg p-4 max-h-60 overflow-y-auto">
+    {{ appt.raw_transcript }}
+  </div>
+</details>
+{% endif %}
+
+{# Actions #}
+<div class="flex gap-3">
+  <a href="{{ url_for('appointments.list_appointments',
+                      session_id=session.id) }}"
+     class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold
+            py-2 px-4 rounded-md transition-colors text-sm">
+    ← All Appointments
+  </a>
+  <form method="POST"
+        action="{{ url_for('appointments.delete_appointment',
+                           appt_id=appt.id) }}"
+        onsubmit="return confirm('Delete this appointment?')">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <button type="submit"
+            class="bg-red-50 hover:bg-red-100 text-red-600 font-semibold
+                   py-2 px-4 rounded-md transition-colors text-sm">
+      Delete
+    </button>
+  </form>
+</div>
+
+<script>
+async function toggleAction(actionId, btn) {
+  const res  = await fetch(`/appointments/action/${actionId}/toggle`, {
+    method: 'POST',
+    headers: {
+      'X-CSRFToken': '{{ csrf_token() }}',
+      'Content-Type': 'application/json',
+    }
+  });
+  const data = await res.json();
+  if (data.success) {
+    window.location.reload();
+  }
+}
+</script>
+{% endblock %}

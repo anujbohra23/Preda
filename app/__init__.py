@@ -1,8 +1,8 @@
 import os
 from flask import Flask
 from .config import config_map, DevelopmentConfig
-from .extensions import db, login_manager, csrf, limiter
-
+from .extensions import db, login_manager, csrf, limiter, migrate
+from .appointments.routes import appointments_bp
 
 def create_app(config_name: str = None):
     if config_name is None:
@@ -11,6 +11,7 @@ def create_app(config_name: str = None):
     app = Flask(__name__)
     cfg = config_map.get(config_name, DevelopmentConfig)
     app.config.from_object(cfg)
+    app.register_blueprint(appointments_bp)
 
     app.config['WTF_CSRF_HEADERS'] = ['X-CSRFToken']
 
@@ -20,6 +21,7 @@ def create_app(config_name: str = None):
     login_manager.init_app(app)
     csrf.init_app(app)
     limiter.init_app(app)
+    migrate.init_app(app, db)
 
     login_manager.login_view = 'auth.login'
     login_manager.login_message = 'Please log in to access this page.'

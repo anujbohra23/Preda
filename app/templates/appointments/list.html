@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block title %}Appointments{% endblock %}
+{% block content %}
+
+<div class="mb-5 text-sm text-slate-500 flex items-center gap-2">
+  <a href="{{ url_for('sessions.dashboard') }}"
+     class="text-blue-600 hover:underline">Dashboard</a>
+  <span>/</span>
+  <a href="{{ url_for('sessions.detail', session_id=session.id) }}"
+     class="text-blue-600 hover:underline">{{ session.title }}</a>
+  <span>/</span>
+  <span>Appointments</span>
+</div>
+
+<div class="flex items-center justify-between mb-6">
+  <h1 class="text-2xl font-bold text-slate-800">📋 Appointments</h1>
+  <a href="{{ url_for('appointments.new_appointment',
+                      session_id=session.id) }}"
+     class="bg-blue-600 hover:bg-blue-700 text-white font-semibold
+            py-2 px-4 rounded-md transition-colors text-sm">
+    + New Appointment
+  </a>
+</div>
+
+{% if appointments %}
+<div class="space-y-4">
+  {% for appt in appointments %}
+  <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5
+              flex items-center justify-between">
+    <div>
+      <p class="font-semibold text-slate-800 mb-0.5">
+        {{ appt.title or 'Untitled Appointment' }}
+      </p>
+      <p class="text-xs text-slate-500">
+        {{ appt.capture_method | capitalize }} &nbsp;·&nbsp;
+        {{ appt.created_at[:10] }}
+        {% if appt.followup_date %}
+        &nbsp;·&nbsp; 📅 Follow-up: {{ appt.followup_date }}
+        {% endif %}
+      </p>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="text-xs px-2 py-1 rounded-full font-medium
+        {% if appt.status == 'done' %}
+          bg-green-100 text-green-700
+        {% elif appt.status == 'failed' %}
+          bg-red-100 text-red-700
+        {% else %}
+          bg-amber-100 text-amber-700
+        {% endif %}">
+        {{ appt.status }}
+      </span>
+      <a href="{{ url_for('appointments.detail', appt_id=appt.id) }}"
+         class="text-sm text-blue-600 hover:underline font-medium">
+        View →
+      </a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% else %}
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm p-12
+            text-center">
+  <div class="text-4xl mb-4">📋</div>
+  <h2 class="font-semibold text-slate-700 mb-2">No appointments yet</h2>
+  <p class="text-slate-500 text-sm mb-5">
+    Record or add notes from your next doctor visit.
+  </p>
+  <a href="{{ url_for('appointments.new_appointment',
+                      session_id=session.id) }}"
+     class="bg-blue-600 hover:bg-blue-700 text-white font-semibold
+            py-2 px-5 rounded-md transition-colors text-sm">
+    + Add First Appointment
+  </a>
+</div>
+{% endif %}
+{% endblock %}

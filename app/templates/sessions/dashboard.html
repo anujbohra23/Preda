@@ -18,6 +18,30 @@
   </a>
 </div>
 
+
+{% if followup_alerts %}
+<div class="bg-amber-50 border border-amber-300 rounded-xl px-5 py-4 mb-6">
+  {% for alert in followup_alerts %}
+  <div class="flex items-center justify-between">
+    <div>
+      <p class="font-semibold text-amber-800 text-sm">
+        ⏰ Follow-up due: {{ alert.followup_date }}
+      </p>
+      <p class="text-xs text-amber-600">{{ alert.title }}</p>
+    </div>
+    <a href="{{ url_for('appointments.detail', appt_id=alert.id) }}"
+       class="text-xs text-amber-700 underline font-medium">
+      View →
+    </a>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+
+
+
+
 {# ── Session list ─────────────────────────────────────────────────────────── #}
 {% if sessions %}
   <div class="space-y-4">

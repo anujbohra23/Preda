@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block title %}New Appointment{% endblock %}
+{% block content %}
+
+<div class="mb-5 text-sm text-slate-500 flex items-center gap-2">
+  <a href="{{ url_for('sessions.dashboard') }}"
+     class="text-blue-600 hover:underline">Dashboard</a>
+  <span>/</span>
+  <a href="{{ url_for('sessions.detail', session_id=session.id) }}"
+     class="text-blue-600 hover:underline">{{ session.title }}</a>
+  <span>/</span>
+  <span>New Appointment</span>
+</div>
+
+<h1 class="text-2xl font-bold text-slate-800 mb-1">
+  📋 Record Appointment
+</h1>
+<p class="text-sm text-slate-500 mb-8">
+  Capture what your doctor said so you never forget.
+  Choose how you want to add this appointment.
+</p>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+
+  {# Record live #}
+  <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6
+              flex flex-col">
+    <div class="text-3xl mb-3">🎙</div>
+    <h2 class="font-semibold text-slate-800 mb-1">Record Live</h2>
+    <p class="text-sm text-slate-500 mb-4 flex-1">
+      Record your appointment in real time using your microphone.
+      Requires your doctor's consent.
+    </p>
+    {% if whisper_ok %}
+    <a href="{{ url_for('appointments.record_appointment',
+                        session_id=session.id) }}"
+       class="block text-center bg-blue-600 hover:bg-blue-700 text-white
+              font-semibold py-2.5 px-4 rounded-md transition-colors text-sm">
+      Start Recording →
+    </a>
+    {% else %}
+    <div class="text-xs text-amber-700 bg-amber-50 border border-amber-200
+                rounded-lg px-3 py-2 mb-3">
+      Whisper model not available.
+      Run: <code>ollama pull whisper</code>
+    </div>
+    <button disabled
+            class="w-full bg-slate-200 text-slate-400 font-semibold
+                   py-2.5 px-4 rounded-md text-sm cursor-not-allowed">
+      Unavailable
+    </button>
+    {% endif %}
+  </div>
+
+  {# Upload audio #}
+  <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6
+              flex flex-col">
+    <div class="text-3xl mb-3">📁</div>
+    <h2 class="font-semibold text-slate-800 mb-1">Upload Audio</h2>
+    <p class="text-sm text-slate-500 mb-4 flex-1">
+      Already recorded on your phone? Upload the file here.
+      Supports mp3, wav, m4a, webm, ogg up to 50MB.
+    </p>
+    <a href="{{ url_for('appointments.upload_appointment',
+                        session_id=session.id) }}"
+       class="block text-center bg-blue-600 hover:bg-blue-700 text-white
+              font-semibold py-2.5 px-4 rounded-md transition-colors text-sm">
+      Upload File →
+    </a>
+  </div>
+
+  {# Manual notes #}
+  <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6
+              flex flex-col">
+    <div class="text-3xl mb-3">✍️</div>
+    <h2 class="font-semibold text-slate-800 mb-1">Type Notes</h2>
+    <p class="text-sm text-slate-500 mb-4 flex-1">
+      Type or paste your notes from the appointment.
+      No audio needed — works anywhere.
+    </p>
+    <a href="{{ url_for('appointments.manual_appointment',
+                        session_id=session.id) }}"
+       class="block text-center bg-blue-600 hover:bg-blue-700 text-white
+              font-semibold py-2.5 px-4 rounded-md transition-colors text-sm">
+      Enter Notes →
+    </a>
+  </div>
+
+</div>
+{% endblock %}

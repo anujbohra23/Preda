@@ -7,6 +7,8 @@ from flask_login import login_required, current_user
 from ..extensions import db
 from ..models import Session, IntakeField, Upload, DiseaseResult, ChatMessage, Report
 from .forms import NewSessionForm
+from datetime import datetime, timezone, timedelta
+from ..models import Appointment
 
 sessions_bp = Blueprint('sessions', __name__, url_prefix='/sessions')
 
@@ -40,6 +42,16 @@ def dashboard():
         .all()
     )
     form = NewSessionForm()
+    today       = datetime.now(timezone.utc).date()
+    alert_date  = today + timedelta(days=7)
+    followup_alerts = (
+        Appointment.query
+        .filter_by(user_id=current_user.id)
+        .filter(Appointment.followup_date.isnot(None))
+        .filter(Appointment.followup_date <= str(alert_date))
+        .filter(Appointment.followup_date >= str(today))
+        .all()
+    )
     return render_template(
         'sessions/dashboard.html',
         sessions=user_sessions,

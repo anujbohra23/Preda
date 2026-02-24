@@ -24,6 +24,7 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libpq5 \
     curl \
+    ffmpeg \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy installed packages from builder
@@ -49,7 +50,7 @@ EXPOSE 8000
 # Entrypoint: wait for DB, run migrations, start gunicorn
 CMD ["sh", "-c", "\
     python scripts/wait_for_db.py && \
-    python scripts/init_db.py && \
+    flask db upgrade && \
     python scripts/seed_disease_catalog.py && \
     gunicorn --bind 0.0.0.0:8000 \
              --workers 2 \

@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% block title %}Record Appointment{% endblock %}
+{% block content %}
+
+<div class="max-w-lg mx-auto">
+  <h1 class="text-2xl font-bold text-slate-800 mb-1">🎙 Live Recording</h1>
+  <p class="text-sm text-slate-500 mb-6">
+    Record your appointment in real time.
+    Your doctor must consent before you begin.
+  </p>
+
+  {# Consent box #}
+  <div class="bg-amber-50 border border-amber-300 rounded-xl p-5 mb-6">
+    <p class="font-semibold text-amber-800 mb-3">⚠️ Consent Required</p>
+    <ul class="text-sm text-amber-700 space-y-1.5 mb-4">
+      <li>✓ You have informed your doctor this will be recorded</li>
+      <li>✓ Your doctor has agreed to be recorded</li>
+      <li>✓ This recording is for your personal use only</li>
+    </ul>
+    <label class="flex items-start gap-3 cursor-pointer">
+      <input type="checkbox" id="consent_check"
+             class="mt-0.5 rounded text-blue-600">
+      <span class="text-sm text-amber-800 font-medium">
+        I confirm the above — I may proceed with recording
+      </span>
+    </label>
+  </div>
+
+  {# Doctor / date #}
+  <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5 mb-5">
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label class="block text-xs font-semibold text-slate-500
+                      uppercase tracking-wide mb-1">Doctor Name</label>
+        <input type="text" id="doctor_name" placeholder="Dr. Smith"
+               class="w-full border border-slate-300 rounded-md px-3 py-2
+                      text-sm focus:outline-none focus:ring-2
+                      focus:ring-blue-500">
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-slate-500
+                      uppercase tracking-wide mb-1">Date</label>
+        <input type="date" id="appt_date"
+               value="{{ now[:10] if now else '' }}"
+               class="w-full border border-slate-300 rounded-md px-3 py-2
+                      text-sm focus:outline-none focus:ring-2
+                      focus:ring-blue-500">
+      </div>
+    </div>
+  </div>
+
+  {# Recorder UI #}
+  <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6
+              text-center">
+
+    <div id="idle_state">
+      <div class="text-5xl mb-4">🎙</div>
+      <p class="text-slate-500 text-sm mb-5">
+        Press Start to begin recording
+      </p>
+      <button id="start_btn"
+              disabled
+              onclick="startRecording()"
+              class="bg-red-600 hover:bg-red-700 disabled:bg-slate-300
+                     disabled:cursor-not-allowed text-white font-semibold
+                     py-3 px-8 rounded-full transition-colors text-sm">
+        ● Start Recording
+      </button>
+    </div>
+
+    <div id="recording_state" class="hidden">
+      <div class="flex items-center justify-center gap-2 mb-4">
+        <span class="w-3 h-3 rounded-full bg-red-500 animate-pulse"></span>
+        <span class="text-red-600 font-semibold">Recording</span>
+      </div>
+      <p id="timer" class="text-3xl font-mono text-slate-800 mb-5">
+        00:00
+      </p>
+      <button onclick="stopRecording()"
+              class="bg-slate-800 hover:bg-slate-900 text-white
+                     font-semibold py-3 px-8 rounded-full
+                     transition-colors text-sm">
+        ■ Stop & Transcribe
+      </button>
+    </div>
+
+    <div id="processing_state" class="hidden">
+      <div class="text-4xl mb-4 animate-bounce">⏳</div>
+      <p class="text-slate-600 font-medium mb-1">Transcribing...</p>
+      <p class="text-slate-400 text-sm">
+        This may take a minute depending on recording length.
+      </p>
+    </div>
+
+  </div>
+
+  {# Hidden form for submission #}
+  <form id="audio_form" method="POST"
+        action="{{ url_for('appointments.record_appointment',
+                           session_id=session.id) }}"
+        enctype="multipart/form-data" class="hidden">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="hidden" name="doctor_name" id="f_doctor">
+    <input type="hidden" name="appointment_date" id="f_date">
+    <input type="file" name="audio" id="f_audio">
+  </form>
+</div>
+
+<script>
+let mediaRecorder, audioChunks = [], timerInterval, seconds = 0;
+
+document.getElementById('consent_check').addEventListener('change', (e) => {
+  document.getElementById('start_btn').disabled = !e.target.checked;
+});
+
+async function startRecording() {
+  const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+  mediaRecorder = new MediaRecorder(stream);
+  audioChunks   = [];
+
+  mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+  mediaRecorder.start();
+
+  document.getElementById('idle_state').classList.add('hidden');
+  document.getElementById('recording_state').classList.remove('hidden');
+
+  seconds = 0;
+  timerInterval = setInterval(() => {
+    seconds++;
+    const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+    const s = String(seconds % 60).padStart(2, '0');
+    document.getElementById('timer').textContent = `${m}:${s}`;
+  }, 1000);
+}
+
+function stopRecording() {
+  clearInterval(timerInterval);
+  mediaRecorder.stop();
+
+  mediaRecorder.onstop = () => {
+    document.getElementById('recording_state').classList.add('hidden');
+    document.getElementById('processing_state').classList.remove('hidden');
+
+    const blob    = new Blob(audioChunks, { type: 'audio/webm' });
+    const file    = new File([blob], 'recording.webm', { type: 'audio/webm' });
+    const dt      = new DataTransfer();
+    dt.items.add(file);
+
+    document.getElementById('f_doctor').value = 
+      document.getElementById('doctor_name').value;
+    document.getElementById('f_date').value   = 
+      document.getElementById('appt_date').value;
+    document.getElementById('f_audio').files  = dt.files;
+
+    document.getElementById('audio_form').submit();
+  };
+}
+</script>
+{% endblock %}
