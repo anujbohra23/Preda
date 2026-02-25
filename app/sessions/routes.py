@@ -1,16 +1,13 @@
-from datetime import datetime, timezone
-from flask import (
-    Blueprint, render_template, redirect,
-    url_for, flash, request, abort
-)
-from flask_login import login_required, current_user
-from ..extensions import db
-from ..models import Session, IntakeField, Upload, DiseaseResult, ChatMessage, Report
-from .forms import NewSessionForm
-from datetime import datetime, timezone, timedelta
-from ..models import Appointment
+from datetime import datetime, timedelta, timezone
 
-sessions_bp = Blueprint('sessions', __name__, url_prefix='/sessions')
+from flask import Blueprint, abort, flash, redirect, render_template, url_for
+from flask_login import current_user, login_required
+
+from ..extensions import db
+from ..models import Appointment, ChatMessage, DiseaseResult, Session
+from .forms import NewSessionForm
+
+sessions_bp = Blueprint("sessions", __name__, url_prefix="/sessions")
 
 
 def _utcnow():
@@ -25,43 +22,41 @@ def _own_session_or_404(session_id: int) -> Session:
     return s
 
 
-
-
-
-
-
 # ── Dashboard ──────────────────────────────────────────────────────────────────
 
-@sessions_bp.route('/')
+
+@sessions_bp.route("/")
 @login_required
 def dashboard():
     user_sessions = (
-        Session.query
-        .filter_by(user_id=current_user.id)
+        Session.query.filter_by(user_id=current_user.id)
         .order_by(Session.created_at.desc())
         .all()
     )
     form = NewSessionForm()
-    today       = datetime.now(timezone.utc).date()
-    alert_date  = today + timedelta(days=7)
+    today = datetime.now(timezone.utc).date()
+    alert_date = today + timedelta(days=7)
+
     followup_alerts = (
-        Appointment.query
-        .filter_by(user_id=current_user.id)
+        Appointment.query.filter_by(user_id=current_user.id)
         .filter(Appointment.followup_date.isnot(None))
         .filter(Appointment.followup_date <= str(alert_date))
         .filter(Appointment.followup_date >= str(today))
         .all()
     )
+
     return render_template(
-        'sessions/dashboard.html',
+        "sessions/dashboard.html",
         sessions=user_sessions,
-        form=form
+        form=form,
+        followup_alerts=followup_alerts,
     )
 
 
 # ── Create new session ─────────────────────────────────────────────────────────
 
-@sessions_bp.route('/new', methods=['GET', 'POST'])
+
+@sessions_bp.route("/new", methods=["GET", "POST"])
 @login_required
 def new_session():
     form = NewSessionForm()
@@ -73,56 +68,47 @@ def new_session():
         s = Session(
             user_id=current_user.id,
             title=title,
-            status='intake',
+            status="intake",
             created_at=_utcnow(),
-            updated_at=_utcnow()
+            updated_at=_utcnow(),
         )
         db.session.add(s)
         db.session.commit()
-        flash(f'Session "{s.title}" created.', 'success')
-        return redirect(url_for('intake.intake_form', session_id=s.id))
+        flash(f'Session "{s.title}" created.', "success")
+        return redirect(url_for("intake.intake_form", session_id=s.id))
 
-    return render_template('sessions/new_session.html', form=form)
+    return render_template("sessions/new_session.html", form=form)
 
 
 # ── Session detail ─────────────────────────────────────────────────────────────
 
-@sessions_bp.route('/<int:session_id>')
+
+@sessions_bp.route("/<int:session_id>")
 @login_required
 def detail(session_id):
     s = _own_session_or_404(session_id)
 
-    intake = {
-        f.field_name: f.field_value
-        for f in s.intake_fields.all()
-    }
+    intake = {f.field_name: f.field_value for f in s.intake_fields.all()}
     uploads = s.uploads.all()
-    diseases = (
-        s.disease_results
-        .order_by(DiseaseResult.rank)
-        .all()
-    )
-    messages = (
-        s.chat_messages
-        .order_by(ChatMessage.created_at)
-        .all()
-    )
+    diseases = s.disease_results.order_by(DiseaseResult.rank).all()
+    messages = s.chat_messages.order_by(ChatMessage.created_at).all()
     reports = s.reports.all()
 
     return render_template(
-        'sessions/detail.html',
+        "sessions/detail.html",
         s=s,
         intake=intake,
         uploads=uploads,
         diseases=diseases,
         messages=messages,
-        reports=reports
+        reports=reports,
     )
 
 
 # ── Delete session ─────────────────────────────────────────────────────────────
 
-@sessions_bp.route('/<int:session_id>/delete', methods=['POST'])
+
+@sessions_bp.route("/<int:session_id>/delete", methods=["POST"])
 @login_required
 def delete_session(session_id):
     s = _own_session_or_404(session_id)
@@ -130,11 +116,12 @@ def delete_session(session_id):
 
     # Remove uploaded files from disk
     import os
+
     for upload in s.uploads.all():
         if upload.stored_path and os.path.exists(upload.stored_path):
             os.remove(upload.stored_path)
 
     db.session.delete(s)
     db.session.commit()
-    flash(f'Session "{title}" deleted.', 'success')
-    return redirect(url_for('sessions.dashboard'))
+    flash(f'Session "{title}" deleted.', "success")
+    return redirect(url_for("sessions.dashboard"))

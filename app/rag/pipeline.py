@@ -9,39 +9,36 @@ Flow:
   5. Send chunks + question to Ollama
   6. Return answer with citations
 """
+
 import os
+
 import requests
 
-from .vector_store import (
-    build_session_index,
-    retrieve_chunks,
-    session_index_exists,
-)
 from ..safety.triage import check_safety, is_retrieval_sufficient
-
+from .vector_store import build_session_index, retrieve_chunks, session_index_exists
 
 # ── Ollama config (set in .env to override) ────────────────────────────────────
-OLLAMA_BASE_URL = os.environ.get('OLLAMA_BASE_URL', 'http://localhost:11434')
-OLLAMA_MODEL    = os.environ.get('OLLAMA_MODEL', 'llama3.2:3b')
-OLLAMA_TIMEOUT  = int(os.environ.get('OLLAMA_TIMEOUT', '60'))
+OLLAMA_BASE_URL = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")
+OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "llama3.2:3b")
+OLLAMA_TIMEOUT = int(os.environ.get("OLLAMA_TIMEOUT", "60"))
 
 
 # ── System prompt ──────────────────────────────────────────────────────────────
-SYSTEM_PROMPT = """You are a health document assistant helping a patient 
-understand their medical documents.
-
-RULES you must always follow:
-1. Answer ONLY using the provided document chunks below.
-2. Cite every factual claim using [1], [2], [3] matching the chunk numbers.
-3. If the answer is not in the chunks, say exactly:
-   "I don't know based on the available documents."
-4. NEVER invent medical facts, lab values, names, or dates.
-5. NEVER provide a diagnosis or treatment recommendation.
-6. Write in clear, simple language a non-medical person can understand.
-7. Keep your answer to 4-6 sentences maximum.
-8. Always end with this exact line:
-   "⚕ This is informational only. Please consult your healthcare provider."
-"""
+SYSTEM_PROMPT = (
+    "You are a health document assistant helping a patient understand their "
+    "medical documents.\n\n"
+    "RULES you must always follow:\n"
+    "1. Answer ONLY using the provided document chunks below.\n"
+    "2. Cite every factual claim using [1], [2], [3] matching the chunk numbers.\n"
+    "3. If the answer is not in the chunks, say exactly:\n"
+    '   "I don\'t know based on the available documents."\n'
+    "4. NEVER invent medical facts, lab values, names, or dates.\n"
+    "5. NEVER provide a diagnosis or treatment recommendation.\n"
+    "6. Write in clear, simple language a non-medical person can understand.\n"
+    "7. Keep your answer to 4-6 sentences maximum.\n"
+    "8. Always end with this exact line:\n"
+    '   "⚕ This is informational only. Please consult your healthcare provider."\n'
+)
 
 
 DONT_KNOW = (
@@ -53,6 +50,7 @@ DONT_KNOW = (
 
 # ── Ollama caller ──────────────────────────────────────────────────────────────
 
+
 def _call_ollama(question: str, retrieved: list[dict]) -> str:
     """
     Send the question + retrieved chunks to Ollama and get a synthesized answer.
@@ -61,26 +59,26 @@ def _call_ollama(question: str, retrieved: list[dict]) -> str:
     # Build numbered context
     context_parts = []
     for i, result in enumerate(retrieved):
-        context_parts.append(f"[{i+1}] {result['text'][:600]}")
+        context_parts.append(f"[{i + 1}] {result['text'][:600]}")
     context = "\n\n".join(context_parts)
 
     # Full prompt
     user_message = (
-        f"Here are the relevant chunks from the patient's documents:\n\n"
+        "Here are the relevant chunks from the patient's documents:\n\n"
         f"{context}\n\n"
         f"Patient's question: {question}\n\n"
-        f"Answer using ONLY the chunks above. "
-        f"Use [1], [2], [3] to cite your sources."
+        "Answer using ONLY the chunks above. "
+        "Use [1], [2], [3] to cite your sources."
     )
 
     payload = {
-        "model":  OLLAMA_MODEL,
+        "model": OLLAMA_MODEL,
         "prompt": f"{SYSTEM_PROMPT}\n\nUser: {user_message}\n\nAssistant:",
         "stream": False,
         "options": {
-            "temperature": 0.1,    # low temp = more factual, less creative
-            "num_predict": 400,    # max tokens in response
-        }
+            "temperature": 0.1,  # low temp = more factual, less creative
+            "num_predict": 400,  # max tokens in response
+        },
     }
 
     try:
@@ -91,7 +89,7 @@ def _call_ollama(question: str, retrieved: list[dict]) -> str:
         )
         response.raise_for_status()
         data = response.json()
-        answer = data.get('response', '').strip()
+        answer = data.get("response", "").strip()
 
         if not answer:
             return _fallback_answer(retrieved)
@@ -99,10 +97,7 @@ def _call_ollama(question: str, retrieved: list[dict]) -> str:
         return answer
 
     except requests.exceptions.ConnectionError:
-        print(
-            "[RAG] Ollama not running. "
-            "Start with: ollama serve"
-        )
+        print("[RAG] Ollama not running. Start with: ollama serve")
         return _fallback_answer(retrieved)
 
     except requests.exceptions.Timeout:
@@ -116,30 +111,46 @@ def _call_ollama(question: str, retrieved: list[dict]) -> str:
 
 # ── Fallback when Ollama is offline ───────────────────────────────────────────
 
+
 def _fallback_answer(retrieved: list[dict]) -> str:
     """
     Structured extraction fallback — no LLM needed.
     Pulls readable lines from lab report style text.
     """
     LAB_KEYWORDS = {
-        'NORMAL', 'HIGH', 'LOW', 'RESULT', 'SODIUM', 'POTASSIUM',
-        'GLUCOSE', 'HEMOGLOBIN', 'CREATININE', 'CHOLESTEROL',
-        'PHYSICIAN', 'DATE', 'COLLECTED', 'REPORTED', 'PATIENT',
-        'SPECIMEN', 'WBC', 'RBC', 'PLATELET', 'CALCIUM', 'PROTEIN',
+        "NORMAL",
+        "HIGH",
+        "LOW",
+        "RESULT",
+        "SODIUM",
+        "POTASSIUM",
+        "GLUCOSE",
+        "HEMOGLOBIN",
+        "CREATININE",
+        "CHOLESTEROL",
+        "PHYSICIAN",
+        "DATE",
+        "COLLECTED",
+        "REPORTED",
+        "PATIENT",
+        "SPECIMEN",
+        "WBC",
+        "RBC",
+        "PLATELET",
+        "CALCIUM",
+        "PROTEIN",
     }
 
     lines = []
     for i, result in enumerate(retrieved[:3]):
         meaningful = []
-        for line in result['text'].split('\n'):
+        for line in result["text"].split("\n"):
             line = line.strip()
-            if len(line) > 10 and any(
-                kw in line.upper() for kw in LAB_KEYWORDS
-            ):
+            if len(line) > 10 and any(kw in line.upper() for kw in LAB_KEYWORDS):
                 meaningful.append(line)
 
         if meaningful:
-            lines.append(f"[{i+1}] " + " | ".join(meaningful[:4]))
+            lines.append(f"[{i + 1}] " + " | ".join(meaningful[:4]))
 
     if lines:
         return (
@@ -150,7 +161,7 @@ def _fallback_answer(retrieved: list[dict]) -> str:
         )
 
     # Last resort
-    top = retrieved[0]['text'][:300] if retrieved else ''
+    top = retrieved[0]["text"][:300] if retrieved else ""
     return (
         f"From your documents [1]: {top}...\n\n"
         "⚕ This is informational only. "
@@ -160,6 +171,7 @@ def _fallback_answer(retrieved: list[dict]) -> str:
 
 # ── Index helpers ──────────────────────────────────────────────────────────────
 
+
 def ensure_index(session_id: int, chunks: list[str]) -> bool:
     if session_index_exists(session_id):
         return True
@@ -167,6 +179,7 @@ def ensure_index(session_id: int, chunks: list[str]) -> bool:
 
 
 # ── Main RAG entry point ───────────────────────────────────────────────────────
+
 
 def run_rag(
     session_id: int,
@@ -188,31 +201,31 @@ def run_rag(
     """
     # ── 1. Safety check ────────────────────────────────────────────────────
     safety = check_safety(question)
-    if safety['triggered']:
+    if safety["triggered"]:
         return {
-            'answer': (
+            "answer": (
                 f"⚠️ {safety['emergency_message']} "
                 "Please call emergency services immediately "
                 "(911 / 999 / 112). "
                 "Do not rely on this tool in an emergency."
             ),
-            'citations':         [],
-            'safety_triggered':  True,
-            'emergency_message': safety['emergency_message'],
-            'retrieved':         [],
+            "citations": [],
+            "safety_triggered": True,
+            "emergency_message": safety["emergency_message"],
+            "retrieved": [],
         }
 
     # ── 2. Ensure FAISS index ──────────────────────────────────────────────
     if not chunks:
         return {
-            'answer': (
+            "answer": (
                 "No documents are available for this session. "
                 "Please upload a PDF and confirm the extracted text first."
             ),
-            'citations':         [],
-            'safety_triggered':  False,
-            'emergency_message': None,
-            'retrieved':         [],
+            "citations": [],
+            "safety_triggered": False,
+            "emergency_message": None,
+            "retrieved": [],
         }
 
     ensure_index(session_id, chunks)
@@ -223,11 +236,11 @@ def run_rag(
     # ── 4. Citations-required policy ───────────────────────────────────────
     if not is_retrieval_sufficient(retrieved):
         return {
-            'answer':            DONT_KNOW,
-            'citations':         [],
-            'safety_triggered':  False,
-            'emergency_message': None,
-            'retrieved':         retrieved,
+            "answer": DONT_KNOW,
+            "citations": [],
+            "safety_triggered": False,
+            "emergency_message": None,
+            "retrieved": retrieved,
         }
 
     # ── 5. Synthesize with Ollama ──────────────────────────────────────────
@@ -236,26 +249,24 @@ def run_rag(
     # ── 6. Build citations ─────────────────────────────────────────────────
     citations = []
     for i, result in enumerate(retrieved):
-        chunk_idx   = result['chunk_index']
-        chunk_db_id = (
-            chunk_db_ids[chunk_idx]
-            if chunk_idx < len(chunk_db_ids) else None
-        )
+        chunk_idx = result["chunk_index"]
+        chunk_db_id = chunk_db_ids[chunk_idx] if chunk_idx < len(chunk_db_ids) else None
         source_name = (
-            source_names[chunk_idx]
-            if chunk_idx < len(source_names) else 'Document'
+            source_names[chunk_idx] if chunk_idx < len(source_names) else "Document"
         )
-        citations.append({
-            'label':      f"[{i + 1}]",
-            'chunk_id':   chunk_db_id,
-            'source_doc': source_name,
-            'excerpt':    result['text'][:300],
-        })
+        citations.append(
+            {
+                "label": f"[{i + 1}]",
+                "chunk_id": chunk_db_id,
+                "source_doc": source_name,
+                "excerpt": result["text"][:300],
+            }
+        )
 
     return {
-        'answer':            answer,
-        'citations':         citations,
-        'safety_triggered':  False,
-        'emergency_message': None,
-        'retrieved':         retrieved,
+        "answer": answer,
+        "citations": citations,
+        "safety_triggered": False,
+        "emergency_message": None,
+        "retrieved": retrieved,
     }

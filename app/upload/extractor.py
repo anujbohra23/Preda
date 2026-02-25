@@ -2,23 +2,26 @@
 PDF text extraction and chunking.
 Uses PyMuPDF (fitz) as primary extractor with pypdf as fallback.
 """
+
 import os
 import uuid
-import fitz          # PyMuPDF
+
+import fitz  # PyMuPDF
 from pypdf import PdfReader
 from werkzeug.utils import secure_filename
 
-
 # ── Constants ──────────────────────────────────────────────────────────────────
-CHUNK_SIZE   = 400   # words per chunk
-CHUNK_OVERLAP = 80   # words overlap between chunks
+CHUNK_SIZE = 400  # words per chunk
+CHUNK_OVERLAP = 80  # words overlap between chunks
 MAX_FILE_BYTES = 10 * 1024 * 1024  # 10 MB
 
 
 # ── File saving ────────────────────────────────────────────────────────────────
 
-def save_upload(file_storage, upload_folder: str,
-                user_id: int, session_id: int) -> dict:
+
+def save_upload(
+    file_storage, upload_folder: str, user_id: int, session_id: int
+) -> dict:
     """
     Validate and save an uploaded FileStorage object.
     Returns dict with stored_path, original_name, file_size_bytes, mime_type.
@@ -26,8 +29,8 @@ def save_upload(file_storage, upload_folder: str,
     """
     original_name = secure_filename(file_storage.filename)
 
-    if not original_name.lower().endswith('.pdf'):
-        raise ValueError('Only PDF files are accepted.')
+    if not original_name.lower().endswith(".pdf"):
+        raise ValueError("Only PDF files are accepted.")
 
     # Read bytes to check size (file_storage.seek(0) after)
     file_storage.seek(0, os.SEEK_END)
@@ -35,10 +38,10 @@ def save_upload(file_storage, upload_folder: str,
     file_storage.seek(0)
 
     if size > MAX_FILE_BYTES:
-        raise ValueError('File exceeds the 10 MB size limit.')
+        raise ValueError("File exceeds the 10 MB size limit.")
 
     if size == 0:
-        raise ValueError('Uploaded file is empty.')
+        raise ValueError("Uploaded file is empty.")
 
     # Build storage path: uploads/<user_id>/<session_id>/<uuid>.pdf
     dest_dir = os.path.join(upload_folder, str(user_id), str(session_id))
@@ -49,14 +52,15 @@ def save_upload(file_storage, upload_folder: str,
     file_storage.save(stored_path)
 
     return {
-        'original_name': original_name,
-        'stored_path': stored_path,
-        'file_size_bytes': size,
-        'mime_type': 'application/pdf',
+        "original_name": original_name,
+        "stored_path": stored_path,
+        "file_size_bytes": size,
+        "mime_type": "application/pdf",
     }
 
 
 # ── Text extraction ────────────────────────────────────────────────────────────
+
 
 def extract_text_from_pdf(stored_path: str) -> str:
     """
@@ -76,9 +80,9 @@ def _extract_with_pymupdf(path: str) -> str:
         for page in doc:
             pages.append(page.get_text())
         doc.close()
-        return '\n'.join(pages)
+        return "\n".join(pages)
     except Exception:
-        return ''
+        return ""
 
 
 def _extract_with_pypdf(path: str) -> str:
@@ -89,16 +93,17 @@ def _extract_with_pypdf(path: str) -> str:
             t = page.extract_text()
             if t:
                 pages.append(t)
-        return '\n'.join(pages)
+        return "\n".join(pages)
     except Exception:
-        return ''
+        return ""
 
 
 # ── Chunking ───────────────────────────────────────────────────────────────────
 
-def chunk_text(text: str,
-               chunk_size: int = CHUNK_SIZE,
-               overlap: int = CHUNK_OVERLAP) -> list[str]:
+
+def chunk_text(
+    text: str, chunk_size: int = CHUNK_SIZE, overlap: int = CHUNK_OVERLAP
+) -> list[str]:
     """
     Split text into overlapping word-based chunks.
     Returns a list of chunk strings.
@@ -114,7 +119,7 @@ def chunk_text(text: str,
     start = 0
     while start < len(words):
         end = start + chunk_size
-        chunk = ' '.join(words[start:end])
+        chunk = " ".join(words[start:end])
         chunks.append(chunk)
         if end >= len(words):
             break

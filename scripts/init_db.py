@@ -1,17 +1,24 @@
-import sys
 import os
+import sys
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from app import create_app
-from app.extensions import db
+def main():
+    sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-app = create_app('development')
+    from app import create_app
+    from app.extensions import db
 
-with app.app_context():
-    db.create_all()
-    print('✅ All tables created:')
-    from sqlalchemy import inspect
-    inspector = inspect(db.engine)
-    for table in inspector.get_table_names():
-        print(f'   • {table}')
+    app = create_app("development")
+
+    with app.app_context():
+        db.create_all()
+        print("✅ All tables created:")
+        from sqlalchemy import inspect
+
+        inspector = inspect(db.engine)
+        for table in inspector.get_table_names():
+            print(f"   • {table}")
+
+
+if __name__ == "__main__":
+    main()
