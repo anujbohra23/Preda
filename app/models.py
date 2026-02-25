@@ -109,7 +109,7 @@ class DiseaseCatalog(db.Model):
     icd_code        = db.Column(db.Text, nullable=True)
     short_desc      = db.Column(db.Text, nullable=True)
     embedding_blob  = db.Column(db.LargeBinary, nullable=True)
-    updated_at      = db.Column(db.Text, nullable=False, default=utcnow)
+    # updated_at      = db.Column(db.Text, nullable=False, default=utcnow)
 
     results = db.relationship('DiseaseResult', backref='disease', lazy='dynamic')
 

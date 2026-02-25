@@ -1,5 +1,5 @@
 """
-Seed the disease catalog and build TF-IDF embeddings.
+Seed the disease catalog using sentence-transformer embeddings (384 dims).
 
 Run once (and re-run whenever disease_catalog.csv changes):
     python scripts/seed_disease_catalog.py
@@ -7,19 +7,15 @@ Run once (and re-run whenever disease_catalog.csv changes):
 import sys
 import os
 import csv
-import pickle
 import numpy as np
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from sklearn.feature_extraction.text import TfidfVectorizer
 from app import create_app
 from app.extensions import db
 from app.models import DiseaseCatalog
 
-
-CATALOG_PATH    = os.path.join('data', 'disease_catalog.csv')
-VECTORIZER_PATH = os.path.join('data', 'tfidf_vectorizer.pkl')
+CATALOG_PATH = os.path.join('data', 'disease_catalog.csv')
 
 
 def main():
@@ -35,49 +31,43 @@ def main():
 
         print(f'Found {len(rows)} diseases in catalog.')
 
-        # ── Build corpus for TF-IDF ────────────────────────────────────────
-        # Each disease is represented as "name + description"
+        # ── Load sentence transformer ──────────────────────────────────────
+        print('Loading sentence transformer model...')
+        from sentence_transformers import SentenceTransformer
+        model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
+        print('Model loaded.')
+
+        # ── Build corpus ───────────────────────────────────────────────────
         corpus = [
             f"{r['disease_name']} {r['short_desc']}"
             for r in rows
         ]
 
-
-
-        # ── Fit TF-IDF vectorizer ──────────────────────────────────────────
-        vectorizer = TfidfVectorizer(
-            analyzer='word',
-            ngram_range=(1, 2),     # unigrams + bigrams
-            min_df=1,
-            max_features=8000,
-            stop_words='english',
-            sublinear_tf=True        # apply log normalization to TF
+        # ── Encode all diseases ────────────────────────────────────────────
+        print('Encoding disease descriptions...')
+        embeddings = model.encode(
+            corpus,
+            batch_size=32,
+            show_progress_bar=True,
+            convert_to_numpy=True,
+            normalize_embeddings=True,
         )
-        tfidf_matrix = vectorizer.fit_transform(corpus)  # shape: (N, vocab)
+        print(f'Embedding shape: {embeddings.shape}')  # should be (51, 384)
 
-        print(f'TF-IDF matrix shape: {tfidf_matrix.shape}')
-
-        # ── Save vectorizer to disk ────────────────────────────────────────
-        os.makedirs('data', exist_ok=True)
-        with open(VECTORIZER_PATH, 'wb') as f:
-            pickle.dump(vectorizer, f)
-        print(f'Vectorizer saved to {VECTORIZER_PATH}')
-
-        # ── Upsert diseases into DB ────────────────────────────────────────
+        # ── Upsert into DB ─────────────────────────────────────────────────
         inserted = 0
         updated  = 0
 
         for i, row in enumerate(rows):
-            # Get dense vector for this disease
-            vec = tfidf_matrix[i].toarray().astype(np.float32).flatten()
+            vec = embeddings[i].astype(np.float32)
 
             existing = DiseaseCatalog.query.filter_by(
                 disease_name=row['disease_name']
             ).first()
 
             if existing:
-                existing.icd_code     = row['icd_code']
-                existing.short_desc   = row['short_desc']
+                existing.icd_code       = row['icd_code']
+                existing.short_desc     = row['short_desc']
                 existing.embedding_blob = vec.tobytes()
                 updated += 1
             else:
@@ -85,7 +75,7 @@ def main():
                     disease_name    = row['disease_name'],
                     icd_code        = row['icd_code'],
                     short_desc      = row['short_desc'],
-                    embedding_blob=vec.tobytes()
+                    embedding_blob  = vec.tobytes(),
                 ))
                 inserted += 1
 
@@ -93,7 +83,14 @@ def main():
         print(f'Done — {inserted} inserted, {updated} updated.')
         print(f'Total diseases in DB: {DiseaseCatalog.query.count()}')
 
+        # ── Verify dimension ───────────────────────────────────────────────
+        d = DiseaseCatalog.query.first()
+        if d and d.embedding_blob:
+            dim = len(d.embedding_blob) // 4
+            print(f'Stored embedding dimension: {dim}')
+            assert dim == 384, f'Expected 384 dims, got {dim}'
+            print('✓ Dimension check passed.')
+
 
 if __name__ == '__main__':
     main()
-    

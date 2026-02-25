@@ -57,7 +57,4 @@ def create_app(config_name: str = None):
     app.register_blueprint(settings_bp)
     app.register_blueprint(email_bp)
 
-    with app.app_context():
-        db.create_all()
-
     return app
