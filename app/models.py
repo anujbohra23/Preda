@@ -18,6 +18,7 @@ class User(UserMixin, db.Model):
     pw_hash = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.Text, nullable=False, default=utcnow)
     deleted_at = db.Column(db.Text, nullable=True)
+    preferred_language = db.Column(db.Text, nullable=False, default="en")
 
     sessions = db.relationship(
         "Session", backref="user", lazy="dynamic", cascade="all, delete-orphan"
@@ -129,7 +130,7 @@ class DiseaseCatalog(db.Model):
     icd_code = db.Column(db.Text, nullable=True)
     short_desc = db.Column(db.Text, nullable=True)
     embedding_blob = db.Column(db.LargeBinary, nullable=True)
-    # updated_at      = db.Column(db.Text, nullable=False, default=utcnow)
+    # updated_at = db.Column(db.Text, nullable=False, default=utcnow)
 
     results = db.relationship("DiseaseResult", backref="disease", lazy="dynamic")
 

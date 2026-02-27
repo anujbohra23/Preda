@@ -1,9 +1,10 @@
 """
+app/appointments/summariser.py
+
 Appointment summariser using Ollama (llama3.2:3b).
-
 Takes raw transcript or manual notes and returns structured summary_json.
+Language-aware: responds in Hindi when session lang == 'hi'.
 """
-
 import json
 import os
 
@@ -13,42 +14,13 @@ OLLAMA_BASE_URL = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")
 OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "llama3.2:3b")
 OLLAMA_TIMEOUT = int(os.environ.get("OLLAMA_TIMEOUT", "120"))
 
-SYSTEM_PROMPT = (
-    "You are a medical appointment summariser. Your job is to read appointment notes "
-    "or transcripts and extract structured information to help the patient remember "
-    "what happened and what they need to do.\n\n"
-    "RULES:\n"
-    "1. Always respond with valid JSON only — no markdown, no extra text.\n"
-    "2. Use plain, simple English a non-medical person can understand.\n"
-    "3. If information is not mentioned, use null for that field.\n"
-    "4. Never invent information not present in the notes.\n"
-    "5. Be concise but complete.\n\n"
-    "Respond with exactly this JSON structure:\n"
-    "{\n"
-    '  "what_doctor_said": "2-3 sentence plain English summary'
-    ' of the doctor\'s findings",\n'
-    '  "medications": [\n'
-    '    {"name": "...", "dosage": "...", "frequency": "...", "notes": "..."}\n'
-    "  ],\n"
-    '  "tests_ordered": [\n'
-    '    {"name": "...", "location": "...", "urgency": "..."}\n'
-    "  ],\n"
-    '  "lifestyle_changes": [\n'
-    '    {"description": "..."}\n'
-    "  ],\n"
-    '  "warning_signs": ["...", "..."],\n'
-    '  "followup_date": "YYYY-MM-DD or null",\n'
-    '  "followup_instructions": "..."\n'
-    "}"
-)
-
 
 def summarise(text: str) -> dict:
     """
     Generate structured appointment summary from text.
+    Language is determined from the active Flask session (en or hi).
 
-    Returns { success, summary, error } where summary is a parsed dict matching the
-    JSON structure above.
+    Returns { success, summary, error } where summary is a parsed dict.
     """
     if not text or len(text.strip()) < 10:
         return {
@@ -57,14 +29,24 @@ def summarise(text: str) -> dict:
             "error": "Text is too short to summarise.",
         }
 
-    user_message = (
-        f"Here are the appointment notes/transcript:\n\n{text}\n\n"
-        "Please extract and return the structured JSON summary."
-    )
+    from ..lang.helpers import build_appointment_system_prompt, is_hindi
+
+    system_prompt = build_appointment_system_prompt()
+
+    if is_hindi():
+        user_message = (
+            f"नीचे अपॉइंटमेंट के नोट्स/ट्रांसक्रिप्ट हैं:\n\n{text}\n\n"
+            "कृपया JSON सारांश निकालें और वापस करें।"
+        )
+    else:
+        user_message = (
+            f"Here are the appointment notes/transcript:\n\n{text}\n\n"
+            "Please extract and return the structured JSON summary."
+        )
 
     payload = {
         "model": OLLAMA_MODEL,
-        "prompt": f"{SYSTEM_PROMPT}\n\nUser: {user_message}\n\nAssistant:",
+        "prompt": f"{system_prompt}\n\nUser: {user_message}\n\nAssistant:",
         "stream": False,
         "options": {
             "temperature": 0.1,
@@ -92,7 +74,6 @@ def summarise(text: str) -> dict:
         return {"success": True, "summary": summary, "error": None}
 
     except json.JSONDecodeError:
-        # Ollama returned non-JSON — build basic summary from raw text
         return {
             "success": True,
             "summary": _fallback_summary(text, raw),
@@ -129,6 +110,15 @@ def _fallback_summary(original_text: str, ollama_raw: str) -> dict:
 
 def extract_actions(summary: dict) -> list[dict]:
     """Convert summary_json into a flat list of AppointmentAction dicts."""
+    from ..lang.helpers import is_hindi
+
+    if is_hindi():
+        seek_medical = "यह होने पर तुरंत चिकित्सा सहायता लें।"
+        followup_default = "अनुवर्ती अपॉइंटमेंट"
+    else:
+        seek_medical = "Seek medical attention if this occurs."
+        followup_default = "Follow-up appointment"
+
     actions: list[dict] = []
 
     for med in summary.get("medications", []) or []:
@@ -171,7 +161,7 @@ def extract_actions(summary: dict) -> list[dict]:
             {
                 "action_type": "warning",
                 "description": ws,
-                "detail": "Seek medical attention if this occurs.",
+                "detail": seek_medical,
                 "due_date": None,
             }
         )
@@ -182,7 +172,7 @@ def extract_actions(summary: dict) -> list[dict]:
         actions.append(
             {
                 "action_type": "followup",
-                "description": followup_inst or "Follow-up appointment",
+                "description": followup_inst or followup_default,
                 "detail": None,
                 "due_date": followup_date,
             }

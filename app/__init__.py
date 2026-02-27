@@ -1,10 +1,10 @@
 import os
 
-from flask import Flask
+from flask import Flask, session
 
 from .appointments.routes import appointments_bp
 from .config import DevelopmentConfig, config_map
-from .extensions import csrf, db, limiter, login_manager, migrate
+from .extensions import babel, csrf, db, limiter, login_manager, migrate
 
 
 def create_app(config_name: str = None):
@@ -36,6 +36,26 @@ def create_app(config_name: str = None):
     def load_user(user_id):
         return db.session.get(User, int(user_id))
 
+    # ── Language / Babel ─────────────────────────────────────────────────────
+    def get_locale():
+        lang = session.get("lang", "en")
+        return lang if lang in ("en", "hi") else "en"
+
+    babel.init_app(app, locale_selector=get_locale)
+
+    from .lang.routes import lang_bp
+
+    app.register_blueprint(lang_bp)
+
+    @app.context_processor
+    def inject_globals():
+        lang = session.get("lang", "en")
+        return {
+            "current_lang": lang,
+            "is_hindi": lang == "hi",
+        }
+
+    # ── Feature blueprints ───────────────────────────────────────────────────
     from .auth.routes import auth_bp
     from .email.routes import email_bp
     from .history.routes import history_bp

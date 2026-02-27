@@ -1,0 +1,398 @@
+# Hindi translations for Health Assistant
+msgid ""
+msgstr ""
+"Project-Id-Version: HealthAssistant 1.0\n"
+"POT-Creation-Date: 2026-02-26 00:00+0000\n"
+"PO-Revision-Date: 2026-02-26 00:00+0000\n"
+"Language: hi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Dashboard"
+msgstr "डैशबोर्ड"
+
+msgid "History"
+msgstr "इतिहास"
+
+msgid "Settings"
+msgstr "सेटिंग्स"
+
+msgid "Sign Out"
+msgstr "साइन आउट"
+
+msgid "Log In"
+msgstr "लॉग इन"
+
+msgid "Sign Up"
+msgstr "साइन अप"
+
+msgid "Call emergency services immediately: 911 / 999 / 112"
+msgstr "तुरंत आपातकालीन सेवाओं को कॉल करें: 112"
+
+msgid "Not medical advice."
+msgstr "यह चिकित्सा सलाह नहीं है।"
+
+msgid "HealthAssist is an informational tool only."
+msgstr "HealthAssist केवल एक सूचना उपकरण है।"
+
+msgid "Always consult a qualified healthcare professional."
+msgstr "हमेशा एक योग्य स्वास्थ्य पेशेवर से परामर्श लें।"
+
+msgid "© 2026 HealthAssist MVP — Informational tool only"
+msgstr "© 2026 HealthAssist MVP — केवल सूचना उपकरण"
+
+msgid "Not a medical device. Not a substitute for professional care."
+msgstr "यह चिकित्सा उपकरण नहीं है। पेशेवर देखभाल का विकल्प नहीं।"
+
+msgid "Email address"
+msgstr "ईमेल पता"
+
+msgid "Password"
+msgstr "पासवर्ड"
+
+msgid "Confirm Password"
+msgstr "पासवर्ड की पुष्टि करें"
+
+msgid "Create Account"
+msgstr "खाता बनाएं"
+
+msgid "Already have an account?"
+msgstr "पहले से खाता है?"
+
+msgid "Don't have an account?"
+msgstr "खाता नहीं है?"
+
+msgid "Sign in"
+msgstr "साइन इन करें"
+
+msgid "Welcome back"
+msgstr "वापस स्वागत है"
+
+msgid "Create your account"
+msgstr "अपना खाता बनाएं"
+
+msgid "Invalid email or password."
+msgstr "अमान्य ईमेल या पासवर्ड।"
+
+msgid "Account created successfully. Please log in."
+msgstr "खाता सफलतापूर्वक बनाया गया। कृपया लॉग इन करें।"
+
+msgid "Email already registered."
+msgstr "ईमेल पहले से पंजीकृत है।"
+
+msgid "New Session"
+msgstr "नया सत्र"
+
+msgid "No sessions yet"
+msgstr "अभी तक कोई सत्र नहीं"
+
+msgid "Start your first health session to get started."
+msgstr "शुरू करने के लिए अपना पहला स्वास्थ्य सत्र शुरू करें।"
+
+msgid "Start New Session"
+msgstr "नया सत्र शुरू करें"
+
+msgid "Session Title"
+msgstr "सत्र का शीर्षक"
+
+msgid "e.g. Chest pain check-up"
+msgstr "उदा. सीने में दर्द की जांच"
+
+msgid "Create Session"
+msgstr "सत्र बनाएं"
+
+msgid "Active"
+msgstr "सक्रिय"
+
+msgid "Completed"
+msgstr "पूर्ण"
+
+msgid "View"
+msgstr "देखें"
+
+msgid "Delete"
+msgstr "हटाएं"
+
+msgid "Session deleted."
+msgstr "सत्र हटा दिया गया।"
+
+msgid "Are you sure you want to delete this session?"
+msgstr "क्या आप वाकई इस सत्र को हटाना चाहते हैं?"
+
+msgid "Symptom Intake"
+msgstr "लक्षण प्रवेश"
+
+msgid "Tell us about your symptoms"
+msgstr "हमें अपने लक्षणों के बारे में बताएं"
+
+msgid "Describe your symptoms"
+msgstr "अपने लक्षण बताएं"
+
+msgid "How long have you had these symptoms?"
+msgstr "आपको ये लक्षण कब से हैं?"
+
+msgid "Age"
+msgstr "आयु"
+
+msgid "Sex"
+msgstr "लिंग"
+
+msgid "Male"
+msgstr "पुरुष"
+
+msgid "Female"
+msgstr "महिला"
+
+msgid "Other"
+msgstr "अन्य"
+
+msgid "Existing conditions"
+msgstr "पहले से मौजूद बीमारियां"
+
+msgid "Current medications"
+msgstr "वर्तमान दवाएं"
+
+msgid "Allergies"
+msgstr "एलर्जी"
+
+msgid "Save and Continue"
+msgstr "सहेजें और जारी रखें"
+
+msgid "Upload Documents"
+msgstr "दस्तावेज़ अपलोड करें"
+
+msgid "Upload medical reports, lab results, or prescriptions"
+msgstr "चिकित्सा रिपोर्ट, लैब परिणाम या नुस्खे अपलोड करें"
+
+msgid "Choose File"
+msgstr "फ़ाइल चुनें"
+
+msgid "Upload"
+msgstr "अपलोड करें"
+
+msgid "Uploaded Documents"
+msgstr "अपलोड किए गए दस्तावेज़"
+
+msgid "No documents uploaded yet."
+msgstr "अभी तक कोई दस्तावेज़ अपलोड नहीं हुआ।"
+
+msgid "Processing..."
+msgstr "प्रसंस्करण हो रहा है..."
+
+msgid "Extracted Text"
+msgstr "निकाला गया पाठ"
+
+msgid "Confirm Extraction"
+msgstr "निष्कर्षण की पुष्टि करें"
+
+msgid "Possible Conditions"
+msgstr "संभावित स्थितियां"
+
+msgid "Based on your symptoms, these conditions may be relevant:"
+msgstr "आपके लक्षणों के आधार पर, ये स्थितियां प्रासंगिक हो सकती हैं:"
+
+msgid "Similarity"
+msgstr "समानता"
+
+msgid "ICD Code"
+msgstr "ICD कोड"
+
+msgid "These are not diagnoses. Please consult a doctor."
+msgstr "ये निदान नहीं हैं। कृपया डॉक्टर से परामर्श लें।"
+
+msgid "Run Analysis"
+msgstr "विश्लेषण चलाएं"
+
+msgid "No matching conditions found."
+msgstr "कोई मिलान स्थिति नहीं मिली।"
+
+msgid "High match"
+msgstr "उच्च मिलान"
+
+msgid "Medium match"
+msgstr "मध्यम मिलान"
+
+msgid "Low match"
+msgstr "कम मिलान"
+
+msgid "Chat with your documents"
+msgstr "अपने दस्तावेज़ों से पूछें"
+
+msgid "Ask a question about your health..."
+msgstr "अपने स्वास्थ्य के बारे में प्रश्न पूछें..."
+
+msgid "Send"
+msgstr "भेजें"
+
+msgid "Thinking..."
+msgstr "सोच रहा है..."
+
+msgid "No documents uploaded. Upload documents first to use chat."
+msgstr "कोई दस्तावेज़ नहीं। चैट के लिए पहले दस्तावेज़ अपलोड करें।"
+
+msgid "Sources"
+msgstr "स्रोत"
+
+msgid "Clear chat"
+msgstr "चैट साफ़ करें"
+
+msgid "Appointments"
+msgstr "अपॉइंटमेंट"
+
+msgid "New Appointment"
+msgstr "नया अपॉइंटमेंट"
+
+msgid "Record Live"
+msgstr "सीधे रिकॉर्ड करें"
+
+msgid "Upload Audio"
+msgstr "ऑडियो अपलोड करें"
+
+msgid "Type Notes"
+msgstr "नोट्स टाइप करें"
+
+msgid "Doctor Name"
+msgstr "डॉक्टर का नाम"
+
+msgid "Appointment Date"
+msgstr "अपॉइंटमेंट की तारीख"
+
+msgid "Appointment Notes"
+msgstr "अपॉइंटमेंट नोट्स"
+
+msgid "Generate Summary"
+msgstr "सारांश बनाएं"
+
+msgid "What Your Doctor Said"
+msgstr "आपके डॉक्टर ने क्या कहा"
+
+msgid "Your Action Plan"
+msgstr "आपकी कार्य योजना"
+
+msgid "Medications Prescribed"
+msgstr "निर्धारित दवाएं"
+
+msgid "Tests Ordered"
+msgstr "आदेश किए गए परीक्षण"
+
+msgid "Lifestyle Changes"
+msgstr "जीवनशैली में बदलाव"
+
+msgid "Warning Signs"
+msgstr "चेतावनी के संकेत"
+
+msgid "Follow-up"
+msgstr "अनुवर्ती"
+
+msgid "Seek medical attention if this occurs."
+msgstr "यह होने पर तुरंत चिकित्सा सहायता लें।"
+
+msgid "I confirm my doctor has consented to being recorded."
+msgstr "मैं पुष्टि करता/करती हूं कि डॉक्टर ने रिकॉर्डिंग की सहमति दी है।"
+
+msgid "Start Recording"
+msgstr "रिकॉर्डिंग शुरू करें"
+
+msgid "Stop & Transcribe"
+msgstr "रोकें और ट्रांसक्राइब करें"
+
+msgid "Recording..."
+msgstr "रिकॉर्ड हो रहा है..."
+
+msgid "Transcribing..."
+msgstr "ट्रांसक्राइब हो रहा है..."
+
+msgid "View Raw Transcript"
+msgstr "कच्चा ट्रांसक्रिप्ट देखें"
+
+msgid "No appointments yet"
+msgstr "अभी तक कोई अपॉइंटमेंट नहीं"
+
+msgid "Add First Appointment"
+msgstr "पहला अपॉइंटमेंट जोड़ें"
+
+msgid "Appointment deleted."
+msgstr "अपॉइंटमेंट हटा दिया गया।"
+
+msgid "Follow-up due in"
+msgstr "अनुवर्ती देय है"
+
+msgid "days"
+msgstr "दिनों में"
+
+msgid "Generate Report"
+msgstr "रिपोर्ट बनाएं"
+
+msgid "Download Report"
+msgstr "रिपोर्ट डाउनलोड करें"
+
+msgid "Email Report"
+msgstr "रिपोर्ट ईमेल करें"
+
+msgid "Report generated successfully."
+msgstr "रिपोर्ट सफलतापूर्वक बनाई गई।"
+
+msgid "Health Summary Report"
+msgstr "स्वास्थ्य सारांश रिपोर्ट"
+
+msgid "Save"
+msgstr "सहेजें"
+
+msgid "Cancel"
+msgstr "रद्द करें"
+
+msgid "Back"
+msgstr "वापस"
+
+msgid "Next"
+msgstr "अगला"
+
+msgid "Submit"
+msgstr "जमा करें"
+
+msgid "Edit"
+msgstr "संपादित करें"
+
+msgid "Close"
+msgstr "बंद करें"
+
+msgid "Loading..."
+msgstr "लोड हो रहा है..."
+
+msgid "Error"
+msgstr "त्रुटि"
+
+msgid "Success"
+msgstr "सफलता"
+
+msgid "Confirm"
+msgstr "पुष्टि करें"
+
+msgid "Yes"
+msgstr "हां"
+
+msgid "No"
+msgstr "नहीं"
+
+msgid "Date"
+msgstr "तारीख"
+
+msgid "Status"
+msgstr "स्थिति"
+
+msgid "Page not found"
+msgstr "पृष्ठ नहीं मिला"
+
+msgid "Something went wrong. Please try again."
+msgstr "कुछ गलत हो गया। कृपया दोबारा कोशिश करें।"
+
+msgid "Delete Account"
+msgstr "खाता हटाएं"
+
+msgid "Are you sure you want to delete your account? This cannot be undone."
+msgstr "क्या आप वाकई अपना खाता हटाना चाहते हैं? इसे वापस नहीं किया जा सकता।"
+
+msgid "Powered by AI, built for patients"
+msgstr "AI द्वारा संचालित, मरीजों के लिए बनाया गया"

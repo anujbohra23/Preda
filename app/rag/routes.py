@@ -70,7 +70,6 @@ def chat_page(session_id):
 
     messages = s.chat_messages.order_by(ChatMessage.created_at).all()
 
-    # Attach citations to each assistant message for display
     messages_with_citations = []
     for msg in messages:
         citations = []
@@ -88,7 +87,6 @@ def chat_page(session_id):
         > 0
     )
 
-    # Update session status
     if s.status == "results":
         s.status = "chat"
         s.updated_at = _utcnow()
@@ -130,16 +128,15 @@ def send_message(session_id):
         created_at=_utcnow(),
     )
     db.session.add(user_msg)
-    db.session.flush()  # get user_msg.id
+    db.session.flush()
 
-    # ── Quick safety check on user message ────────────────────────────────
+    # ── Safety check ───────────────────────────────────────────────────────
     safety = check_safety(user_text)
     if safety["triggered"]:
         user_msg.safety_triggered = 1
         s.safety_flagged = 1
         s.updated_at = _utcnow()
 
-        # Log it
         _log_audit(
             current_user.id,
             session_id,
@@ -150,16 +147,26 @@ def send_message(session_id):
             },
         )
 
-        # Save emergency assistant message
-        assistant_msg = ChatMessage(
-            session_id=session_id,
-            role="assistant",
-            content=(
+        # Language-aware emergency response
+        from ..lang.helpers import is_hindi
+        if is_hindi():
+            emergency_content = (
+                f"🚨 {safety['emergency_message']} "
+                "कृपया तुरंत आपातकालीन सेवाओं को कॉल करें (112)। "
+                "आपात स्थिति में इस उपकरण पर निर्भर न रहें।"
+            )
+        else:
+            emergency_content = (
                 f"🚨 {safety['emergency_message']} "
                 "Please call emergency services immediately "
                 "(911 / 999 / 112). "
                 "Do not rely on this tool in an emergency."
-            ),
+            )
+
+        assistant_msg = ChatMessage(
+            session_id=session_id,
+            role="assistant",
+            content=emergency_content,
             safety_triggered=1,
             created_at=_utcnow(),
         )

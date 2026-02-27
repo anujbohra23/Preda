@@ -36,3 +36,6 @@ requests==2.32.3
 
 # Environment
 python-dotenv==1.0.1
+
+#translation
+Flask-Babel==4.0.0
