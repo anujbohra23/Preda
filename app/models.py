@@ -257,3 +257,4 @@ class AppointmentAction(db.Model):
     due_date = db.Column(db.Text, nullable=True)
     is_completed = db.Column(db.Integer, nullable=False, default=0)
     created_at = db.Column(db.Text, nullable=False, default=utcnow)
+    
