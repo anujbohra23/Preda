@@ -201,6 +201,27 @@ class Report(db.Model):
     pdf_path = db.Column(db.Text, nullable=True)
     generated_at = db.Column(db.Text, nullable=False, default=utcnow)
 
+# ── Safety Triage Logic ────────────────────────────────────────────────
+class LabValue(db.Model):
+    __tablename__ = "lab_values"
+
+    id             = db.Column(db.Integer, primary_key=True)
+    user_id        = db.Column(db.Integer, db.ForeignKey("users.id"),
+                               nullable=False, index=True)
+    session_id     = db.Column(db.Integer, db.ForeignKey("sessions.id"),
+                               nullable=False, index=True)
+    upload_id      = db.Column(db.Integer, db.ForeignKey("uploads.id"),
+                               nullable=True)
+
+    # Normalised test name — always Title Case e.g. "HbA1c", "Creatinine"
+    test_name      = db.Column(db.Text, nullable=False, index=True)
+    value          = db.Column(db.Float, nullable=True)   # numeric, None if non-numeric
+    unit           = db.Column(db.Text, nullable=True)    # "mg/dL", "%", etc.
+    raw_value      = db.Column(db.Text, nullable=True)    # original string from report
+    reference_range= db.Column(db.Text, nullable=True)    # "4.0-5.6" or "< 200"
+    status         = db.Column(db.Text, nullable=True)    # normal / high / low / unknown
+    report_date    = db.Column(db.Text, nullable=True)    # date from report, YYYY-MM-DD
+    created_at     = db.Column(db.Text, nullable=False, default=utcnow)
 
 class AuditLog(db.Model):
     __tablename__ = "audit_logs"

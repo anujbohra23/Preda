@@ -1,0 +1,622 @@
+icd_code,disease_name,chapter,synonyms,short_desc
+A000,"Cholera due to Vibrio cholerae 01, biovar cholerae",Infectious diseases,,"A bacterial infection that causes severe diarrhea and vomiting, usually spread through contaminated food or water."
+A011,Paratyphoid fever A,Infectious diseases,,Paratyphoid fever A is a type of food poisoning caused by eating contaminated food or water with certain bacteria.
+A020,Salmonella enteritis,Infectious diseases,,"Salmonella enteritis is a type of food poisoning that causes stomach cramps, diarrhea, and fever after eating contaminated food."
+A030,Shigellosis due to Shigella dysenteriae,Infectious diseases,,"A bacterial infection that causes severe diarrhea and stomach cramps, often spread through contaminated food or water."
+A040,Enteropathogenic Escherichia coli infection,Infectious diseases,,"It's a type of bacterial infection that causes diarrhea and stomach cramps, often spread through contaminated food or water."
+A050,Foodborne staphylococcal intoxication,Infectious diseases,,It's a food poisoning illness caused by eating food contaminated with a type of bacteria called Staphylococcus.
+A060,Acute amebic dysentery,Infectious diseases,,"A rare and serious infection caused by a parasite that affects the intestines, leading to severe diarrhea."
+A070,Balantidiasis,Infectious diseases,,"Balantidiasis is a rare and usually mild intestinal infection caused by a parasite called Balantidium, often spread through contaminated water."
+A080,Rotaviral enteritis,Infectious diseases,,Rotaviral enteritis is a common and usually mild stomach illness caused by a virus that affects young children.
+A150,Tuberculosis of lung,Infectious diseases,,Tuberculosis of the lung is a bacterial infection that causes inflammation and damage to lung tissue.
+A170,Tuberculous meningitis,Infectious diseases,,Tuberculous meningitis is a rare and serious infection of the lining around the brain and spinal cord caused by TB.
+A182,Tuberculous peripheral lymphadenopathy,Infectious diseases,,It's a medical term for swollen lymph nodes caused by tuberculosis infection in the body.
+A190,Acute miliary tuberculosis of a single specified site,Infectious diseases,,"A rare and serious form of TB that affects only one part of the body, like a lung or bone."
+A200,Bubonic plague,Infectious diseases,,"The bubonic plague is a rare and serious bacterial infection that can cause fever, swelling, and painful spots."
+A210,Ulceroglandular tularemia,Infectious diseases,,Ulceroglandular tularemia is a rare bacterial infection that causes swollen lymph nodes and painful sores.
+A220,Cutaneous anthrax,Infectious diseases,,"Cutaneous anthrax is a rare skin infection caused by the bacteria Bacillus anthracis, usually from an animal bite."
+A230,Brucellosis due to Brucella melitensis,Infectious diseases,,"A rare bacterial infection that can be spread through contact with infected animals or their products, like unpasteurized milk."
+A240,Glanders,Infectious diseases,,"Glanders is a rare and serious bacterial infection that affects the lungs and kidneys, usually spread through horses."
+A250,Spirillosis,Infectious diseases,bacterial infection|Bacterial infection disorder|Bacterial infection disease,Bacterial infection within Certain infectious and parasitic diseases. Category-level grouping.
+A260,Cutaneous erysipeloid,Infectious diseases,mycosis|Mycosis disorder|Mycosis disease,Mycosis within Certain infectious and parasitic diseases. Category-level grouping.
+A270,Leptospirosis icterohemorrhagica,Infectious diseases,,"It's a bacterial infection that can cause severe liver and kidney problems, often spread through contaminated water or soil."
+A280,Pasteurellosis,Infectious diseases,,"Pasteurellosis is a bacterial infection that can cause symptoms like fever, cough, and swollen lymph nodes in the neck."
+A300,Indeterminate leprosy,Infectious diseases,,"A rare and serious form of leprosy where the disease doesn't fully go away, but can be managed."
+A310,Pulmonary mycobacterial infection,Infectious diseases,,A type of lung infection caused by a germ called Mycobacterium that can be serious and hard to treat.
+A320,Cutaneous listeriosis,Infectious diseases,,Cutaneous listeriosis is a rare skin infection caused by eating food contaminated with the bacteria Listeria.
+A360,Pharyngeal diphtheria,Infectious diseases,,Pharyngeal diphtheria is a rare and serious illness caused by bacteria that can lead to severe throat infections.
+A380,Scarlet fever with otitis media,Infectious diseases,,A rare complication where scarlet fever (a bacterial infection) causes ear pain and inflammation in the middle ear.
+A390,Meningococcal meningitis,Infectious diseases,,"It's a serious infection that inflames the membranes around your brain and spinal cord, caused by bacteria."
+A400,"Sepsis due to streptococcus, group A",Infectious diseases,,A rare but serious infection caused by a type of bacteria called Streptococcus A that can lead to life-threatening sepsis.
+A411,Sepsis due to other specified staphylococcus,Infectious diseases,,A severe infection caused by a type of bacteria called Staphylococcus that's not listed in the medical book.
+A420,Pulmonary actinomycosis,Infectious diseases,,Pulmonary actinomycosis is a rare infection in the lungs caused by bacteria that can be hard to treat.
+A430,Pulmonary nocardiosis,Infectious diseases,,Pulmonary nocardiosis is a rare lung infection caused by bacteria that can be hard to treat and often serious.
+A440,Systemic bartonellosis,Infectious diseases,,"Systemic bartonellosis is a rare and serious infection caused by the bacteria Bartonella, which can affect many parts of the body."
+A480,Gas gangrene,Infectious diseases,,Gas gangrene is a serious infection that causes tissue to rot and produce gas bubbles under the skin.
+A491,"Streptococcal infection, unspecified site",Infectious diseases,,A general term for a bacterial infection caused by strep bacteria that doesn't specify where the infection occurred.
+A501,"Early congenital syphilis, latent",Infectious diseases,,"A condition where a baby has syphilis that's not causing symptoms now, but might appear later in life."
+A510,Primary genital syphilis,Infectious diseases,,Primary genital syphilis is a bacterial infection that causes sores or rashes on the genitals and surrounding areas.
+A522,Asymptomatic neurosyphilis,Infectious diseases,,Asymptomatic neurosyphilis refers to a condition where syphilis has damaged the brain without causing noticeable symptoms.
+A530,"Latent syphilis, unspecified as early or late",Infectious diseases,,"""Latent syphilis means the disease has been present in your body for a while, but it's not showing symptoms."
+A541,Gonococcal infection of lower genitourinary tract with periurethral and accessory gland abscess,Infectious diseases,,A bacterial infection in the urethra that can cause painful swelling around the bladder and prostate.
+A562,"Chlamydial infection of genitourinary tract, unspecified",Infectious diseases,,"A bacterial infection that causes symptoms like discharge, itching, and pain in the genital area without a clear cause."
+A598,Trichomoniasis of other sites,Infectious diseases,,It's a rare infection that occurs when the Trichomonas parasite moves from its usual genital area to another part of the body.
+A601,Herpesviral infection of perianal skin and rectum,Infectious diseases,,"A viral infection that causes sores or irritation around the anus and rectum, often painful and uncomfortable."
+A630,Anogenital (venereal) warts,Infectious diseases,,"Anogenital warts are small, harmless growths that appear on the skin around the anus and genitals."
+A660,Initial lesions of yaws,Infectious diseases,,"""Small, painless bumps or sores on the skin that are the first signs of a yaws infection."
+B000,Eczema herpeticum,Viral/parasitic diseases,,Eczema herpeticum is a rare and serious skin infection that can spread quickly if not treated properly.
+B010,Varicella meningitis,Viral/parasitic diseases,,Varicella meningitis is a rare but serious illness that occurs when the varicella virus infects the lining of the brain.
+B020,Zoster encephalitis,Viral/parasitic diseases,,Zoster encephalitis is a rare but serious complication of shingles that affects the brain and central nervous system.
+B050,Measles complicated by encephalitis,Viral/parasitic diseases,,"When you have measles and it causes inflammation in your brain, it can lead to serious complications."
+B069,Rubella without complication,Viral/parasitic diseases,,"""Rubella without complications means the virus has caused a mild illness with no serious health problems."
+B070,Plantar wart,Viral/parasitic diseases,,"A small, rough growth on the bottom of your foot from a virus."
+B081,Molluscum contagiosum,Viral/parasitic diseases,,"A skin infection that spreads easily and causes small, pimple-like bumps."
+B150,Hepatitis A with hepatic coma,Viral/parasitic diseases,,A serious liver disease with inflammation that can cause brain damage.
+B160,Acute hepatitis B with delta-agent with hepatic coma,Viral/parasitic diseases,,A rare but life-threatening liver disease caused by hepatitis B and another virus.
+B170,Acute delta-(super) infection of hepatitis B carrier,Viral/parasitic diseases,,A severe infection in people who already have hepatitis B.
+B180,Chronic viral hepatitis B with delta-agent,Viral/parasitic diseases,,A long-term liver disease caused by hepatitis B and another virus.
+B190,Unspecified viral hepatitis with hepatic coma,Viral/parasitic diseases,,A type of viral liver disease with brain damage symptoms.
+B250,Cytomegaloviral pneumonitis,Viral/parasitic diseases,,An inflammation of the lungs from a viral infection.
+B260,Mumps orchitis,Viral/parasitic diseases,,"""Mumps orchitis"" means inflammation of the testicles caused by the mumps virus, often leading to swelling and pain."
+B300,Keratoconjunctivitis due to adenovirus,Viral/parasitic diseases,,"It's a common eye infection caused by the adenovirus virus, often spread through touching contaminated surfaces or people."
+B330,Epidemic myalgia,Viral/parasitic diseases,,Epidemic myalgia refers to a widespread muscle pain that affects many people at the same time.
+B340,"Adenovirus infection, unspecified",Viral/parasitic diseases,,A general term for an adenovirus infection that doesn't specify the exact type or symptoms of the illness.
+B350,Tinea barbae and tinea capitis,Viral/parasitic diseases,,"""Tinea barbae"" and ""tinea capitis"" are fungal infections that affect the hair on your face or head."
+B360,Pityriasis versicolor,Viral/parasitic diseases,,Pityriasis versicolor is a skin condition that causes patches of discoloration on the skin due to yeast overgrowth.
+B370,Candidal stomatitis,Viral/parasitic diseases,,Candidal stomatitis is a mild infection of the mouth caused by a fungus that can cause white patches and discomfort.
+B380,Acute pulmonary coccidioidomycosis,Viral/parasitic diseases,,"A rare fungal infection that affects the lungs, usually caused by inhaling spores from a type of fungus."
+B390,Acute pulmonary histoplasmosis capsulati,Viral/parasitic diseases,,A rare lung infection caused by a fungus called Histoplasma capsulatum that can be serious if not treated.
+B400,Acute pulmonary blastomycosis,Viral/parasitic diseases,,Acute pulmonary blastomycosis is a rare lung infection caused by a fungus that can be serious and life-threatening.
+B410,Pulmonary paracoccidioidomycosis,Viral/parasitic diseases,,"It's a rare fungal infection that affects the lungs and can cause symptoms like coughing, fever, and chest pain."
+B420,Pulmonary sporotrichosis,Viral/parasitic diseases,,"Pulmonary sporotrichosis is a rare fungal infection that affects the lungs, usually caused by coming into contact with infected soil."
+B430,Cutaneous chromomycosis,Viral/parasitic diseases,,Cutaneous chromomycosis is a rare skin infection caused by fungi that can cause thickened and discolored skin patches.
+B440,Invasive pulmonary aspergillosis,Viral/parasitic diseases,,A rare but serious lung infection caused by a fungus called Aspergillus that can be life-threatening if not treated.
+B450,Pulmonary cryptococcosis,Viral/parasitic diseases,,Pulmonary cryptococcosis is a rare lung infection caused by a fungus that can be life-threatening if not treated.
+B460,Pulmonary mucormycosis,Viral/parasitic diseases,,"Pulmonary mucormycosis is a rare and serious fungal infection that affects the lungs, often in people with weakened immune systems."
+B470,Eumycetoma,Viral/parasitic diseases,,"Eumycetoma is a rare fungal infection that causes painful sores or abscesses under the skin, usually on the foot."
+C000,Malignant neoplasm of external upper lip,Neoplasms,,A rare and serious type of cancer that forms on the outer edge of the upper lip.
+C020,Malignant neoplasm of dorsal surface of tongue,Neoplasms,,A type of cancer that grows on the back side of the tongue.
+C030,Malignant neoplasm of upper gum,Neoplasms,,A malignant tumor in the upper gum that can be cancerous and needs medical attention.
+C040,Malignant neoplasm of anterior floor of mouth,Neoplasms,,"A rare and serious cancer that forms in the front part of the mouth, near the tongue."
+C050,Malignant neoplasm of hard palate,Neoplasms,,A rare and serious type of cancer that develops on the hard part of your roof in your mouth.
+C060,Malignant neoplasm of cheek mucosa,Neoplasms,,A type of cancer that forms in the lining of your cheeks and can be painful and affect eating.
+C080,Malignant neoplasm of submandibular gland,Neoplasms,,A rare and serious cancer that develops in the salivary gland under your lower jawbone.
+C090,Malignant neoplasm of tonsillar fossa,Neoplasms,,A rare and serious type of cancer that develops in the tissue near the back of the throat.
+C100,Malignant neoplasm of vallecula,Neoplasms,,"A malignant tumor grows in the small pocket under the tongue, which can be cancerous and spread to other parts."
+C110,Malignant neoplasm of superior wall of nasopharynx,Neoplasms,,A rare and serious cancer that grows on the upper part of the back of the nose.
+C130,Malignant neoplasm of postcricoid region,Neoplasms,,A rare and serious type of cancer that grows in the back part of the throat.
+C140,"Malignant neoplasm of pharynx, unspecified",Neoplasms,,A type of cancer that develops in the throat area without specifying exactly where it's located.
+C153,Malignant neoplasm of upper third of esophagus,Neoplasms,,"A type of cancer that grows in the top part of the esophagus, which is the tube that carries food."
+C160,Malignant neoplasm of cardia,Neoplasms,,A malignant tumor in the stomach that can be cancerous and spread to other parts of the body.
+C170,Malignant neoplasm of duodenum,Neoplasms,,"A malignant tumor growing in the lining of the duodenum, which is part of the small intestine."
+C180,Malignant neoplasm of cecum,Neoplasms,,"A malignant tumor growing in the cecum, which is part of the large intestine, can be life-threatening."
+C210,"Malignant neoplasm of anus, unspecified",Neoplasms,,"A type of cancer that develops in the anus, but its exact location or cause isn't specified."
+C220,Liver cell carcinoma,Neoplasms,,"Liver cell carcinoma is a type of cancer that forms in the liver cells, which can be life-threatening."
+C240,Malignant neoplasm of extrahepatic bile duct,Neoplasms,,A rare and serious cancer that forms in the bile ducts outside the liver.
+C250,Malignant neoplasm of head of pancreas,Neoplasms,neoplasm of uncertain behavior|Neoplasm of uncertain behavior disorder|Neoplasm of uncertain behavior disease,Neoplasm of uncertain behavior within Neoplasms. Category-level grouping.
+C260,"Malignant neoplasm of intestinal tract, part unspecified",Neoplasms,,A type of cancer that grows in the intestines and can be anywhere along its length.
+C300,Malignant neoplasm of nasal cavity,Neoplasms,,A malignant tumor in the nose that can be cancerous and needs medical attention to prevent further growth.
+C310,Malignant neoplasm of maxillary sinus,Neoplasms,,"A rare and serious type of cancer that develops in the maxillary sinus, a part of the nasal cavity."
+C320,Malignant neoplasm of glottis,Neoplasms,,A malignant tumor growing on the vocal cords can cause voice changes and breathing difficulties.
+C342,"Malignant neoplasm of middle lobe, bronchus or lung",Neoplasms,,A type of cancer that forms in the lungs or airways.
+C380,Malignant neoplasm of heart,Neoplasms,,Cancer that develops in the heart muscle.
+C390,"Malignant neoplasm of upper respiratory tract, part unspecified",Neoplasms,,Cancer that grows in the upper part of the respiratory system but doesn't specify where exactly.
+C410,Malignant neoplasm of bones of skull and face,Neoplasms,,Cancer that affects the bones around the skull and face.
+C430,Malignant melanoma of lip,Neoplasms,,"Cancer that occurs on the lip, usually due to sun exposure."
+C450,Mesothelioma of pleura,Neoplasms,,A rare cancer that forms in the lining surrounding the lungs.
+C460,Kaposi's sarcoma of skin,Neoplasms,,A type of skin cancer caused by a viral infection.
+C470,"Malignant neoplasm of peripheral nerves of head, face and neck",Neoplasms,,"Cancer that grows in the nerves near the head, face, and neck."
+C480,Malignant neoplasm of retroperitoneum,Neoplasms,,A rare and serious cancer that forms in the tissues behind the abdominal organs.
+C490,"Malignant neoplasm of connective and soft tissue of head, face and neck",Neoplasms,,"A type of cancer that forms in the tissues around your head, face, or neck."
+C4A0,Merkel cell carcinoma of lip,Neoplasms,,"A rare and aggressive skin cancer that starts on the lips, often appearing as a small, bleeding bump."
+C510,Malignant neoplasm of labium majus,Neoplasms,,A rare and serious type of cancer that develops in the upper lip area.
+C530,Malignant neoplasm of endocervix,Neoplasms,,"A type of cancer that develops in the cervix, which is the lower part of the uterus."
+C540,Malignant neoplasm of isthmus uteri,Neoplasms,,A rare and serious type of cancer that develops in the narrow part of the uterus.
+C561,Malignant neoplasm of right ovary,Neoplasms,,A type of cancer that develops in the ovaries and can spread to other parts of the body.
+C573,Malignant neoplasm of parametrium,Neoplasms,,A malignant tumor that grows in the tissue surrounding the uterus or other organs in the pelvic area.
+C600,Malignant neoplasm of prepuce,Neoplasms,,"A rare and serious medical condition where abnormal cells grow on the foreskin, often requiring surgical removal."
+C632,Malignant neoplasm of scrotum,Neoplasms,,A malignant tumor growing in the scrotum that can spread to other parts of the body and be life-threatening.
+D001,Carcinoma in situ of esophagus,Blood disorders,,A rare and non-cancerous condition where abnormal cells form in the lining of the esophagus without invading deeper tissues.
+D010,Carcinoma in situ of colon,Blood disorders,,"A rare condition where abnormal cells are found only in the lining of the colon, but haven't invaded deeper."
+D020,Carcinoma in situ of larynx,Blood disorders,,A rare and serious condition where cancer cells are present on the surface of the larynx but haven't spread.
+D030,Melanoma in situ of lip,Blood disorders,,It's a rare and treatable skin cancer that only affects the outer layer of the lip.
+D040,Carcinoma in situ of skin of lip,Blood disorders,,"A rare condition where abnormal cells form on the surface of the lip, but haven't spread to deeper tissues."
+D060,Carcinoma in situ of endocervix,Blood disorders,,"It's a rare and non-cancerous condition where abnormal cells are found on the surface of the cervix, but haven't spread."
+D070,Carcinoma in situ of endometrium,Blood disorders,,It's a rare condition where cancer cells are present in the lining of the uterus but haven't spread yet.
+D090,Carcinoma in situ of bladder,Blood disorders,,It's a rare and non-cancerous condition where abnormal cells are found on the inside lining of the bladder.
+D100,Benign neoplasm of lip,Blood disorders,,A benign tumor on the lip that's usually harmless and can be removed by a doctor.
+D110,Benign neoplasm of parotid gland,Blood disorders,,"A benign tumor in the parotid gland, which is a small salivary gland near your ear."
+D120,Benign neoplasm of cecum,Blood disorders,,"A benign tumor in the first part of the large intestine, usually found during a colonoscopy or X-ray."
+D130,Benign neoplasm of esophagus,Blood disorders,,A benign tumor in the esophagus that's non-cancerous and usually grows slowly without causing harm.
+D140,"Benign neoplasm of middle ear, nasal cavity and accessory sinuses",Blood disorders,,"A benign growth in the middle ear, nose, or surrounding areas that's usually harmless and doesn't cause problems."
+D150,Benign neoplasm of thymus,Blood disorders,,A benign tumor in the thymus gland that's usually harmless and often goes away on its own.
+D164,Benign neoplasm of bones of skull and face,Blood disorders,,A non-cancerous growth on the bones of your skull and face.
+D170,"Benign lipomatous neoplasm of skin and subcutaneous tissue of head, face and neck",Blood disorders,,"A small, harmless lump under your skin on the head, face, or neck."
+D181,"Lymphangioma, any site",Blood disorders,,A benign fluid-filled sac that can appear anywhere in the body.
+D190,Benign neoplasm of mesothelial tissue of pleura,Blood disorders,,A non-cancerous growth on the lining surrounding the lungs.
+D200,Benign neoplasm of soft tissue of retroperitoneum,Blood disorders,,A non-cancerous growth in soft tissue near the kidneys.
+D210,"Benign neoplasm of connective and other soft tissue of head, face and neck",Blood disorders,,"A non-cancerous growth in soft tissue of the head, face, and neck."
+D220,Melanocytic nevi of lip,Blood disorders,,"A common, harmless mole on the lip."
+D230,Other benign neoplasm of skin of lip,Blood disorders,,A benign growth on the skin of your lower lip.
+D241,Benign neoplasm of right breast,Blood disorders,,A benign tumor in the right breast that's non-cancerous and usually doesn't cause problems or spread.
+D250,Submucous leiomyoma of uterus,Blood disorders,,A submucous leiomyoma is a type of non-cancerous growth in the uterus that can cause bleeding and discomfort.
+D260,Other benign neoplasm of cervix uteri,Blood disorders,,A non-cancerous growth on the cervix that's not typically serious and usually doesn't require treatment.
+D270,Benign neoplasm of right ovary,Blood disorders,,A benign tumor in the right ovary that's non-cancerous and usually doesn't cause symptoms or spread to other parts.
+D280,Benign neoplasm of vulva,Blood disorders,,A benign tumor on the vulva that's non-cancerous and usually doesn't cause symptoms or problems.
+D290,Benign neoplasm of penis,Blood disorders,,A benign growth on the penis that's non-cancerous and usually not painful or serious.
+D303,Benign neoplasm of bladder,Blood disorders,,A benign tumor in the bladder that's non-cancerous and usually doesn't cause symptoms or problems.
+D320,Benign neoplasm of cerebral meninges,Blood disorders,,A benign tumor that grows on the protective membranes covering the brain and spinal cord.
+E000,"Congenital iodine-deficiency syndrome, neurological type",Endocrine/metabolic,,It's a rare condition where babies are born with brain and nervous system problems due to lack of iodine in the womb.
+E010,Iodine-deficiency related diffuse (endemic) goiter,Endocrine/metabolic,,A condition where the thyroid gland gets enlarged due to a lack of iodine in the diet.
+E030,Congenital hypothyroidism with diffuse goiter,Endocrine/metabolic,,It's a rare condition where the thyroid gland doesn't form properly and grows too big in the neck.
+E040,Nontoxic diffuse goiter,Endocrine/metabolic,,A non-toxic diffuse goiter is a type of thyroid problem where the thyroid gland becomes enlarged and lumpy.
+E060,Acute thyroiditis,Endocrine/metabolic,,Acute thyroiditis is an inflammation of the thyroid gland that can cause pain and swelling in the neck.
+E070,Hypersecretion of calcitonin,Endocrine/metabolic,,Hypersecretion of calcitonin means your body produces too much a hormone that helps regulate calcium levels in the blood.
+E088,Diabetes mellitus due to underlying condition with unspecified complications,Endocrine/metabolic,,A medical condition where the body has trouble regulating blood sugar levels due to an unknown underlying cause.
+E098,Drug or chemical induced diabetes mellitus with unspecified complications,Endocrine/metabolic,,A type of diabetes caused by certain medicines or chemicals that can damage the body's ability to regulate blood sugar.
+E108,Type 1 diabetes mellitus with unspecified complications,Endocrine/metabolic,,"A type of diabetes where the body can't regulate blood sugar levels properly, but the exact problems aren't known."
+E118,Type 2 diabetes mellitus with unspecified complications,Endocrine/metabolic,,"A type of diabetes where the body can't regulate blood sugar levels properly, but the exact problems aren't known."
+E138,Other specified diabetes mellitus with unspecified complications,Endocrine/metabolic,,This medical term refers to a type of diabetes where the exact cause and severity are unknown.
+E160,Drug-induced hypoglycemia without coma,Endocrine/metabolic,,A rare condition where taking certain medications causes low blood sugar levels that aren't severe enough to cause unconsciousness.
+E200,Idiopathic hypoparathyroidism,Endocrine/metabolic,,"A rare condition where the parathyroid glands don't produce enough parathyroid hormone, affecting calcium levels in the body."
+E210,Primary hyperparathyroidism,Endocrine/metabolic,,Primary hyperparathyroidism is a rare condition where one or more of your parathyroid glands produce too much calcium.
+E220,Acromegaly and pituitary gigantism,Endocrine/metabolic,obesity|Obesity disorder|Obesity disease,"Obesity within Endocrine, nutritional and metabolic diseases. Category-level grouping."
+E230,Hypopituitarism,Endocrine/metabolic,,Hypopituitarism is a rare condition where the pituitary gland doesn't produce enough hormones that control many bodily functions.
+E240,Pituitary-dependent Cushing's disease,Endocrine/metabolic,,"It's a rare condition where your pituitary gland produces too much cortisol, leading to excessive weight gain and other issues."
+E250,Congenital adrenogenital disorders associated with enzyme deficiency,Endocrine/metabolic,type 2 diabetes|Type 2 diabetes disorder|Type 2 diabetes disease,"Type 2 diabetes within Endocrine, nutritional and metabolic diseases. Category-level grouping."
+E261,Secondary hyperaldosteronism,Endocrine/metabolic,,Secondary hyperaldosteronism occurs when the body's response to a different condition causes high levels of a hormone called aldosterone.
+E270,Other adrenocortical overactivity,Endocrine/metabolic,,"""Other adrenocortical overactivity"" means having too much activity in the adrenal glands, which can cause various health issues."
+E280,Estrogen excess,Endocrine/metabolic,,Excess estrogen in the body can cause hormonal imbalances and lead to various health issues in women.
+E290,Testicular hyperfunction,Endocrine/metabolic,,Testicular hyperfunction is a rare condition where the testicles produce too much testosterone hormone.
+E300,Delayed puberty,Endocrine/metabolic,,"Delayed puberty means your body doesn't start developing normally at the expected age, usually around 12-14 years old."
+E310,Autoimmune polyglandular failure,Endocrine/metabolic,,It's a rare condition where your immune system mistakenly attacks and damages multiple organs in your body.
+E320,Persistent hyperplasia of thymus,Endocrine/metabolic,,It's a rare condition where the thymus gland grows too much and can cause problems with the immune system.
+E341,Other hypersecretion of intestinal hormones,Endocrine/metabolic,,It's a rare condition where the intestines produce too many hormones that help with digestion and absorption.
+E368,Other intraoperative complications of endocrine system,Endocrine/metabolic,,"Other complications during surgery that can affect the endocrine system include bleeding, infection, or damage to nearby organs."
+E440,Moderate protein-calorie malnutrition,Endocrine/metabolic,,Moderate protein-calorie malnutrition means your body isn't getting enough nutrients to stay healthy and strong.
+E500,Vitamin A deficiency with conjunctival xerosis,Endocrine/metabolic,,A condition where the eyes become dry and irritated due to a lack of Vitamin A in the body.
+E512,Wernicke's encephalopathy,Endocrine/metabolic,,"Wernicke's encephalopathy is a brain disorder that causes confusion, memory loss, and eye problems due to vitamin B12 deficiency."
+E530,Riboflavin deficiency,Endocrine/metabolic,,A Riboflavin deficiency means your body isn't getting enough of a vital nutrient that helps keep you healthy.
+E550,"Rickets, active",Endocrine/metabolic,,"""Rickets, active"" means a type of bone disease that can cause weak bones and deformities in children."
+E560,Deficiency of vitamin E,Endocrine/metabolic,,"A deficiency in vitamin E can cause problems with the immune system and skin health, leading to fatigue."
+E610,Copper deficiency,Endocrine/metabolic,,"A copper deficiency means your body doesn't have enough of this essential mineral, which affects many bodily functions."
+E630,Essential fatty acid [EFA] deficiency,Endocrine/metabolic,,"A lack of essential fatty acids in the body can cause problems with skin, brain, and heart health."
+E640,Sequelae of protein-calorie malnutrition,Endocrine/metabolic,,"Protein-calorie malnutrition can lead to long-term health problems, such as weakened immune systems and poor growth in children."
+E661,Drug-induced obesity,Endocrine/metabolic,,"""Drug-induced obesity occurs when certain medications cause weight gain or make people feel hungrier and eat more."
+E670,Hypervitaminosis A,Endocrine/metabolic,,"Hypervitaminosis A is a condition where you take too much vitamin A, which can cause health problems."
+E700,Classical phenylketonuria,Endocrine/metabolic,,A rare genetic disorder that affects how the body breaks down an amino acid called phenylalanine.
+E710,Maple-syrup-urine disease,Endocrine/metabolic,,Maple syrup urine disease is a rare genetic disorder that affects how the body breaks down certain amino acids.
+E723,Disorders of lysine and hydroxylysine metabolism,Endocrine/metabolic,,It's a group of rare genetic disorders that affect the body's ability to process certain amino acids.
+E730,Congenital lactase deficiency,Endocrine/metabolic,,"It's a rare condition where some people are born without the ability to digest lactose, a sugar in milk."
+E744,Disorders of pyruvate metabolism and gluconeogenesis,Endocrine/metabolic,,"It refers to problems with how the body makes energy from food, specifically with a key molecule called pyruvate."
+E753,"Sphingolipidosis, unspecified",Endocrine/metabolic,,"""Sphingolipidosis, unspecified"" is a rare genetic disorder affecting the body's ability to break down certain fatty substances."
+E761,"Mucopolysaccharidosis, type II",Endocrine/metabolic,,A rare genetic disorder that affects the body's ability to break down and recycle sugar molecules.
+E770,Defects in post-translational modification of lysosomal enzymes,Endocrine/metabolic,,"This refers to errors that occur when enzymes inside cells are modified after they're made, affecting their function."
+E781,Pure hyperglyceridemia,Endocrine/metabolic,,Pure hypercholesterolemia means having very high levels of a type of fat in the blood called cholesterol.
+E790,Hyperuricemia without signs of inflammatory arthritis and tophaceous disease,Endocrine/metabolic,,High levels of uric acid in the blood with no symptoms or problems like joint pain or kidney stones.
+E800,Hereditary erythropoietic porphyria,Endocrine/metabolic,,A rare genetic disorder that affects the production of red blood cells and can cause painful skin blistering.
+E832,Disorders of zinc metabolism,Endocrine/metabolic,,Disorders of zinc metabolism refer to problems with how the body absorbs and uses zinc for good health.
+F060,Psychotic disorder with hallucinations due to known physiological condition,Mental health,,A person has severe mental health issues caused by a medical condition that affects their brain and senses.
+F070,Personality change due to known physiological condition,Mental health,,A person's behavior or mood changes because of a medical condition that affects their brain or body.
+F200,Paranoid schizophrenia,Mental health,,"A type of severe mental illness where a person has strong, persistent delusions and disorganized thinking patterns."
+F250,"Schizoaffective disorder, bipolar type",Mental health,,A mental health condition where a person experiences extreme mood swings and sometimes hallucinations or delusions.
+F302,"Manic episode, severe with psychotic symptoms",Mental health,,A severe mental health episode where a person loses touch with reality and experiences extreme mood swings.
+F310,"Bipolar disorder, current episode hypomanic",Mental health,,A person with bipolar disorder has an abnormally high mood that's less severe than a full-blown manic episode.
+F320,"Major depressive disorder, single episode, mild",Mental health,,"It's a type of depression that affects your mood and daily life for the first time, but it's not severe."
+F330,"Major depressive disorder, recurrent, mild",Mental health,,A type of depression that happens when you feel sad or hopeless for more than two weeks at a time.
+F340,Cyclothymic disorder,Mental health,,Cyclothymic disorder is a mental health condition where you experience periods of mild depression and anxiety that last two years.
+F408,Other phobic anxiety disorders,Mental health,,"Other phobic anxiety disorders include specific fears like claustrophobia, agoraphobia, and social anxiety, among others."
+F410,Panic disorder [episodic paroxysmal anxiety],Mental health,,"It's a condition where people experience sudden, intense feelings of extreme fear or anxiety that can be overwhelming."
+F422,Mixed obsessional thoughts and acts,Mental health,,"It's when you have unwanted, intrusive thoughts that can be distressing, and sometimes you act on them without thinking."
+F430,Acute stress reaction,Mental health,,An acute stress reaction is a temporary emotional response to a stressful event that can feel overwhelming and scary.
+F440,Dissociative amnesia,Mental health,,Dissociative amnesia is a condition where people forget important information or events due to extreme stress or trauma.
+F450,Somatization disorder,Mental health,,Somatization disorder is a condition where people experience physical symptoms like pain or illness without any clear medical cause.
+F481,Depersonalization-derealization syndrome,Mental health,,"It's a mental health condition where people feel like they're observing their life from outside their body, detached."
+F509,"Eating disorder, unspecified",Mental health,,"""Eating disorder, unspecified"" means a person's eating habits are unhealthy and not clearly caused by another specific condition."
+F513,Sleepwalking [somnambulism],Mental health,,"Sleepwalking, or somnambulism, is when a person gets up and walks around while they're still asleep."
+F520,Hypoactive sexual desire disorder,Mental health,,"It's a condition where people have low or almost no interest in sex, and it can cause emotional distress."
+F530,Postpartum depression,Mental health,,Postpartum depression is a type of sadness or emotional struggle that some women experience after giving birth to a baby.
+F550,Abuse of antacids,Mental health,,Taking too many antacids can lead to an imbalance of stomach acid and cause more problems than it solves.
+F600,Paranoid personality disorder,Mental health,,"A person with paranoid personality disorder has an irrational and persistent distrust of others, often leading to anxiety and conflict."
+F630,Pathological gambling,Mental health,,Pathological gambling is a serious mental health condition where people compulsively gamble despite negative effects on their lives.
+F640,Transsexualism,Mental health,major depressive disorder|Major depressive disorder disorder|Major depressive disorder disease,Major depressive disorder within Mental and behavioural disorders. Category-level grouping.
+F650,Fetishism,Mental health,,"Fetishism is a type of sexual interest or attraction to specific objects, materials, or body parts that aren't typically erotic."
+F68A,Factitious disorder imposed on another,Mental health,,"A person fabricates or exaggerates a medical condition in someone else to gain attention, sympathy, and control."
+F800,Phonological disorder,Mental health,,A phonological disorder is a speech problem where sounds are not pronounced correctly or in the right order.
+F810,Specific reading disorder,Mental health,,A specific reading disorder is a difficulty with reading due to an underlying learning or processing issue.
+F840,Autistic disorder,Mental health,,Autistic disorder is a neurological condition that affects how people communicate and interact with others in social situations.
+F900,"Attention-deficit hyperactivity disorder, predominantly inattentive type",Mental health,,"It's a condition where people have trouble paying attention and sitting still, often feeling restless and easily distracted."
+F910,Conduct disorder confined to family context,Mental health,substance use disorder|Substance use disorder disorder|Substance use disorder disease,Substance use disorder within Mental and behavioural disorders. Category-level grouping.
+F930,Separation anxiety disorder of childhood,Mental health,,It's a mental health condition where children feel extremely anxious or scared when separated from their main caregivers.
+F940,Selective mutism,Mental health,,Selective mutism is a rare condition where some people are unable to speak in certain situations or environments.
+F950,Transient tic disorder,Mental health,,"Transient Tic Disorder is a condition where people experience sudden, brief, and repetitive movements or sounds without warning."
+F980,Enuresis not due to a substance or known physiological condition,Mental health,,This term refers to bedwetting that can't be explained by medical conditions or substances.
+G000,Hemophilus meningitis,Neurological,,Hemophilus meningitis is a rare and serious infection that inflames the lining around the brain and spinal cord.
+G030,Nonpyogenic meningitis,Neurological,,Nonpyogenic meningitis is a type of meningitis that doesn't cause pus to form in the brain or spinal fluid.
+G041,Tropical spastic paraplegia,Neurological,,"""Tropical spastic paraplegia"" is a rare neurological disorder that affects movement and balance in the legs."
+G053,Encephalitis and encephalomyelitis in diseases classified elsewhere,Neurological,,These conditions are classified under other diseases because they're not distinct enough to be considered separate medical conditions.
+G060,Intracranial abscess and granuloma,Neurological,,"An intracranial abscess and granuloma is a serious infection that forms in the brain, causing inflammation and damage."
+G110,Congenital nonprogressive ataxia,Neurological,,"It's a rare genetic disorder that affects balance and coordination from birth, but doesn't get worse over time."
+G120,"Infantile spinal muscular atrophy, type I [Werdnig-Hoffman]",Neurological,,It's a rare genetic disorder that affects muscle strength and movement in babies and young children.
+G130,Paraneoplastic neuromyopathy and neuropathy,Neurological,epilepsy|Epilepsy disorder|Epilepsy disease,Epilepsy within Diseases of the nervous system. Category-level grouping.
+G20C,"Parkinsonism, unspecified",Neurological,,"Parkinsonism, unspecified, means you have symptoms similar to Parkinson's disease but the cause isn't known or confirmed."
+G210,Malignant neuroleptic syndrome,Neurological,,"A rare but life-threatening condition caused by certain medications, leading to muscle stiffness, fever, and organ damage."
+G230,Hallervorden-Spatz disease,Neurological,,Hallervorden-Spatz disease is a rare brain disorder that causes problems with movement and coordination in children.
+G241,Genetic torsion dystonia,Neurological,,Genetic torsion dystonia is a rare genetic disorder that affects muscle movement and causes twisting of the body.
+G250,Essential tremor,Neurological,,"Essential tremor is a neurological condition that causes involuntary shaking or trembling in your hands, arms, or head."
+G300,Alzheimer's disease with early onset,Neurological,,"A rare and serious form of Alzheimer's that starts before age 60, affecting memory, thinking, and daily life."
+G311,"Senile degeneration of brain, not elsewhere classified",Neurological,,"A condition where the brain's cells slowly die and don't function properly, causing memory loss and confusion."
+G320,Subacute combined degeneration of spinal cord in diseases classified elsewhere,Neurological,,It's a rare condition where the spinal cord gets damaged due to another disease or health issue.
+G35A,Relapsing-remitting multiple sclerosis,Neurological,,"Relapsing-remitting multiple sclerosis is a type of MS where symptoms come and go, often with periods of complete recovery."
+G360,Neuromyelitis optica [Devic],Neurological,,Neuromyelitis optica (NMO) is a rare autoimmune disease that damages the nerves connecting the brain and spinal cord.
+G370,Diffuse sclerosis of central nervous system,Neurological,,Diffuse sclerosis of the central nervous system is a condition where the protective covering around nerves deteriorates over time.
+G441,"Vascular headache, not elsewhere classified",Neurological,,A vascular headache is a type of headache caused by problems with blood vessels in the brain or neck.
+G450,Vertebro-basilar artery syndrome,Neurological,,Vertebro-basilar artery syndrome is a rare condition where the blood vessels in the neck and spine don't work properly.
+G460,Middle cerebral artery syndrome,Neurological,,Middle cerebral artery syndrome is a rare condition where the middle part of the brain doesn't get enough blood supply.
+G478,Other sleep disorders,Neurological,,"Other sleep disorders include insomnia, restless leg syndrome, narcolepsy, and sleep apnea, which can affect sleep quality and daily life."
+G500,Trigeminal neuralgia,Neurological,,"Trigeminal neuralgia is a chronic pain condition that affects the nerves in your face, causing sudden, severe headaches."
+G510,Bell's palsy,Neurological,,"Bell's palsy is a temporary weakness or paralysis of the face muscle on one side, usually caused by an infection."
+G520,Disorders of olfactory nerve,Neurological,,"Disorders of the olfactory nerve affect your sense of smell, making it hard to detect or identify different smells."
+G540,Brachial plexus disorders,Neurological,,"""Brachial plexus disorders are injuries or conditions that affect the nerves in your arm and shoulder area."
+G580,Intercostal neuropathy,Neurological,,"Intercostal neuropathy is a condition that affects the nerves between your ribs, causing pain and discomfort."
+G600,Hereditary motor and sensory neuropathy,Neurological,,"A rare nerve disorder that affects muscle strength, sensation, and movement, often passed down through families."
+G610,Guillain-Barre syndrome,Neurological,,"It's a rare autoimmune disorder where your immune system mistakenly attacks the nerves, causing muscle weakness and numbness."
+G620,Drug-induced polyneuropathy,Neurological,,"""Drug-induced polyneuropathy is a condition that affects the nerves, causing numbness, pain, and weakness in the hands and feet."
+G650,Sequelae of Guillain-Barre syndrome,Neurological,,The sequelae of Guillain-Barre syndrome are long-term problems that can occur after the initial illness has passed.
+G701,Toxic myoneural disorders,Neurological,,"""Toxic myoneural disorders"" refers to conditions where toxins damage the nerves and muscles in your body."
+G713,"Mitochondrial myopathy, not elsewhere classified",Neurological,,"It's a rare condition that affects the energy-producing parts of cells, leading to muscle weakness and fatigue."
+G720,Drug-induced myopathy,Neurological,,A rare condition where muscles become weak and stiff due to certain medications.
+G731,Lambert-Eaton syndrome in neoplastic disease,Neurological,,"A rare condition where a type of cancer causes muscle weakness and numbness, often affecting the arms."
+G800,Spastic quadriplegic cerebral palsy,Neurological,,It's a rare and severe form of cerebral palsy that affects muscle tone and movement in all four limbs.
+G830,Diplegia of upper limbs,Neurological,,"Diplegia of the upper limbs means weakness or paralysis in both arms, often affecting fine motor skills."
+G890,Central pain syndrome,Neurological,,"Central pain syndrome is a chronic condition where people experience severe, burning pain in their body's central nervous system."
+G901,Familial dysautonomia [Riley-Day],Neurological,,Familial dysautonomia is a rare genetic disorder that affects nerve function and causes various health problems.
+G910,Communicating hydrocephalus,Neurological,,"Communicating hydrocephalus is a condition where fluid builds up in the brain, causing pressure and potential damage."
+G928,Other toxic encephalopathy,Neurological,,"""Other toxic encephalopathy"" refers to brain damage caused by exposure to poisonous substances or chemicals."
+G930,Cerebral cysts,Neurological,,Cerebral cysts are abnormal fluid-filled sacs that can form in the brain and sometimes cause problems.
+H019,Unspecified inflammation of eyelid,Eye and ear,,It's a general term for redness and swelling around the eye caused by an unknown or unexplained infection.
+H029,Unspecified disorder of eyelid,Eye and ear,,An unspecified disorder of the eyelid means the exact cause and nature of the problem are unknown.
+H049,"Disorder of lacrimal system, unspecified",Eye and ear,,A problem with the tear ducts or glands that doesn't have a specific cause or diagnosis.
+H059,Unspecified disorder of orbit,Eye and ear,,An unspecified disorder of the orbit means an unknown or unexplained condition affecting the eye socket area.
+H109,Unspecified conjunctivitis,Eye and ear,,"Unspecified conjunctivitis is a type of eye infection that causes redness, itchiness, and discharge without a known cause."
+H119,Unspecified disorder of conjunctiva,Eye and ear,,It's a general term for an eye problem affecting the thin membrane covering the white part of your eyes.
+H159,Unspecified disorder of sclera,Eye and ear,,A condition where the clear outer layer of the eye (sclera) becomes cloudy or discolored without a known cause.
+H168,Other keratitis,Eye and ear,,"""Other keratitis refers to eye inflammation that's not caused by contact lenses or dry eyes, but other factors."
+H179,Unspecified corneal scar and opacity,Eye and ear,,"A small, cloudy area on the clear part of your eye that can cause vision problems or discomfort."
+H189,Unspecified disorder of cornea,Eye and ear,,An unspecified disorder of the cornea means a problem with the clear outer layer of your eye that can't be identified.
+H209,Unspecified iridocyclitis,Eye and ear,,Unspecified iridocyclitis is a type of eye inflammation that doesn't have a clear cause or explanation.
+H219,Unspecified disorder of iris and ciliary body,Eye and ear,,It's a medical condition where the iris and ciliary body in your eye don't work properly or are damaged.
+H259,Unspecified age-related cataract,Eye and ear,,A type of clouding in the lens of the eye that affects vision as we get older.
+H268,Other specified cataract,Eye and ear,,A cloudy area on the lens in your eye that's affecting vision.
+H278,Other specified disorders of lens,Eye and ear,,A problem with the lens in your eye that's causing symptoms.
+H318,Other specified disorders of choroid,Eye and ear,,A disorder of the blood vessels in the back of the eye.
+H338,Other retinal detachments,Eye and ear,,"The retina separates from its normal position, causing vision problems."
+H349,Unspecified retinal vascular occlusion,Eye and ear,,There's an unknown blockage in the blood vessels of the retina.
+H359,Unspecified retinal disorder,Eye and ear,,There's an unknown condition affecting the retina.
+H409,Unspecified glaucoma,Eye and ear,,High pressure in the eye is causing symptoms.
+H439,Unspecified disorder of vitreous body,Eye and ear,,There's an unknown problem with the gel-like substance inside the eye.
+H449,Unspecified disorder of globe,Eye and ear,,A problem affecting the clear part of the eye that can cause vision problems.
+H462,Nutritional optic neuropathy,Eye and ear,,Nutrition-related damage to the optic nerve that affects vision.
+H479,Unspecified disorder of visual pathways,Eye and ear,,A general issue with how the brain processes visual information from the eyes.
+H499,Unspecified paralytic strabismus,Eye and ear,,A condition where one eye is not moving properly due to muscle weakness or paralysis.
+H509,Unspecified strabismus,Eye and ear,,A misalignment of the eyes that can affect depth perception and vision.
+H510,Palsy (spasm) of conjugate gaze,Eye and ear,,A temporary spasm in the muscles that control eye movement.
+H524,Presbyopia,Eye and ear,,A age-related decline in near vision ability.
+H532,Diplopia,Eye and ear,,"Dual vision, where two images are seen instead of one."
+H543,"Unqualified visual loss, both eyes",Eye and ear,,Sudden loss of vision in both eyes without an obvious cause
+H579,Unspecified disorder of eye and adnexa,Eye and ear,,A problem with the eye and surrounding tissues that isn't clearly defined
+H671,"Otitis media in diseases classified elsewhere, right ear",Eye and ear,,"Inflammation of the middle ear due to another condition, affecting the right ear"
+H814,Vertigo of central origin,Eye and ear,,Dizziness caused by a central nervous system issue
+H821,"Vertiginous syndromes in diseases classified elsewhere, right ear",Eye and ear,,Dizziness caused by another underlying condition affecting the right ear
+H900,"Conductive hearing loss, bilateral",Eye and ear,,Hearing loss in both ears where sound is not transmitted properly
+H913,"Deaf nonspeaking, not elsewhere classified",Eye and ear,,A type of hearing loss that doesn't allow for speech or understanding
+I010,Acute rheumatic pericarditis,Cardiovascular,,Inflammation of the heart's outer layer due to rheumatic fever
+I020,Rheumatic chorea with heart involvement,Cardiovascular,,"It's a rare condition where the heart and joints get inflamed, causing symptoms like joint pain and abnormal heartbeat."
+I050,Rheumatic mitral stenosis,Cardiovascular,,It's a condition where the heart valve between the left and right sides of the heart gets narrowed.
+I060,Rheumatic aortic stenosis,Cardiovascular,,Rheumatic aortic stenosis is a narrowing of the heart's main valve due to an old infection.
+I070,Rheumatic tricuspid stenosis,Cardiovascular,,"It's a condition where the valve between your heart's right side gets narrowed, making it harder for blood to flow."
+I080,Rheumatic disorders of both mitral and aortic valves,Cardiovascular,,This condition involves problems with the heart valves that control blood flow between the heart's chambers.
+I090,Rheumatic myocarditis,Cardiovascular,,"Rheumatic myocarditis is an inflammation of the heart muscle caused by a bacterial infection, often after strep throat."
+I110,Hypertensive heart disease with heart failure,Cardiovascular,,"A condition where the heart becomes too weak to pump enough blood, often caused by high blood pressure."
+I120,Hypertensive chronic kidney disease with stage 5 chronic kidney disease or end stage renal disease,Cardiovascular,,A serious condition where your kidneys are severely damaged and can't clean waste from your blood properly.
+I130,"Hypertensive heart and chronic kidney disease with heart failure and stage 1 through stage 4 chronic kidney disease, or unspecified chronic kidney disease",Cardiovascular,,"This medical condition means you have high blood pressure that's affecting your kidneys and heart, leading to kidney problems."
+I150,Renovascular hypertension,Cardiovascular,,Renovascular hypertension occurs when high blood pressure develops due to narrowing or blockage in the arteries that supply the kidneys.
+I160,Hypertensive urgency,Cardiovascular,,A medical emergency where your blood pressure is extremely high and needs to be treated right away.
+I1A0,Resistant hypertension,Cardiovascular,,Resistant hypertension means having high blood pressure that doesn't respond to regular medication and lifestyle changes.
+I200,Unstable angina,Cardiovascular,,Unstable angina is a type of chest pain that occurs when the heart muscle doesn't get enough oxygen.
+I213,ST elevation (STEMI) myocardial infarction of unspecified site,Cardiovascular,,A heart attack where the exact spot in the heart that's blocked isn't known.
+I220,Subsequent ST elevation (STEMI) myocardial infarction of anterior wall,Cardiovascular,arrhythmia|Arrhythmia disorder|Arrhythmia disease,Arrhythmia within Diseases of the circulatory system. Category-level grouping.
+I230,Hemopericardium as current complication following acute myocardial infarction,Cardiovascular,,Hemopericardium is a rare but serious condition where blood collects in the sac surrounding the heart after a heart attack.
+I240,Acute coronary thrombosis not resulting in myocardial infarction,Cardiovascular,,"A blockage in the heart that doesn't cause a heart attack, but can still be serious and potentially life-threatening."
+I252,Old myocardial infarction,Cardiovascular,,"""Old myocardial infarction"" means a heart attack that happened many years ago and may not be causing symptoms."
+I270,Primary pulmonary hypertension,Cardiovascular,,Primary pulmonary hypertension is a rare and serious condition where the blood pressure in the lungs becomes too high.
+I280,Arteriovenous fistula of pulmonary vessels,Cardiovascular,,An abnormal connection between the arteries and veins in the lungs that can cause problems with oxygenation.
+I300,Acute nonspecific idiopathic pericarditis,Cardiovascular,,A rare and mysterious condition where the lining of the heart becomes inflamed without a known cause or reason.
+I310,Chronic adhesive pericarditis,Cardiovascular,,Chronic adhesive pericarditis is a condition where the lining around your heart becomes inflamed and sticks together.
+I330,Acute and subacute infective endocarditis,Cardiovascular,,It's a rare but serious infection of the heart valves that can be mild or severe.
+I340,Nonrheumatic mitral (valve) insufficiency,Cardiovascular,,"It's a condition where the heart valve between the left and right chambers doesn't close properly, allowing blood to leak."
+I350,Nonrheumatic aortic (valve) stenosis,Cardiovascular,,A non-rheumatic aortic valve stenosis is a narrowing of the heart's main valve that can make it harder to pump blood.
+I360,Nonrheumatic tricuspid (valve) stenosis,Cardiovascular,,It's a condition where the heart valve between the right and left sides of the heart becomes narrowed or blocked.
+I370,Nonrheumatic pulmonary valve stenosis,Cardiovascular,hypertensive disease|Hypertensive disease disorder|Hypertensive disease disease,Hypertensive disease within Diseases of the circulatory system. Category-level grouping.
+I400,Infective myocarditis,Cardiovascular,,Infective myocarditis is a rare but serious condition where the heart muscle becomes inflamed due to an infection.
+I420,Dilated cardiomyopathy,Cardiovascular,,Dilated cardiomyopathy is a condition where the heart's main pumping chamber becomes weak and enlarged over time.
+I440,"Atrioventricular block, first degree",Cardiovascular,,"Atrioventricular block, first degree means your heart's electrical signals are delayed, but still work properly."
+I450,Right fascicular block,Cardiovascular,,"A ""right fascicular block"" means the nerve that controls the right arm's upper part isn't working properly."
+I462,Cardiac arrest due to underlying cardiac condition,Cardiovascular,,"When the heart stops working properly because of a pre-existing heart problem, it can lead to cardiac arrest."
+I470,Re-entry ventricular arrhythmia,Cardiovascular,,A type of irregular heartbeat that occurs when the heart's ventricles beat too quickly or irregularly after a procedure.
+I480,Paroxysmal atrial fibrillation,Cardiovascular,,"Paroxysmal atrial fibrillation is a type of irregular heartbeat that comes and goes suddenly, often without warning."
+I491,Atrial premature depolarization,Cardiovascular,,Atrial premature depolarization is a heart rhythm issue where the heart beats too early and irregularly.
+I501,"Left ventricular failure, unspecified",Cardiovascular,,Left ventricular failure means the left side of your heart isn't pumping blood properly.
+I510,"Cardiac septal defect, acquired",Cardiovascular,,"A hole in the wall between heart chambers that develops later in life, often due to injury or infection."
+I602,Nontraumatic subarachnoid hemorrhage from anterior communicating artery,Cardiovascular,,A type of bleeding in the brain that occurs when a blood vessel near the brain's surface ruptures.
+I610,"Nontraumatic intracerebral hemorrhage in hemisphere, subcortical",Cardiovascular,,"A type of brain bleed that occurs inside the brain's outer layer, near the surface, and not caused by trauma."
+I621,Nontraumatic extradural hemorrhage,Cardiovascular,,A non-traumatic extradural hemorrhage is a type of bleeding in the brain that occurs without any obvious injury.
+I636,"Cerebral infarction due to cerebral venous thrombosis, nonpyogenic",Cardiovascular,,A blood clot in a vein that supplies the brain causes damage or death of brain tissue.
+I651,Occlusion and stenosis of basilar artery,Cardiovascular,,"It's a medical condition where the blood vessel at the base of the brain narrows or blocks, affecting circulation."
+I663,Occlusion and stenosis of cerebellar arteries,Cardiovascular,cerebrovascular disease|Cerebrovascular disease disorder|Cerebrovascular disease disease,Cerebrovascular disease within Diseases of the circulatory system. Category-level grouping.
+I670,"Dissection of cerebral arteries, nonruptured",Cardiovascular,,This medical term refers to a procedure where the doctor carefully examines the brain's blood vessels without causing damage.
+I680,Cerebral amyloid angiopathy,Cardiovascular,,Cerebral amyloid angiopathy is a condition where abnormal protein clumps build up in blood vessels in the brain.
+I700,Atherosclerosis of aorta,Cardiovascular,,Atherosclerosis of the aorta is when plaque builds up in the main artery that carries blood from your heart.
+I718,"Aortic aneurysm of unspecified site, ruptured",Cardiovascular,,"""A serious medical condition where a weakened blood vessel in the body bursts, causing severe bleeding and potentially life-threatening complications."
+I720,Aneurysm of carotid artery,Cardiovascular,,An aneurysm in the carotid artery is a bulge that can burst and cause a stroke or brain damage.
+I731,Thromboangiitis obliterans [Buerger's disease],Cardiovascular,,"It's a rare condition that causes inflammation and blockages in blood vessels, often affecting young smokers."
+I742,Embolism and thrombosis of arteries of the upper extremities,Cardiovascular,,"A blood clot in an arm artery can cut off blood flow, causing pain, swelling, and potentially serious complications."
+I770,"Arteriovenous fistula, acquired",Cardiovascular,,An acquired arteriovenous fistula is an abnormal connection between a blood vessel and another vein or artery.
+I780,Hereditary hemorrhagic telangiectasia,Cardiovascular,,Hereditary hemorrhagic telangiectasia is a rare genetic disorder that causes abnormal blood vessels to form in the body.
+I790,Aneurysm of aorta in diseases classified elsewhere,Cardiovascular,,An aneurysm of the aorta is when the main blood vessel that carries oxygen to the body gets weakened.
+I803,"Phlebitis and thrombophlebitis of lower extremities, unspecified",Cardiovascular,,It's a medical condition where the veins in your legs become inflamed or swollen with blood clots.
+J020,Streptococcal pharyngitis,Respiratory,,Streptococcal pharyngitis is a common and contagious throat infection caused by bacteria that can spread quickly.
+J040,Acute laryngitis,Respiratory,,Acute laryngitis is a sudden inflammation of the voice box that causes hoarseness and a sore throat.
+J050,Acute obstructive laryngitis [croup],Respiratory,,"Acute obstructive laryngitis, or croup, is a common childhood illness that causes a barking cough and hoarse voice."
+J060,Acute laryngopharyngitis,Respiratory,,Acute laryngopharyngitis is a sudden inflammation of the throat and voice box that causes pain and hoarseness.
+J101,Influenza due to other identified influenza virus with other respiratory manifestations,Respiratory,,This means you have the flu from a different type of flu virus that's causing additional breathing problems.
+J111,Influenza due to unidentified influenza virus with other respiratory manifestations,Respiratory,,A rare and serious illness caused by a new flu virus that also affects the lungs.
+J120,Adenoviral pneumonia,Respiratory,,Adenoviral pneumonia is a type of lung infection caused by a virus that can be spread through the air.
+J150,Pneumonia due to Klebsiella pneumoniae,Respiratory,,A serious lung infection caused by a type of bacteria called Klebsiella pneumoniae that can be life-threatening.
+J160,Chlamydial pneumonia,Respiratory,,"Chlamydial pneumonia is a type of lung infection caused by the Chlamydia bacteria, often spread through close contact."
+J180,"Bronchopneumonia, unspecified organism",Respiratory,respiratory failure|Respiratory failure disorder|Respiratory failure disease,Respiratory failure within Diseases of the respiratory system. Category-level grouping.
+J200,Acute bronchitis due to Mycoplasma pneumoniae,Respiratory,,A type of lung infection caused by a small germ called Mycoplasma pneumoniae that affects the airways.
+J210,Acute bronchiolitis due to respiratory syncytial virus,Respiratory,,A serious lung infection in young children caused by a common virus that affects their small airways.
+J300,Vasomotor rhinitis,Respiratory,,Vasomotor rhinitis is a common allergy-like condition that causes nasal congestion and stuffiness without any actual allergens.
+J310,Chronic rhinitis,Respiratory,,Chronic rhinitis is a long-term condition that causes persistent nasal congestion and stuffiness in the nose.
+J320,Chronic maxillary sinusitis,Respiratory,,Chronic maxillary sinusitis is a long-term inflammation of the sinuses in your upper jaw that doesn't go away easily.
+J330,Polyp of nasal cavity,Respiratory,,A polyp in the nasal cavity is a growth that can cause breathing problems and discomfort in the nose.
+J340,"Abscess, furuncle and carbuncle of nose",Respiratory,,"A collection of painful, infected bumps on the nose that can be treated with antibiotics or surgery."
+J351,Hypertrophy of tonsils,Respiratory,copd|COPD disorder|COPD disease,COPD within Diseases of the respiratory system. Category-level grouping.
+J370,Chronic laryngitis,Respiratory,,Chronic laryngitis is a long-term inflammation of the vocal cords that can cause hoarseness and voice problems.
+J381,Polyp of vocal cord and larynx,Respiratory,,"A polyp on the vocal cord or larynx can cause hoarseness, coughing, and breathing difficulties in some people."
+J390,Retropharyngeal and parapharyngeal abscess,Respiratory,,A Retropharyngeal or Parapharyngeal Abscess is a painful infection in the neck that can be life-threatening if not treated.
+J410,Simple chronic bronchitis,Respiratory,,Simple chronic bronchitis is a long-term inflammation of the airways that makes it hard to breathe.
+J430,Unilateral pulmonary emphysema [MacLeod's syndrome],Respiratory,,"A rare lung condition where air leaks into the lungs from a tear in the lining, causing breathing problems."
+J440,Chronic obstructive pulmonary disease with (acute) lower respiratory infection,Respiratory,,"It's a lung condition that makes breathing harder, often caused by an acute infection on top of existing COPD."
+J470,Bronchiectasis with acute lower respiratory infection,Respiratory,,"A lung condition where airways become damaged and inflamed, making it harder to breathe, often accompanied by a cough."
+J4A0,Restrictive allograft syndrome,Respiratory,,Restrictive allograft syndrome is a rare complication where the body rejects an organ transplant too aggressively.
+J620,Pneumoconiosis due to talc dust,Respiratory,,A lung disease caused by inhaling very fine particles of talcum powder over a long time.
+J630,Aluminosis (of lung),Respiratory,,Aluminosis of the lung is a rare disease where metal dust in the air causes inflammation and scarring.
+J660,Byssinosis,Respiratory,,"Byssinosis is a lung disease caused by inhaling cotton dust, often affecting textile workers."
+J670,Farmer's lung,Respiratory,,Farmer's lung is a type of lung disease that people get from breathing in tiny particles from moldy hay.
+J680,"Bronchitis and pneumonitis due to chemicals, gases, fumes and vapors",Respiratory,,It's a medical condition that happens when you breathe in bad air or particles that irritate your lungs.
+J690,Pneumonitis due to inhalation of food and vomit,Respiratory,,Inflammation of lung tissue from swallowed food and vomit
+J700,Acute pulmonary manifestations due to radiation,Respiratory,,Damage to lungs from radiation exposure
+J810,Acute pulmonary edema,Respiratory,,Lung swelling due to fluid buildup
+J842,Lymphoid interstitial pneumonia,Respiratory,,A rare lung disease with abnormal immune response
+J850,Gangrene and necrosis of lung,Respiratory,,Dangerous lung tissue death from infection or injury
+J860,Pyothorax with fistula,Respiratory,,Infection in the space between lungs and chest wall
+J910,Malignant pleural effusion,Respiratory,,Cancer cells leaking into the fluid around the lungs
+J920,Pleural plaque with presence of asbestos,Respiratory,,A build-up of scar tissue in the lining of the lungs
+J930,Spontaneous tension pneumothorax,Respiratory,,A spontaneous tension pneumothorax is a life-threatening condition where air gets trapped in the space between lungs and chest.
+J940,Chylous effusion,Respiratory,,A chylous effusion is a type of fluid buildup in the body's cavities that contains fatty tissue from the digestive system.
+J951,Acute pulmonary insufficiency following thoracic surgery,Respiratory,,A rare but serious complication after lung surgery where the lungs can't get enough oxygen.
+J982,Interstitial emphysema,Respiratory,,"Interstitial emphysema is a condition where air leaks into the lungs' tiny air sacs, causing them to become over-inflated."
+K000,Anodontia,Digestive,,Anodontia is a rare dental condition where teeth do not develop properly in the jawbone.
+K010,Embedded teeth,Digestive,,"Embedded teeth are small, usually harmless growths that stick out from the gum line of your teeth."
+K023,Arrested dental caries,Digestive,,"""Arrested dental caries"" means the decay has stopped growing, but it's still present in the tooth."
+K030,Excessive attrition of teeth,Digestive,,Excessive attrition of teeth means wearing down your teeth too much due to grinding or clenching.
+K041,Necrosis of pulp,Digestive,,Necrosis of pulp refers to the death of the soft tissue inside a tooth due to injury or infection.
+K054,Periodontosis,Digestive,,Periodontosis is a gum disease that damages the tissues supporting your teeth and can lead to tooth loss.
+K061,Gingival enlargement,Digestive,,Gingival enlargement is when the gums around your teeth become swollen and larger than normal.
+K080,Exfoliation of teeth due to systemic causes,Digestive,,"Tooth decay or discoloration caused by underlying health issues, such as diabetes or kidney disease, rather than poor oral hygiene."
+K090,Developmental odontogenic cysts,Digestive,,"Developmental odontogenic cysts are rare, non-cancerous growths in the jaw that can cause problems for teeth and gums."
+K110,Atrophy of salivary gland,Digestive,,The atrophy of a salivary gland means it shrinks and loses its ability to produce saliva.
+K120,Recurrent oral aphthae,Digestive,,"Recurrent oral aphthae are small, painful sores that keep coming back on the inside of your mouth."
+K130,Diseases of lips,Digestive,gastritis|Gastritis disorder|Gastritis disease,Gastritis within Diseases of the digestive system. Category-level grouping.
+K140,Glossitis,Digestive,,"Glossitis is a condition where the tissue covering your tongue becomes inflamed or irritated, often causing discomfort."
+K200,Eosinophilic esophagitis,Digestive,pancreatic disorder|Pancreatic disorder disorder|Pancreatic disorder disease,Pancreatic disorder within Diseases of the digestive system. Category-level grouping.
+K219,Gastro-esophageal reflux disease without esophagitis,Digestive,,"It's a condition where stomach acid flows back into the tube connecting your mouth and stomach, causing discomfort."
+K220,Achalasia of cardia,Digestive,,Achalasia of the esophagus is a rare condition where food gets stuck in the throat due to muscle weakness.
+K250,Acute gastric ulcer with hemorrhage,Digestive,,A severe stomach ulcer that bleeds and can be life-threatening if not treated promptly by a doctor.
+K260,Acute duodenal ulcer with hemorrhage,Digestive,liver disease|Liver disease disorder|Liver disease disease,Liver disease within Diseases of the digestive system. Category-level grouping.
+K270,"Acute peptic ulcer, site unspecified, with hemorrhage",Digestive,,"A severe stomach problem where an ulcer has developed and is bleeding, possibly causing serious health issues."
+K280,Acute gastrojejunal ulcer with hemorrhage,Digestive,,A painful and potentially life-threatening condition where an ulcer develops in the stomach or small intestine's upper part.
+K310,Acute dilatation of stomach,Digestive,,A sudden and severe swelling of the stomach that can be painful and may require medical attention.
+K380,Hyperplasia of appendix,Digestive,,Hyperplasia of the appendix means the lining of the appendix grows too much and can cause problems.
+K420,"Umbilical hernia with obstruction, without gangrene",Digestive,,"A small bulge in the belly that can cause discomfort and blockage, but not usually life-threatening."
+K430,"Incisional hernia with obstruction, without gangrene",Digestive,,A small bulge or weakness in the abdominal wall that can cause blockages.
+K440,"Diaphragmatic hernia with obstruction, without gangrene",Digestive,,"Air leaks into the chest cavity through a hole in the diaphragm, causing breathing problems."
+K450,"Other specified abdominal hernia with obstruction, without gangrene",Digestive,,A type of hernia with an unspecified location and symptoms.
+K460,"Unspecified abdominal hernia with obstruction, without gangrene",Digestive,,A general term for any hernia without a specific diagnosis.
+K520,Gastroenteritis and colitis due to radiation,Digestive,,Inflammation of the intestines due to radiation therapy.
+K551,Chronic vascular disorders of intestine,Digestive,,A condition where blood flow to the intestine is damaged over time.
+K560,Paralytic ileus,Digestive,,A temporary blockage of the intestine that prevents normal movement.
+K580,Irritable bowel syndrome with diarrhea,Digestive,,"A chronic condition causing abdominal pain, cramps, and loose stools."
+K591,Functional diarrhea,Digestive,,Functional diarrhea is a type of stomach upset where your bowels are loose and you have frequent bowel movements.
+K600,Acute anal fissure,Digestive,,An acute anal fissure is a small tear in the skin around the anus that causes pain and bleeding.
+K610,Anal abscess,Digestive,,An anal abscess is a painful lump that forms when bacteria get trapped under the skin in your anus.
+K620,Anal polyp,Digestive,,A small growth on the inside of your anus that can be painful and sometimes bleed or fall off.
+K630,Abscess of intestine,Digestive,,An abscess of the intestine is a painful pocket of infection that forms in the wall of the intestine.
+K640,First degree hemorrhoids,Digestive,,"First-degree hemorrhoids are small, swollen veins in the lower rectum or anus that can be painful and itchy."
+K650,Generalized (acute) peritonitis,Digestive,,"It's a serious and painful inflammation of the lining around your intestines, usually caused by infection or injury."
+K660,Peritoneal adhesions (postprocedural) (postinfection),Digestive,,"Peritoneal adhesions are painful, sticky bands that form in the abdominal cavity after surgery or an infection."
+K682,Retroperitoneal fibrosis,Digestive,,"Retroperitoneal fibrosis is a rare condition where scar tissue grows in the abdominal cavity, often causing pain and bowel issues."
+K700,Alcoholic fatty liver,Digestive,,Alcoholic fatty liver is a condition where the liver becomes inflamed and damaged due to excessive drinking.
+K710,Toxic liver disease with cholestasis,Digestive,,"A condition where the liver becomes inflamed and unable to properly process bile, leading to serious health problems."
+K730,"Chronic persistent hepatitis, not elsewhere classified",Digestive,,A rare and serious liver disease that doesn't fit into any other known category.
+K741,Hepatic sclerosis,Digestive,,Hepatic sclerosis is a condition where the liver's tiny blood vessels become scarred and narrow over time.
+K750,Abscess of liver,Digestive,,An abscess of the liver is a painful lump that forms when bacteria infect and cause inflammation in the liver.
+L011,Impetiginization of other dermatoses,Skin,,It's when a skin condition like eczema or acne becomes infected and spreads to other areas of the body.
+L040,"Acute lymphadenitis of face, head and neck",Skin,,"It's a rare condition where the lymph nodes in your face, head, and neck become inflamed suddenly."
+L080,Pyoderma,Skin,,A skin rash caused by bacterial infection and inflammation.
+L100,Pemphigus vulgaris,Skin,,An autoimmune disease that causes blisters on the skin's surface.
+L110,Acquired keratosis follicularis,Skin,,A harmless growth on the skin that can be itchy or painful.
+L120,Bullous pemphigoid,Skin,,A condition where the skin forms large blisters due to an immune response.
+L130,Dermatitis herpetiformis,Skin,,A type of eczema characterized by intense itching and blistering skin.
+L200,Besnier's prurigo,Skin,,"A skin rash caused by severe itching, often leading to open sores."
+L210,Seborrhea capitis,Skin,,A common skin condition causing flaky scalp patches in children.
+L230,Allergic contact dermatitis due to metals,Skin,,"A skin reaction triggered by contact with certain metals, such as nickel."
+L240,Irritant contact dermatitis due to detergents,Skin,,A skin reaction that happens when people touch or wear things like soaps and cleaning products that irritate their skin.
+L250,Unspecified contact dermatitis due to cosmetics,Skin,,A skin reaction caused by using cosmetics that you're not sure are safe or cause an allergic response.
+L270,Generalized skin eruption due to drugs and medicaments taken internally,Skin,,A rash or skin reaction caused by certain medications you take inside your body.
+L280,Lichen simplex chronicus,Skin,,It's a skin condition where the skin becomes itchy and inflamed due to repeated scratching or irritation.
+L290,Pruritus ani,Skin,,It's a chronic itchiness in the bottom area that can be uncomfortable and frustrating to deal with.
+L300,Nummular dermatitis,Skin,,"Nummular dermatitis is a skin condition that causes small, coin-shaped patches of itchy, scaly skin on the body."
+L400,Psoriasis vulgaris,Skin,,"Psoriasis vulgaris is a common skin condition that causes red, scaly patches on the skin, often itchy and painful."
+L410,Pityriasis lichenoides et varioliformis acuta,Skin,,"It's a rare skin condition that causes small, itchy bumps and scaly patches on the skin."
+L430,Hypertrophic lichen planus,Skin,,"Hypertrophic lichen planus is a rare skin condition that causes thick, scaly patches on the skin and mucous membranes."
+L440,Pityriasis rubra pilaris,Skin,,"Pityriasis rubra pilaris is a rare skin condition that causes red, scaly patches and small bumps on the skin."
+L490,Exfoliation due to erythematous condition involving less than 10 percent of body surface,Skin,,This medical term refers to skin peeling caused by a mild redness that affects only a small part of the body.
+L500,Allergic urticaria,Skin,,"Allergic urticaria is a skin reaction that causes itchy, swollen, and sometimes painful hives or welts."
+L510,Nonbullous erythema multiforme,Skin,,"It's a skin condition that causes painful, itchy, and blistering rashes on the skin, often triggered by infections or medications."
+L530,Toxic erythema,Skin,,Toxic erythema is a skin reaction that occurs when your body reacts badly to certain medicines or substances.
+L550,Sunburn of first degree,Skin,,A mild sunburn that's easy to treat and usually doesn't cause serious problems or scarring.
+L560,Drug phototoxic response,Skin,,A drug reaction that causes skin and sometimes other tissues to become severely damaged or discolored.
+L570,Actinic keratosis,Skin,,"Actinic keratosis is a skin condition caused by sun damage, leading to small, rough patches on the skin."
+L580,Acute radiodermatitis,Skin,,"Acute radiodermatitis is a painful skin condition caused by radiation exposure, often seen in cancer patients."
+L590,Erythema ab igne [dermatitis ab igne],Skin,,Erythema ab igne is a skin condition caused by prolonged exposure to heat from things like lamps or heaters.
+L600,Ingrowing nail,Skin,,"An ingrown nail is when the edge of your nail grows into your skin, causing pain and infection."
+M009,"Pyogenic arthritis, unspecified",Musculoskeletal,,"Pyogenic arthritis, unspecified, is a type of joint infection that causes pain and swelling without knowing the exact cause."
+M029,"Reactive arthropathy, unspecified",Musculoskeletal,,Reactive arthropathy means your joints become inflamed and stiff in response to an underlying condition or injury.
+M041,Periodic fever syndromes,Musculoskeletal,,Periodic fever syndromes are a group of rare conditions that cause recurring episodes of high fever and other symptoms.
+M059,"Rheumatoid arthritis with rheumatoid factor, unspecified",Musculoskeletal,,"A type of arthritis that causes joint pain and stiffness, often related to an abnormal protein in the blood."
+M061,Adult-onset Still's disease,Musculoskeletal,,Adult-onset Still's disease is a rare condition where the immune system mistakenly attacks healthy tissues in the body.
+M081,Juvenile ankylosing spondylitis,Musculoskeletal,,It's a rare condition where the spine and joints become stiff and inflamed in children and young people.
+M109,"Gout, unspecified",Musculoskeletal,,"""Gout, unspecified"" means you have gout symptoms but the exact cause isn't known or diagnosed yet."
+M119,"Crystal arthropathy, unspecified",Musculoskeletal,,"""Unspecified crystal arthropathy refers to joint pain and stiffness caused by an unknown type of crystal abnormality."
+M129,"Arthropathy, unspecified",Musculoskeletal,,"Arthropathy, unspecified means your joints don't work properly, but the exact cause isn't known or diagnosed yet."
+M130,"Polyarthritis, unspecified",Musculoskeletal,,"""Polyarthritis, unspecified"" means having joint pain and inflammation in multiple joints without a clear cause or diagnosis."
+M150,Primary generalized (osteo)arthritis,Musculoskeletal,,"It's a type of arthritis that affects the joints, causing pain and stiffness in multiple parts of the body."
+M160,Bilateral primary osteoarthritis of hip,Musculoskeletal,,"A type of arthritis that affects the joint in your hip, causing pain and stiffness."
+M170,Bilateral primary osteoarthritis of knee,Musculoskeletal,,A type of arthritis that affects the joint between the thigh bone and shin bone in the knee.
+M180,Bilateral primary osteoarthritis of first carpometacarpal joints,Musculoskeletal,,It's a type of arthritis that affects the small joint at the base of your thumb.
+M247,Protrusio acetabuli,Musculoskeletal,,Protrusio acetabuli is a rare hip condition where the socket of the pelvis becomes abnormally deep and wide.
+M259,"Joint disorder, unspecified",Musculoskeletal,,"""Joint disorder, unspecified"" means a problem with your joints that can't be identified or explained by a doctor."
+M264,"Malocclusion, unspecified",Musculoskeletal,,"""Malocclusion, unspecified"" means the upper and lower teeth don't fit together properly without a specific reason being known."
+M270,Developmental disorders of jaws,Musculoskeletal,,Developmental disorders of jaws refer to unusual growth patterns in the jawbone that can affect facial development.
+M300,Polyarteritis nodosa,Musculoskeletal,,It's a rare blood vessel disease that causes inflammation and damage to the arteries throughout your body.
+M310,Hypersensitivity angiitis,Musculoskeletal,,Hypersensitivity angiitis is a rare skin condition that causes inflammation and damage to blood vessels under the skin.
+M320,Drug-induced systemic lupus erythematosus,Musculoskeletal,,A rare condition where certain medications trigger a type of arthritis that can cause inflammation and damage to joints.
+M340,Progressive systemic sclerosis,Musculoskeletal,,Progressive systemic sclerosis is a chronic autoimmune disease that causes skin and internal organ damage over time.
+M351,Other overlap syndromes,Musculoskeletal,,"""Other overlap syndromes"" refers to conditions where symptoms of two or more diseases overlap and are hard to diagnose."
+M360,Dermato(poly)myositis in neoplastic disease,Musculoskeletal,,Dermatomyositis with cancer refers to a rare condition where skin and muscle inflammation occurs alongside a type of cancer.
+M419,"Scoliosis, unspecified",Musculoskeletal,,"""Scoliosis, unspecified"" means the curvature of your spine that hasn't been diagnosed or explained by a doctor yet."
+M429,"Spinal osteochondrosis, unspecified",Musculoskeletal,,"It's a condition where the spine doesn't grow properly, causing problems with bones and discs."
+M433,Recurrent atlantoaxial dislocation with myelopathy,Musculoskeletal,,"A person's neck joint (atlas) slips out of place repeatedly, putting pressure on the spinal cord and nerves."
+M450,Ankylosing spondylitis of multiple sites in spine,Musculoskeletal,,"A condition where the spine joints fuse together, causing stiffness and pain, often affecting multiple areas of the spine."
+M461,"Sacroiliitis, not elsewhere classified",Musculoskeletal,,Inflammation in the joints where the spine meets the pelvis.
+M479,"Spondylosis, unspecified",Musculoskeletal,,Degeneration of spinal discs without a specific cause.
+M489,"Spondylopathy, unspecified",Musculoskeletal,,Muscle and joint pain in the spine without a known reason.
+M519,"Unspecified thoracic, thoracolumbar and lumbosacral intervertebral disc disorder",Musculoskeletal,,"Problems with the discs between vertebrae in the thoracic, thoracolumbar, and lumbosacral areas."
+M530,Cervicocranial syndrome,Musculoskeletal,,Pain and discomfort in the neck and head due to muscle strain.
+M542,Cervicalgia,Musculoskeletal,osteoporosis|Osteoporosis disorder|Osteoporosis disease,Osteoporosis within Diseases of the musculoskeletal system and connective tissue. Category-level grouping.
+M609,"Myositis, unspecified",Musculoskeletal,,Inflammation of muscles without a specific cause or location.
+M619,"Calcification and ossification of muscle, unspecified",Musculoskeletal,,Hardening and scarring of muscles without a known reason.
+M623,Immobility syndrome (paraplegic),Musculoskeletal,,Loss of mobility due to severe spinal injury.
+M654,Radial styloid tenosynovitis [de Quervain],Musculoskeletal,,"Radial styloid tenosynovitis, also known as de Quervain's disease, is a painful condition affecting the tendons on your wrist."
+M660,Rupture of popliteal cyst,Musculoskeletal,,"A rupture in a lump near the knee joint that forms fluid, causing swelling and pain."
+M719,"Bursopathy, unspecified",Musculoskeletal,,"""Bursopathy, unspecified"" means inflammation of the fluid-filled sacs that cushion joints and reduce friction in the body."
+M720,Palmar fascial fibromatosis [Dupuytren],Musculoskeletal,,"It's a condition where scar tissue forms in the palm of your hand, causing fingers to bend or curl inward."
+M769,"Unspecified enthesopathy, lower limb, excluding foot",Musculoskeletal,,Unspecified enthesopathy of the lower limbs means inflammation or irritation in the connective tissue where muscles and tendons attach.
+M778,"Other enthesopathies, not elsewhere classified",Musculoskeletal,,This category includes rare or unusual conditions that don't fit into other medical categories.
+M790,"Rheumatism, unspecified",Musculoskeletal,,"Rheumatism, unspecified, means your joints are aching or stiff without knowing the exact cause."
+M810,Age-related osteoporosis without current pathological fracture,Musculoskeletal,,"A condition where bones become weak and brittle with age, increasing the risk of fractures."
+M830,Puerperal osteomalacia,Musculoskeletal,,Puerperal osteomalacia is a condition where new mothers develop softening of the bones due to hormonal changes after childbirth.
+M849,"Disorder of continuity of bone, unspecified",Musculoskeletal,,A condition where the bones in your body don't fit together properly without a specific reason being known.
+M852,Hyperostosis of skull,Musculoskeletal,,Hyperostosis of the skull is a rare condition where extra bone grows on the outside of the skull.
+M869,"Osteomyelitis, unspecified",Musculoskeletal,,"Osteomyelitis, unspecified, means an infection in the bone that can't be pinpointed to a specific cause or location."
+M879,"Osteonecrosis, unspecified",Musculoskeletal,,"Osteonecrosis, unspecified, means the bone tissue has died due to lack of blood supply, often causing pain and disability."
+N000,Acute nephritic syndrome with minor glomerular abnormality,Genitourinary,,"A kidney condition where the kidneys are inflamed and slightly damaged, leading to problems filtering waste from the blood."
+N010,Rapidly progressive nephritic syndrome with minor glomerular abnormality,Genitourinary,,A rare kidney disease that causes rapid damage to the kidneys and affects their filtering ability.
+N020,Recurrent and persistent hematuria with minor glomerular abnormality,Genitourinary,,This medical term means recurring blood in the urine due to a small problem with the kidneys' filtering units.
+N030,Chronic nephritic syndrome with minor glomerular abnormality,Genitourinary,,It's a kidney condition where the kidneys don't work properly and have some small damage to the filtering units.
+N040,Nephrotic syndrome with minor glomerular abnormality,Genitourinary,,"It's a kidney condition where the kidneys don't work properly, but not severely damaged."
+N050,Unspecified nephritic syndrome with minor glomerular abnormality,Genitourinary,,It's a kidney condition where the kidneys don't work properly and show some small abnormalities in their filtering system.
+N060,Isolated proteinuria with minor glomerular abnormality,Genitourinary,,This term describes a kidney condition where there's some protein in the urine and mild damage to the tiny filters.
+N070,"Hereditary nephropathy, not elsewhere classified with minor glomerular abnormality",Genitourinary,,A rare kidney condition where the kidneys don't work properly due to a genetic issue.
+N110,Nonobstructive reflux-associated chronic pyelonephritis,Genitourinary,,"A rare kidney infection caused by stomach acid flowing back up into the kidneys, leading to inflammation and damage."
+N130,Hydronephrosis with ureteropelvic junction obstruction,Genitourinary,,"A blockage in the kidney's tube that prevents urine from flowing out, causing swelling and pain."
+N140,Analgesic nephropathy,Genitourinary,,Analgesic nephropathy is a kidney disease caused by long-term use of painkillers like ibuprofen and aspirin.
+N150,Balkan nephropathy,Genitourinary,,Balkan nephropathy is a rare kidney disease that affects people in certain parts of Eastern Europe and the Balkans.
+N170,Acute kidney failure with tubular necrosis,Genitourinary,,It's a serious condition where the kidneys suddenly stop working properly due to damage from toxins or disease.
+N181,"Chronic kidney disease, stage 1",Genitourinary,,"Chronic kidney disease, stage 1 means your kidneys are slightly damaged and need to be monitored closely."
+N200,Calculus of kidney,Genitourinary,,"The ""calculus"" in your kidneys refers to small, hard deposits that can cause blockages and damage over time."
+N210,Calculus in bladder,Genitourinary,,"""Calculus in the bladder"" refers to a medical condition where minerals and salts build up in the bladder."
+N250,Renal osteodystrophy,Genitourinary,,Renal osteodystrophy is a condition that affects bone health in people with kidney disease or failure.
+N261,Atrophy of kidney (terminal),Genitourinary,,Terminal kidney atrophy means the kidneys slowly shrink and stop working due to a severe underlying medical condition.
+N270,"Small kidney, unilateral",Genitourinary,,"A small kidney on one side of the body, which can be a normal variation or sometimes cause issues."
+N280,Ischemia and infarction of kidney,Genitourinary,,Kidney tissue damage due to poor blood flow or blockage.
+N310,"Uninhibited neuropathic bladder, not elsewhere classified",Genitourinary,,Bladder control problems without an obvious cause.
+N320,Bladder-neck obstruction,Genitourinary,ckd|CKD disorder|CKD disease,CKD within Diseases of the genitourinary system. Category-level grouping.
+N340,Urethral abscess,Genitourinary,,Infection and swelling in the urethra.
+N360,Urethral fistula,Genitourinary,,Abnormal connection between the urethra and other organs.
+N390,"Urinary tract infection, site not specified",Genitourinary,,Bacterial infection in the urinary tract without a specific location.
+N400,Benign prostatic hyperplasia without lower urinary tract symptoms,Genitourinary,,Enlargement of the prostate gland without symptoms.
+N410,Acute prostatitis,Genitourinary,,Inflammation of the prostate gland due to infection.
+N420,Calculus of prostate,Genitourinary,,Hardening or growth of prostate tissue.
+N430,Encysted hydrocele,Genitourinary,,"An encysted hydrocele is a fluid-filled sac that forms around a testicle, usually due to scarring or injury."
+N441,Cyst of tunica albuginea testis,Genitourinary,,A cyst on the outer layer of a man's testicle that can cause pain and discomfort.
+N451,Epididymitis,Genitourinary,,Epididymitis is an inflammation of the tube that carries sperm from the testicles to the penis.
+N468,Other male infertility,Genitourinary,,"""Other male infertility"" refers to problems that affect a man's ability to father children due to various reasons."
+N470,"Adherent prepuce, newborn",Genitourinary,,A small piece of skin that covers the end of a baby boy's penis at birth.
+N480,Leukoplakia of penis,Genitourinary,prostate disorder|Prostate disorder disorder|Prostate disorder disease,Prostate disorder within Diseases of the genitourinary system. Category-level grouping.
+N490,Inflammatory disorders of seminal vesicle,Genitourinary,,Inflammatory disorders of the seminal vesicle can cause painful urination and infertility issues in men.
+N500,Atrophy of testis,Genitourinary,,"""Atrophy of the testis"" means the shrinking or wasting away of the testicles due to illness or injury."
+N521,Erectile dysfunction due to diseases classified elsewhere,Genitourinary,,This term refers to a condition where erectile problems are caused by another underlying medical issue.
+N538,Other male sexual dysfunction,Genitourinary,,"""Other male sexual dysfunction"" refers to difficulties with sex that aren't related to erectile problems or low libido."
+N610,Mastitis without abscess,Genitourinary,,Mastitis without abscess refers to inflammation of breast tissue that doesn't form a painful lump or pocket.
+N630,Unspecified lump in unspecified breast,Genitourinary,,A doctor finds a non-cancerous growth or mass in the breast that can't be identified as a specific type.
+N640,Fissure and fistula of nipple,Genitourinary,,A fissure or fistula of the nipple is an abnormal opening in the skin that can be painful and itchy.
+N650,Deformity of reconstructed breast,Genitourinary,,A deformity of the reconstructed breast occurs when the new breast doesn't look or feel like a natural one.
+N710,Acute inflammatory disease of uterus,Genitourinary,,Endometritis is a painful and sometimes serious infection that inflames the lining of the uterus.
+N730,Acute parametritis and pelvic cellulitis,Genitourinary,,Acute parametritis and pelvic cellulitis are serious infections in the tissues around the uterus that can be life-threatening.
+N750,Cyst of Bartholin's gland,Genitourinary,,A Cyst of Bartholin's gland is a small lump that forms when the Bartholin's gland gets blocked or infected.
+R000,"Tachycardia, unspecified",Symptoms and signs,,A rapid heartbeat that's not caused by a known medical condition or medication.
+R010,Benign and innocent cardiac murmurs,Symptoms and signs,,"These are normal sounds heard in the heart when it beats, usually harmless and not a cause for concern."
+R030,"Elevated blood-pressure reading, without diagnosis of hypertension",Symptoms and signs,,"A reading that's higher than normal, but not high enough to be considered a medical condition or diagnosis."
+R040,Epistaxis,Symptoms and signs,,Epistaxis is a medical term for nosebleeds that can be caused by various factors like dry air or injury.
+R051,Acute cough,Symptoms and signs,,"An acute cough is a sudden, sharp cough that lasts for less than three weeks and usually goes away on its own."
+R061,Stridor,Symptoms and signs,,Stridor is a high-pitched sound that occurs when air passes through an obstruction in the throat or windpipe.
+R070,Pain in throat,Symptoms and signs,,"A sore or painful feeling in your throat can be caused by a cold, allergies, or an infection."
+R091,Pleurisy,Symptoms and signs,,Pleurisy is an inflammation of the lining around the lungs that can cause chest pain and difficulty breathing.
+R100,Acute abdomen,Symptoms and signs,,"Your abdomen is suddenly painful and tender, often accompanied by vomiting or fever."
+R110,Nausea,Symptoms and signs,,Feeling queasy or sick to your stomach without an obvious reason.
+R130,Aphagia,Symptoms and signs,,A feeling of not being able to swallow food or drink.
+R140,Abdominal distension (gaseous),Symptoms and signs,,Your belly is swollen due to gas or fluid accumulation.
+R150,Incomplete defecation,Symptoms and signs,,Having trouble passing stool or feeling like you're not fully emptied.
+R160,"Hepatomegaly, not elsewhere classified",Symptoms and signs,,"A large liver that can be felt through the skin, often in people with unknown causes."
+R180,Malignant ascites,Symptoms and signs,,A buildup of fluid in the abdomen that's caused by cancer.
+R192,Visible peristalsis,Symptoms and signs,,Visible movements of food or liquid through your digestive tract.
+R200,Anesthesia of skin,Symptoms and signs,,"""Anesthesia of the skin refers to a temporary numbness or loss of sensation in the skin's surface."
+R220,"Localized swelling, mass and lump, head",Symptoms and signs,,This phrase refers to a swollen area or growth on the body that can be painful and uncomfortable.
+R230,Cyanosis,Symptoms and signs,,Cyanosis is a condition where your skin turns blue or purple due to too much oxygen not being delivered.
+R250,Abnormal head movements,Symptoms and signs,,"""Abnormal head movements"" refers to unusual or uncontrolled movements of the head that can be a symptom of an underlying condition."
+R260,Ataxic gait,Symptoms and signs,,Ataxic gait is a type of walking problem where your legs have trouble coordinating movements and balance.
+R270,"Ataxia, unspecified",Symptoms and signs,,"""Ataxia, unspecified"" means a person has problems with balance and coordination that can't be explained by another condition."
+R290,Tetany,Symptoms and signs,,Tetany is a condition where your muscles cramp up or feel weak due to low calcium levels in the blood.
+R300,Dysuria,Symptoms and signs,,"Dysuria is a medical term for painful or burning urination, often accompanied by discomfort while passing urine."
+R310,Gross hematuria,Symptoms and signs,,Gross hematuria means there's visible blood in your urine that can be seen with the naked eye.
+R330,Drug induced retention of urine,Symptoms and signs,,"""Drug-induced retention of urine"" means your body can't hold pee properly due to certain medications."
+R350,Frequency of micturition,Symptoms and signs,,The frequency of micturition refers to how often you need to urinate throughout the day.
+R360,Urethral discharge without blood,Symptoms and signs,,"A yellow or white liquid comes out of the penis that's not bloody, often caused by a bacterial infection."
+R390,Extravasation of urine,Symptoms and signs,,Extravasation of urine means that urine leaks out of the body through a cut or opening in the skin.
+R400,Somnolence,Symptoms and signs,,Somnolence is a feeling of drowsiness or excessive sleepiness that can be uncomfortable and disrupt daily activities.
+R410,"Disorientation, unspecified",Symptoms and signs,,"""Disorientation, unspecified"" means you're feeling confused and can't tell time, date, or location, but the cause isn't known."
+R430,Anosmia,Symptoms and signs,,"Anosmia is a condition where you lose your sense of smell, making it hard to detect certain tastes and odors."
+R440,Auditory hallucinations,Symptoms and signs,,"Auditory hallucinations are when people hear sounds or voices that aren't really there, like in their own minds."
+R450,Nervousness,Symptoms and signs,,"Nervousness is a feeling of anxiety or worry that can make you feel shaky, anxious, and unsure about things."
+R460,Very low level of personal hygiene,Symptoms and signs,,"Not washing your body regularly, especially after using the bathroom or before eating, can be unhealthy."
+R471,Dysarthria and anarthria,Symptoms and signs,,Dysarthria and anarthria are speech difficulties where people have trouble articulating sounds or forming words correctly.
+R480,Dyslexia and alexia,Symptoms and signs,,"""Dyslexia is a learning difficulty that affects reading, while alexia is the inability to read at all."
+R490,Dysphonia,Symptoms and signs,,"Dysphonia is a vocal disorder that affects the way you sound when you speak or sing, often causing hoarseness."
+R502,Drug induced fever,Symptoms and signs,,"A fever that occurs when a person takes certain medications, often used to treat infections or pain."
+R510,"Headache with orthostatic component, not elsewhere classified",Symptoms and signs,,A headache that gets worse when standing up and doesn't fit into any other known medical condition.
+U070,Vaping-related disorder,COVID/special,,A vaping-related disorder is an illness caused by breathing in chemicals from e-cigarettes or vapes.
+U099,"Post COVID-19 condition, unspecified",COVID/special,,"Some people get sick after having COVID-19; the exact cause isn't always clear, but it's not related to the virus itself."

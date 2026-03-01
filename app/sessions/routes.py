@@ -6,6 +6,7 @@ from flask_login import current_user, login_required
 from ..extensions import db
 from ..models import Appointment, ChatMessage, DiseaseResult, Session
 from .forms import NewSessionForm
+from ..models import LabValue
 
 sessions_bp = Blueprint("sessions", __name__, url_prefix="/sessions")
 
@@ -94,6 +95,16 @@ def detail(session_id):
     messages = s.chat_messages.order_by(ChatMessage.created_at).all()
     reports = s.reports.all()
 
+    # ── ADD THIS ──────────────────────────────────────────────────────────
+    labs = (
+        LabValue.query
+        .filter_by(session_id=session_id, user_id=current_user.id)
+        .filter(LabValue.value.isnot(None))
+        .order_by(LabValue.test_name)
+        .all()
+    )
+    # ─────────────────────────────────────────────────────────────────────
+
     return render_template(
         "sessions/detail.html",
         s=s,
@@ -102,6 +113,7 @@ def detail(session_id):
         diseases=diseases,
         messages=messages,
         reports=reports,
+        labs=labs,
     )
 
 

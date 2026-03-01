@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% block title %}Lab Values — {{ session.title }}{% endblock %}
+
+{% block content %}
+
+<div class="mb-5 text-sm text-slate-500 flex items-center gap-2">
+  <a href="{{ url_for('sessions.dashboard') }}"
+     class="text-blue-600 hover:underline">Dashboard</a>
+  <span>/</span>
+  <a href="{{ url_for('sessions.detail', session_id=session.id) }}"
+     class="text-blue-600 hover:underline">{{ session.title }}</a>
+  <span>/</span>
+  <span>Lab Values</span>
+</div>
+
+<div class="flex items-center justify-between mb-6">
+  <h1 class="text-2xl font-bold text-slate-800">🧪 Lab Values</h1>
+  <a href="{{ url_for('labs.trends') }}"
+     class="text-sm text-blue-600 hover:underline">
+    📈 View Trends Across Sessions →
+  </a>
+</div>
+
+{% if labs %}
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+  <table class="w-full text-sm">
+    <thead class="bg-slate-50 border-b border-slate-200">
+      <tr>
+        <th class="text-left px-5 py-3 text-xs font-semibold text-slate-500
+                   uppercase tracking-wide">Test</th>
+        <th class="text-left px-5 py-3 text-xs font-semibold text-slate-500
+                   uppercase tracking-wide">Result</th>
+        <th class="text-left px-5 py-3 text-xs font-semibold text-slate-500
+                   uppercase tracking-wide">Reference Range</th>
+        <th class="text-left px-5 py-3 text-xs font-semibold text-slate-500
+                   uppercase tracking-wide">Status</th>
+        <th class="text-left px-5 py-3 text-xs font-semibold text-slate-500
+                   uppercase tracking-wide">Report Date</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-slate-100">
+      {% for lab in labs %}
+      <tr class="hover:bg-slate-50 transition-colors">
+        <td class="px-5 py-3 font-medium text-slate-800">{{ lab.test_name }}</td>
+        <td class="px-5 py-3 text-slate-700">
+          {{ lab.raw_value or lab.value }}
+          {% if lab.unit and lab.unit not in (lab.raw_value or '') %}
+            <span class="text-slate-400">{{ lab.unit }}</span>
+          {% endif %}
+        </td>
+        <td class="px-5 py-3 text-slate-500">
+          {{ lab.reference_range or '—' }}
+        </td>
+        <td class="px-5 py-3">
+          {% if lab.status == 'high' %}
+            <span class="text-xs px-2 py-0.5 rounded-full font-medium
+                         bg-red-100 text-red-700">↑ High</span>
+          {% elif lab.status == 'low' %}
+            <span class="text-xs px-2 py-0.5 rounded-full font-medium
+                         bg-amber-100 text-amber-700">↓ Low</span>
+          {% elif lab.status == 'normal' %}
+            <span class="text-xs px-2 py-0.5 rounded-full font-medium
+                         bg-green-100 text-green-700">✓ Normal</span>
+          {% else %}
+            <span class="text-xs text-slate-400">—</span>
+          {% endif %}
+        </td>
+        <td class="px-5 py-3 text-slate-500 text-xs">
+          {{ lab.report_date or '—' }}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<p class="mt-4 text-xs text-slate-400">
+  ⚕ Lab values are extracted automatically and may not be 100% accurate.
+  Always verify against your original report.
+</p>
+
+{% else %}
+<div class="bg-white rounded-xl border border-dashed border-slate-300 p-12 text-center">
+  <div class="text-4xl mb-3">🧪</div>
+  <p class="font-semibold text-slate-700 mb-1">No lab values extracted</p>
+  <p class="text-sm text-slate-500">
+    Upload a blood test PDF and confirm the extracted text to see lab values here.
+  </p>
+</div>
+{% endif %}
+
+{% endblock %}

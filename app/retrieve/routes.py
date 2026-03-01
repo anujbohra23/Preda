@@ -25,7 +25,7 @@ def _own_session_or_404(session_id: int) -> Session:
 # ── Results page ───────────────────────────────────────────────────────────────
 
 
-@retrieve_bp.route("/<int:session_id>/results")
+@retrieve_bp.route("/<int:session_id>/results") 
 @login_required
 def results(session_id):
     s = _own_session_or_404(session_id)

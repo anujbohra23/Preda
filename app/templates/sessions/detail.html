@@ -3,7 +3,6 @@
 
 {% block content %}
 
-{# ── Breadcrumb ───────────────────────────────────────────────────────────── #}
 <div class="mb-6 flex items-center gap-2 text-sm text-slate-500">
   <a href="{{ url_for('sessions.dashboard') }}"
      class="text-blue-600 hover:underline">Dashboard</a>
@@ -35,7 +34,6 @@
       </div>
     </div>
 
-    {# Next action button based on status #}
     <div>
       {% if s.status == 'intake' %}
         <a href="{{ url_for('intake.intake_form', session_id=s.id) }}"
@@ -55,7 +53,7 @@
                   px-4 py-2 rounded-md transition-colors">
           View Results →
         </a>
-      {% elif s.status in ['results', 'chat', 'report'] %}
+      {% elif s.status in ['chat', 'report'] %}
         <a href="{{ url_for('chat.chat_page', session_id=s.id) }}"
            class="bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold
                   px-4 py-2 rounded-md transition-colors">
@@ -107,6 +105,46 @@
     </li>
     {% endfor %}
   </ul>
+</div>
+{% endif %}
+
+{# ── Lab values snapshot ──────────────────────────────────────────────────── #}
+{% if labs %}
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6 mb-6">
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="font-semibold text-slate-800">🧪 Lab Values</h2>
+    <div class="flex items-center gap-3">
+      <a href="{{ url_for('labs.trends') }}"
+         class="text-xs text-blue-600 hover:underline">📈 Trends</a>
+      <a href="{{ url_for('labs.session_labs', session_id=s.id) }}"
+         class="text-xs text-blue-600 hover:underline">View All</a>
+    </div>
+  </div>
+  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+    {% for lab in labs[:8] %}
+    <div class="bg-slate-50 rounded-lg px-3 py-2.5 border border-slate-100">
+      <p class="text-xs text-slate-500 mb-0.5 truncate">{{ lab.test_name }}</p>
+      <p class="font-semibold text-slate-800 text-sm">
+        {{ lab.raw_value or lab.value }}
+        <span class="text-xs font-normal text-slate-400">{{ lab.unit or '' }}</span>
+      </p>
+      {% if lab.status == 'high' %}
+        <span class="text-xs text-red-600 font-medium">↑ High</span>
+      {% elif lab.status == 'low' %}
+        <span class="text-xs text-amber-600 font-medium">↓ Low</span>
+      {% elif lab.status == 'normal' %}
+        <span class="text-xs text-green-600 font-medium">✓ Normal</span>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% if labs | length > 8 %}
+  <p class="text-xs text-slate-400 mt-3">
+    + {{ labs | length - 8 }} more —
+    <a href="{{ url_for('labs.session_labs', session_id=s.id) }}"
+       class="text-blue-500 hover:underline">view all</a>
+  </p>
+  {% endif %}
 </div>
 {% endif %}
 
@@ -178,6 +216,16 @@
      class="text-sm bg-white border border-slate-300 hover:bg-slate-50
             text-slate-700 px-4 py-2 rounded-md transition-colors">
     📄 Reports
+  </a>
+  <a href="{{ url_for('labs.session_labs', session_id=s.id) }}"
+     class="text-sm bg-white border border-slate-300 hover:bg-slate-50
+            text-slate-700 px-4 py-2 rounded-md transition-colors">
+    🧪 Lab Values
+  </a>
+  <a href="{{ url_for('labs.trends') }}"
+     class="text-sm bg-white border border-slate-300 hover:bg-slate-50
+            text-slate-700 px-4 py-2 rounded-md transition-colors">
+    📈 Trends
   </a>
   {% endif %}
 </div>

@@ -6,7 +6,6 @@ from .appointments.routes import appointments_bp
 from .config import DevelopmentConfig, config_map
 from .extensions import babel, csrf, db, limiter, login_manager, migrate
 
-
 def create_app(config_name: str = None):
     if config_name is None:
         config_name = os.environ.get("FLASK_ENV", "development")
@@ -67,6 +66,7 @@ def create_app(config_name: str = None):
     from .sessions.routes import sessions_bp
     from .settings.routes import settings_bp
     from .upload.routes import upload_bp
+    from .labs.routes import labs_bp
 
     app.register_blueprint(main_bp)
     app.register_blueprint(auth_bp)
@@ -79,5 +79,6 @@ def create_app(config_name: str = None):
     app.register_blueprint(history_bp)
     app.register_blueprint(settings_bp)
     app.register_blueprint(email_bp)
+    app.register_blueprint(labs_bp)
 
     return app

@@ -1,3 +1,4 @@
+from collections import defaultdict
 from datetime import datetime, timezone
 
 from flask import Blueprint, abort, flash, redirect, render_template, request, url_for
@@ -20,15 +21,11 @@ def _own_session_or_404(session_id: int) -> Session:
     return s
 
 
-# ── Review extracted chunks ────────────────────────────────────────────────────
-
-
 @upload_bp.route("/<int:session_id>/review", methods=["GET", "POST"])
 @login_required
 def review(session_id):
     s = _own_session_or_404(session_id)
 
-    # Gather all unconfirmed chunks for this session
     chunks = (
         ExtractedChunk.query.filter_by(session_id=session_id)
         .order_by(ExtractedChunk.upload_id, ExtractedChunk.chunk_index)
@@ -37,16 +34,14 @@ def review(session_id):
 
     if not chunks:
         flash(
-            "No extracted text found for this session. " "Please upload a PDF first.",
+            "No extracted text found for this session. Please upload a PDF first.",
             "warning",
         )
         return redirect(url_for("intake.intake_form", session_id=session_id))
 
-    # Build a map of upload_id → original_name for display
     upload_names = {u.id: u.original_name for u in s.uploads.all()}
 
     if request.method == "POST":
-        # CSRF is validated automatically by Flask-WTF on all POST requests
         updated = 0
         for chunk in chunks:
             field_key = f"chunk_{chunk.id}"
@@ -56,7 +51,6 @@ def review(session_id):
                 chunk.is_confirmed = 1
                 updated += 1
 
-        # Mark all uploads as reviewed
         for upload in s.uploads.all():
             if upload.upload_status == "extracted":
                 upload.upload_status = "reviewed"
@@ -64,6 +58,9 @@ def review(session_id):
         s.status = "results"
         s.updated_at = _utcnow()
         db.session.commit()
+
+        # ── Lab value extraction (non-critical, runs silently) ─────────────
+        _extract_labs_for_session(s, chunks)
 
         flash(f"{updated} chunk(s) confirmed. Running condition matching…", "success")
         return redirect(url_for("retrieve.results", session_id=session_id))
@@ -74,3 +71,33 @@ def review(session_id):
         chunks=chunks,
         upload_names=upload_names,
     )
+
+
+def _extract_labs_for_session(session: Session, chunks: list) -> None:
+    """
+    Extract lab values from confirmed chunks and persist them.
+    Silently catches all errors — never breaks the upload flow.
+    """
+    try:
+        from ..labs.extractor import extract_from_chunks, save_lab_values
+
+        by_upload: dict[int, list[str]] = defaultdict(list)
+        for chunk in chunks:
+            if chunk.is_confirmed:
+                by_upload[chunk.upload_id].append(
+                    chunk.edited_text or chunk.chunk_text
+                )
+
+        for upload_id, texts in by_upload.items():
+            rows = extract_from_chunks(
+                chunks=texts,
+                session_id=session.id,
+                upload_id=upload_id,
+                user_id=session.user_id,
+            )
+            if rows:
+                saved = save_lab_values(rows, upload_id)
+                print(f"[labs] {saved} lab values saved from upload {upload_id}")
+
+    except Exception as e:
+        print(f"[labs] Extraction error (non-fatal): {e}")
