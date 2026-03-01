@@ -3,137 +3,392 @@
 
 {% block content %}
 
-{# ── Header row ───────────────────────────────────────────────────────────── #}
-<div class="flex items-center justify-between mb-6">
+{# ── Welcome + Quick Actions ──────────────────────────────────────────────── #}
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
   <div>
-    <h1 class="text-2xl font-bold text-slate-800">Dashboard</h1>
-    <p class="text-sm text-slate-500 mt-0.5">
-      Welcome back, {{ current_user.email }}
+    <h1 class="text-2xl font-bold text-slate-800">
+      Good {% if now_hour < 12 %}morning{% elif now_hour < 17 %}afternoon{% else %}evening{% endif %},
+      {{ current_user.email.split('@')[0] | title }} 👋
+    </h1>
+    <p class="text-sm text-slate-500 mt-0.5">Here's your health overview</p>
+  </div>
+  <div class="flex gap-2 flex-wrap">
+    <button onclick="document.getElementById('newSessionModal').classList.remove('hidden')"
+            class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold
+                   px-4 py-2 rounded-lg transition-colors flex items-center gap-1.5">
+      <span>＋</span> New Session
+    </button>
+
+    <a href="{{ url_for('labs.trends') }}"
+       class="bg-white border border-slate-300 hover:bg-slate-50 text-slate-700
+              text-sm font-medium px-4 py-2 rounded-lg transition-colors">
+      📈 Lab Trends
+    </a>
+
+    {# Appointments needs session_id #}
+    {% if default_session_id %}
+      <a href="{{ url_for('appointments.list_appointments', session_id=default_session_id) }}"
+         class="bg-white border border-slate-300 hover:bg-slate-50 text-slate-700
+                text-sm font-medium px-4 py-2 rounded-lg transition-colors">
+        📅 Appointments
+      </a>
+    {% else %}
+      <span class="bg-white border border-slate-300 text-slate-400
+                   text-sm font-medium px-4 py-2 rounded-lg cursor-not-allowed">
+        📅 Appointments
+      </span>
+    {% endif %}
+  </div>
+</div>
+
+{# ── Follow-up alerts ─────────────────────────────────────────────────────── #}
+{% for appt in followup_alerts %}
+<div class="bg-amber-50 border border-amber-200 rounded-xl px-5 py-3 mb-4
+            flex items-center justify-between">
+  <div class="flex items-center gap-3">
+    <span class="text-xl">📅</span>
+    <div>
+      <p class="text-sm font-semibold text-amber-800">Follow-up reminder</p>
+      <p class="text-xs text-amber-700">
+        {{ appt.title or 'Appointment' }} — due {{ appt.followup_date }}
+      </p>
+    </div>
+  </div>
+  <a href="{{ url_for('appointments.detail', appointment_id=appt.id) }}"
+     class="text-xs font-medium text-amber-700 hover:underline">View →</a>
+</div>
+{% endfor %}
+
+{# ── Health summary stats ─────────────────────────────────────────────────── #}
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+
+  <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4">
+    <p class="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">
+      Sessions
+    </p>
+    <p class="text-3xl font-bold text-slate-800">{{ total_sessions }}</p>
+    <p class="text-xs text-slate-400 mt-1">total created</p>
+  </div>
+
+  <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4">
+    <p class="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">
+      Reports Uploaded
+    </p>
+    <p class="text-3xl font-bold text-slate-800">{{ total_uploads }}</p>
+    <p class="text-xs text-slate-400 mt-1">
+      {% if last_upload_date %}last {{ last_upload_date }}{% else %}none yet{% endif %}
     </p>
   </div>
-  <a href="{{ url_for('sessions.new_session') }}"
-     class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold
-            px-4 py-2 rounded-md transition-colors shadow-sm">
-    + New Session
-  </a>
-</div>
 
-
-{% if followup_alerts %}
-<div class="bg-amber-50 border border-amber-300 rounded-xl px-5 py-4 mb-6">
-  {% for alert in followup_alerts %}
-  <div class="flex items-center justify-between">
-    <div>
-      <p class="font-semibold text-amber-800 text-sm">
-        ⏰ Follow-up due: {{ alert.followup_date }}
-      </p>
-      <p class="text-xs text-amber-600">{{ alert.title }}</p>
-    </div>
-    <a href="{{ url_for('appointments.detail', appt_id=alert.id) }}"
-       class="text-xs text-amber-700 underline font-medium">
-      View →
-    </a>
+  <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4
+              {% if total_abnormal > 0 %}border-red-200 bg-red-50{% endif %}">
+    <p class="text-xs font-semibold
+              {% if total_abnormal > 0 %}text-red-400{% else %}text-slate-400{% endif %}
+              uppercase tracking-wide mb-1">
+      Abnormal Values
+    </p>
+    <p class="text-3xl font-bold
+              {% if total_abnormal > 0 %}text-red-600{% else %}text-slate-800{% endif %}">
+      {{ total_abnormal }}
+    </p>
+    <p class="text-xs {% if total_abnormal > 0 %}text-red-400{% else %}text-slate-400{% endif %} mt-1">
+      {% if total_abnormal > 0 %}needs attention{% else %}all normal{% endif %}
+    </p>
   </div>
-  {% endfor %}
+
+  <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4">
+    <p class="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">
+      Next Follow-up
+    </p>
+    <p class="text-lg font-bold text-slate-800 leading-tight mt-1">
+      {% if next_followup %}{{ next_followup }}{% else %}—{% endif %}
+    </p>
+    <p class="text-xs text-slate-400 mt-1">
+      {% if next_followup %}upcoming{% else %}none scheduled{% endif %}
+    </p>
+  </div>
+
 </div>
-{% endif %}
 
+{# ── Main two-column layout ────────────────────────────────────────────────── #}
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
+  {# Left column — sessions (2/3 width) #}
+  <div class="lg:col-span-2 space-y-4">
 
+    <div class="flex items-center justify-between">
+      <h2 class="font-semibold text-slate-800">Your Sessions</h2>
+      <span class="text-xs text-slate-400">{{ total_sessions }} total</span>
+    </div>
 
+    {% if sessions %}
+      {% for s in sessions %}
+      <div class="bg-white rounded-xl border border-slate-200 shadow-sm
+                  hover:shadow-md hover:border-slate-300 transition-all">
+        <a href="{{ url_for('sessions.detail', session_id=s.id) }}"
+           class="block p-5">
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 mb-1 flex-wrap">
+                <h3 class="font-semibold text-slate-800 truncate">{{ s.title }}</h3>
+                <span class="text-xs px-2 py-0.5 rounded-full font-medium shrink-0
+                  {% if s.status == 'intake' %}bg-slate-100 text-slate-600
+                  {% elif s.status == 'reviewing' %}bg-amber-100 text-amber-700
+                  {% elif s.status == 'results' %}bg-blue-100 text-blue-700
+                  {% elif s.status == 'chat' %}bg-purple-100 text-purple-700
+                  {% elif s.status == 'report' %}bg-green-100 text-green-700
+                  {% else %}bg-slate-100 text-slate-500{% endif %}">
+                  {{ s.status | capitalize }}
+                </span>
+                {% if s.safety_flagged %}
+                <span class="text-xs px-2 py-0.5 rounded-full bg-red-100
+                             text-red-700 font-medium shrink-0">⚠ Safety</span>
+                {% endif %}
+              </div>
+              <p class="text-xs text-slate-400">
+                Created {{ s.created_at[:10] }}
+              </p>
 
-{# ── Session list ────────────────────────────────────────────────────────── #}
-{% if sessions %}
-  <div class="space-y-4">
-    {% for s in sessions %}
-    <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5
-                hover:border-blue-300 transition-colors">
-      <div class="flex items-start justify-between gap-4">
+              {# Mini stats row #}
+              <div class="flex items-center gap-4 mt-3 text-xs text-slate-500">
+                {% set upload_count = s.uploads.count() %}
+                {% set msg_count = s.chat_messages.count() %}
+                {% set disease_count = s.disease_results.count() %}
+                {% if upload_count %}
+                  <span>📄 {{ upload_count }} upload{{ 's' if upload_count != 1 }}</span>
+                {% endif %}
+                {% if disease_count %}
+                  <span>🔍 {{ disease_count }} condition{{ 's' if disease_count != 1 }}</span>
+                {% endif %}
+                {% if msg_count %}
+                  <span>💬 {{ msg_count }} message{{ 's' if msg_count != 1 }}</span>
+                {% endif %}
+              </div>
+            </div>
 
-        {# Left: info #}
-        <div class="flex-1 min-w-0">
-          <div class="flex items-center gap-2 mb-1">
-            <h2 class="font-semibold text-slate-800 truncate">{{ s.title }}</h2>
-
-            {# Status badge #}
-            <span class="text-xs px-2 py-0.5 rounded-full font-medium
-              {% if s.status == 'intake' %}bg-slate-100 text-slate-600
-              {% elif s.status == 'reviewing' %}bg-amber-100 text-amber-700
-              {% elif s.status == 'results' %}bg-blue-100 text-blue-700
-              {% elif s.status == 'chat' %}bg-purple-100 text-purple-700
-              {% elif s.status == 'report' %}bg-green-100 text-green-700
-              {% else %}bg-slate-100 text-slate-500
-              {% endif %}">
-              {{ s.status | capitalize }}
-            </span>
-
-            {% if s.safety_flagged %}
-            <span class="text-xs px-2 py-0.5 rounded-full font-medium
-                         bg-red-100 text-red-700">
-              ⚠ Safety Flag
-            </span>
+            {# Abnormal lab badge for this session #}
+            {% if s.id in session_lab_snapshot %}
+            {% set top_lab = session_lab_snapshot[s.id] %}
+            <div class="shrink-0 text-right">
+              <div class="inline-flex flex-col items-end">
+                <span class="text-xs font-medium
+                  {% if top_lab.status == 'high' %}text-red-600
+                  {% else %}text-amber-600{% endif %}">
+                  {% if top_lab.status == 'high' %}↑{% else %}↓{% endif %}
+                  {{ top_lab.test_name }}
+                </span>
+                <span class="text-xs text-slate-500">
+                  {{ top_lab.raw_value or top_lab.value }}
+                  {{ top_lab.unit or '' }}
+                </span>
+              </div>
+            </div>
             {% endif %}
           </div>
+        </a>
 
-          <p class="text-xs text-slate-400 mb-3">
-            Created {{ s.created_at[:10] }}
-          </p>
+        {# Action strip #}
+        <div class="border-t border-slate-100 px-5 py-2.5 flex gap-4">
+          {% if s.status == 'intake' %}
+            <a href="{{ url_for('intake.intake_form', session_id=s.id) }}"
+               class="text-xs text-blue-600 hover:underline font-medium">
+              Fill Intake →
+            </a>
+          {% elif s.status == 'reviewing' %}
+            <a href="{{ url_for('upload.review', session_id=s.id) }}"
+               class="text-xs text-amber-600 hover:underline font-medium">
+              Review Upload →
+            </a>
+          {% else %}
+            <a href="{{ url_for('chat.chat_page', session_id=s.id) }}"
+               class="text-xs text-purple-600 hover:underline font-medium">
+              💬 Chat
+            </a>
+            <a href="{{ url_for('retrieve.results', session_id=s.id) }}"
+               class="text-xs text-blue-600 hover:underline font-medium">
+              🔍 Results
+            </a>
+            {% if s.id in session_lab_snapshot %}
+            <a href="{{ url_for('labs.session_labs', session_id=s.id) }}"
+               class="text-xs text-slate-500 hover:underline">
+              🧪 Labs
+            </a>
+            {% endif %}
+          {% endif %}
 
-          {# Quick stats #}
-          <div class="flex gap-4 text-xs text-slate-500">
-            <span>📄 {{ s.uploads.count() }} upload{{ 's' if s.uploads.count() != 1 }}</span>
-            <span>🔍 {{ s.disease_results.count() }} condition{{ 's' if s.disease_results.count() != 1 }}</span>
-            <span>💬 {{ s.chat_messages.count() }} message{{ 's' if s.chat_messages.count() != 1 }}</span>
-            <span>📋 {{ s.reports.count() }} report{{ 's' if s.reports.count() != 1 }}</span>
-          </div>
-        </div>
-
-        {# Right: actions #}
-        <div class="flex flex-col gap-2 shrink-0">
-          <a href="{{ url_for('sessions.detail', session_id=s.id) }}"
-             class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700
-                    px-3 py-1.5 rounded-md transition-colors text-center">
-            View
-          </a>
-          <a href="{{ url_for('intake.intake_form', session_id=s.id) }}"
-             class="text-xs bg-blue-50 hover:bg-blue-100 text-blue-700
-                    px-3 py-1.5 rounded-md transition-colors text-center">
-            Edit Intake
-          </a>
-
-          {# Delete form with CSRF #}
+          {# Delete form #}
           <form method="POST"
                 action="{{ url_for('sessions.delete_session', session_id=s.id) }}"
-                onsubmit="return confirm('Delete this session and all its data?')">
+                class="ml-auto"
+                onsubmit="return confirm('Delete session \'{{ s.title }}\'?')">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <button type="submit"
-                    class="w-full text-xs bg-red-50 hover:bg-red-100 text-red-600
-                           px-3 py-1.5 rounded-md transition-colors">
+                    class="text-xs text-slate-300 hover:text-red-500 transition-colors">
               Delete
             </button>
           </form>
         </div>
+      </div>
+      {% endfor %}
 
+    {% else %}
+      <div class="bg-white rounded-xl border border-dashed border-slate-300 p-14
+                  text-center">
+        <div class="text-5xl mb-4">🏥</div>
+        <h3 class="font-semibold text-slate-700 mb-2">No sessions yet</h3>
+        <p class="text-sm text-slate-500 mb-5">
+          Create a session to start tracking your health.
+        </p>
+        <button onclick="document.getElementById('newSessionModal').classList.remove('hidden')"
+                class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold
+                       px-5 py-2.5 rounded-lg transition-colors">
+          Create First Session
+        </button>
+      </div>
+    {% endif %}
+  </div>
+
+  {# Right column — abnormal labs + activity (1/3 width) #}
+  <div class="space-y-5">
+
+    {# Abnormal lab values panel #}
+    {% if unique_abnormal %}
+    <div class="bg-white rounded-xl border border-red-200 shadow-sm p-5">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="font-semibold text-slate-800 text-sm flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-red-500 inline-block animate-pulse"></span>
+          Needs Attention
+        </h2>
+        <a href="{{ url_for('labs.trends') }}"
+           class="text-xs text-blue-600 hover:underline">View Trends</a>
+      </div>
+      <div class="space-y-2.5">
+        {% for lab in unique_abnormal %}
+        <div class="flex items-center justify-between py-2 border-b
+                    border-slate-100 last:border-0">
+          <div>
+            <p class="text-sm font-medium text-slate-700">{{ lab.test_name }}</p>
+            <p class="text-xs text-slate-400 mt-0.5">
+              {{ lab.raw_value or lab.value }} {{ lab.unit or '' }}
+            </p>
+          </div>
+          <span class="text-xs px-2 py-0.5 rounded-full font-semibold shrink-0
+            {% if lab.status == 'high' %}bg-red-100 text-red-700
+            {% else %}bg-amber-100 text-amber-700{% endif %}">
+            {% if lab.status == 'high' %}↑ High{% else %}↓ Low{% endif %}
+          </span>
+        </div>
+        {% endfor %}
       </div>
     </div>
-    {% endfor %}
-  </div>
+    {% endif %}
 
-{% else %}
-  {# Empty state #}
-  <div class="text-center py-20 bg-white rounded-xl border border-dashed
-              border-slate-300">
-    <div class="text-5xl mb-4">📋</div>
-    <h2 class="text-lg font-semibold text-slate-700 mb-1">No sessions yet</h2>
-    <p class="text-sm text-slate-500 mb-6">
-      Start by creating a new session and describing your symptoms.
-    </p>
-    <a href="{{ url_for('sessions.new_session') }}"
-       class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold
-              px-5 py-2.5 rounded-md transition-colors">
-      Create Your First Session
-    </a>
+    {# Quick actions #}
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
+      <h2 class="font-semibold text-slate-800 text-sm mb-3">Quick Actions</h2>
+      <div class="space-y-2">
+        <button onclick="document.getElementById('newSessionModal').classList.remove('hidden')"
+                class="w-full text-left text-sm px-3 py-2.5 rounded-lg
+                       bg-blue-50 hover:bg-blue-100 text-blue-700 font-medium
+                       transition-colors flex items-center gap-2">
+          <span>＋</span> New Session
+        </button>
+        <a href="{{ url_for('labs.trends') }}"
+           class="w-full text-left text-sm px-3 py-2.5 rounded-lg
+                  bg-slate-50 hover:bg-slate-100 text-slate-700
+                  transition-colors flex items-center gap-2 block">
+          📈 Lab Trends
+        </a>
+
+        {# Appointments needs session_id #}
+        {% if default_session_id %}
+          <a href="{{ url_for('appointments.list_appointments', session_id=default_session_id) }}"
+             class="w-full text-left text-sm px-3 py-2.5 rounded-lg
+                    bg-slate-50 hover:bg-slate-100 text-slate-700
+                    transition-colors flex items-center gap-2 block">
+            📅 Appointments
+          </a>
+        {% else %}
+          <span class="w-full text-left text-sm px-3 py-2.5 rounded-lg
+                       bg-slate-50 text-slate-400 cursor-not-allowed
+                       flex items-center gap-2 block">
+            📅 Appointments
+          </span>
+        {% endif %}
+      </div>
+    </div>
+
+    {# Recent activity feed #}
+    {% if activity %}
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
+      <h2 class="font-semibold text-slate-800 text-sm mb-4">Recent Activity</h2>
+      <div class="space-y-3">
+        {% for item in activity %}
+        <div class="flex gap-3">
+          <div class="shrink-0 w-7 h-7 rounded-full flex items-center justify-center
+                      text-sm
+                      {% if item.type == 'chat' %}bg-purple-100
+                      {% elif item.type == 'lab' %}bg-teal-100
+                      {% else %}bg-slate-100{% endif %}">
+            {% if item.type == 'chat' %}💬
+            {% elif item.type == 'lab' %}🧪
+            {% else %}📄{% endif %}
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-xs text-slate-700 leading-snug">{{ item.detail }}</p>
+            <p class="text-xs text-slate-400 mt-0.5">{{ item.date }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
   </div>
-{% endif %}
+</div>
+
+{# ── New Session Modal ─────────────────────────────────────────────────────── #}
+<div id="newSessionModal"
+     class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-50
+            flex items-center justify-center p-4">
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6">
+    <div class="flex items-center justify-between mb-5">
+      <h2 class="text-lg font-bold text-slate-800">New Session</h2>
+      <button onclick="document.getElementById('newSessionModal').classList.add('hidden')"
+              class="text-slate-400 hover:text-slate-600 text-xl leading-none">✕</button>
+    </div>
+    <form method="POST" action="{{ url_for('sessions.new_session') }}">
+      {{ form.hidden_tag() }}
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-slate-700 mb-1.5">
+          Session Title
+        </label>
+        {{ form.title(
+             class="w-full border border-slate-300 rounded-lg px-3 py-2.5 text-sm
+                    focus:outline-none focus:ring-2 focus:ring-blue-500
+                    focus:border-transparent",
+             placeholder="e.g. Annual Blood Test Jan 2026"
+           ) }}
+        <p class="text-xs text-slate-400 mt-1">Leave blank to auto-name by date.</p>
+      </div>
+      <div class="flex gap-2 justify-end">
+        <button type="button"
+                onclick="document.getElementById('newSessionModal').classList.add('hidden')"
+                class="px-4 py-2 text-sm text-slate-600 hover:text-slate-800
+                       border border-slate-300 rounded-lg transition-colors">
+          Cancel
+        </button>
+        <button type="submit"
+                class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white
+                       text-sm font-semibold rounded-lg transition-colors">
+          Create Session
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{# Pass now_hour for greeting #}
+{% set now_hour = now_hour if now_hour is defined else 12 %}
 
 {% endblock %}
