@@ -24,7 +24,7 @@ def chunk_text(
 
     chunks = []
     start = 0
-    while start < len(words):
+    while start < len(words): # should not be infinite because start is incremented each loop
         end = start + chunk_size
         chunk = " ".join(words[start:end])
         chunks.append(chunk)
