@@ -1,6 +1,6 @@
-# ⚕ HealthAssist MVP
+# ⚕ HealthAssist
 
-> An informational health document assistant that helps patients understand their medical records, match symptoms to possible conditions, and share summaries with their pharmacy — privately and securely.
+> An informational health document assistant that helps patients understand their medical records, match symptoms to possible conditions, track lab trends over time, and share summaries with their pharmacy — privately and securely.
 
 **Not a medical device. Not a substitute for professional care.**
 
@@ -21,6 +21,7 @@
 - [How It Works](#how-it-works)
   - [Two-Tower Retrieval](#two-tower-retrieval)
   - [RAG Chat Pipeline](#rag-chat-pipeline)
+  - [Lab Value Extraction](#lab-value-extraction)
   - [Safety Layer](#safety-layer)
 - [CI/CD](#cicd)
 - [Deployment (Railway)](#deployment-railway)
@@ -35,10 +36,14 @@ HealthAssist is a Flask-based MVP that allows users to:
 
 1. Describe their symptoms via an intake form
 2. Upload medical PDF documents (lab reports, referral letters)
-3. Match symptoms to possible conditions using semantic similarity
+3. Match symptoms to possible conditions using semantic similarity over 621 ICD-10 coded conditions
 4. Chat with their documents using a local LLM (Ollama) with cited responses
-5. Generate patient-friendly or pharmacy summaries as PDFs
-6. Email the pharmacy summary directly to their saved pharmacy
+5. Ask any general medical question — the pipeline intelligently switches between document-grounded and general-knowledge mode
+6. Automatically extract and track lab values (HbA1c, cholesterol, creatinine, etc.) across sessions with trend charts
+7. Log and summarise appointments via audio recording, PDF upload, or manual entry
+8. Generate patient-friendly or pharmacy summaries as PDFs
+9. Email the pharmacy summary directly to their saved pharmacy
+10. Use the app in Hindi (हिंदी) with full UI and LLM response translation
 
 All processing happens locally or within the user's own infrastructure. No health data is sent to third-party AI APIs.
 
@@ -51,13 +56,19 @@ All processing happens locally or within the user's own infrastructure. No healt
 | **Auth** | Email + password, session-based, CSRF protected |
 | **PDF Upload** | Extract and chunk text from medical PDFs |
 | **Symptom Intake** | Structured form: age, sex, complaint, duration, medications, allergies |
-| **Condition Matching** | Semantic two-tower retrieval over 50+ ICD-coded conditions |
+| **Condition Matching** | Semantic two-tower retrieval over 621 ICD-10 coded conditions |
 | **RAG Chat** | FAISS vector search + Ollama LLM synthesis with inline citations |
+| **Two-mode RAG** | Document-grounded (cited) when relevant chunks found; general medical knowledge mode for broader questions |
+| **Lab Value Extraction** | Automatic extraction of 40+ lab test types from uploaded PDFs via Ollama |
+| **Lab Trend Charts** | Cross-session line charts per test (HbA1c, LDL, Creatinine, etc.) using Chart.js |
+| **Appointment Memory** | Record, upload, or manually enter appointment notes; Ollama generates structured summaries + action plans |
+| **Hindi Support** | Full UI translation + Ollama responds in Hindi when language toggled |
 | **Safety Triage** | Emergency keyword detection across all inputs, site-wide banners |
 | **Report Generation** | Patient summary + pharmacy summary PDFs via ReportLab |
 | **Email Sharing** | One-click send to saved pharmacy via SMTP with explicit consent |
 | **Audit Logging** | Every action logged: login, upload, consent, email, delete |
 | **Delete Account** | Full data deletion including files from disk |
+| **Dashboard** | Health summary stats, abnormal lab alerts, activity feed, session cards with inline lab snapshots |
 
 ---
 
@@ -66,7 +77,7 @@ All processing happens locally or within the user's own infrastructure. No healt
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                        Browser                              │
-│          Tailwind CSS + Vanilla JS (no framework)           │
+│     Tailwind CSS + Vanilla JS + Chart.js (no framework)     │
 └──────────────────────┬──────────────────────────────────────┘
                        │ HTTP
 ┌──────────────────────▼──────────────────────────────────────┐
@@ -77,7 +88,11 @@ All processing happens locally or within the user's own infrastructure. No healt
 │  └──────────┘  └──────────┘  └──────────┘  └───────────┘  │
 │                                                             │
 │  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌───────────┐  │
-│  │ Retrieve │  │   RAG    │  │ Reports  │  │   Email   │  │
+│  │ Retrieve │  │   RAG    │  │   Labs   │  │   Email   │  │
+│  └──────────┘  └──────────┘  └──────────┘  └───────────┘  │
+│                                                             │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌───────────┐  │
+│  │ Reports  │  │  Appts   │  │   Lang   │  │ Settings  │  │
 │  └──────────┘  └──────────┘  └──────────┘  └───────────┘  │
 │                                                             │
 │  ┌─────────────────────────────────────────────────────┐   │
@@ -101,14 +116,18 @@ All processing happens locally or within the user's own infrastructure. No healt
 | **Web framework** | Flask 3.0 |
 | **Database** | PostgreSQL 16 (SQLite for local dev) |
 | **ORM** | SQLAlchemy 2.0 + Flask-SQLAlchemy |
+| **Migrations** | Flask-Migrate (Alembic) |
 | **Auth** | Flask-Login + Werkzeug password hashing |
 | **Forms / CSRF** | Flask-WTF |
 | **Rate limiting** | Flask-Limiter |
-| **Embeddings** | `sentence-transformers` (all-MiniLM-L6-v2) |
+| **Embeddings** | `sentence-transformers` (all-MiniLM-L6-v2, 384 dims) |
 | **Vector search** | FAISS (faiss-cpu) |
 | **Local LLM** | Ollama + llama3.2:3b |
 | **PDF extraction** | PyMuPDF + pypdf |
 | **PDF generation** | ReportLab |
+| **Audio transcription** | faster-whisper (local) |
+| **Charts** | Chart.js 4 (CDN) |
+| **Internationalisation** | Flask-Babel (English + Hindi) |
 | **Email** | Python smtplib (SMTP/TLS) |
 | **Frontend** | Tailwind CSS CDN + Vanilla JS |
 | **Production server** | Gunicorn |
@@ -126,8 +145,8 @@ health-assistant/
 ├── app/
 │   ├── __init__.py              # App factory
 │   ├── config.py                # Config classes (dev/prod)
-│   ├── extensions.py            # db, login_manager, csrf, limiter
-│   ├── models.py                # SQLAlchemy models (11 tables)
+│   ├── extensions.py            # db, login_manager, csrf, limiter, babel
+│   ├── models.py                # SQLAlchemy models (13 tables)
 │   │
 │   ├── auth/                    # Signup, login, logout
 │   ├── sessions/                # Session CRUD, dashboard
@@ -135,24 +154,39 @@ health-assistant/
 │   ├── upload/                  # PDF upload + extraction review
 │   ├── retrieve/                # Two-tower condition matching
 │   ├── rag/                     # FAISS vector store + RAG pipeline
+│   ├── labs/                    # Lab value extraction + trend routes
+│   ├── appointments/            # Appointment capture + Ollama summaries
 │   ├── reports/                 # PDF report generation
 │   ├── email/                   # Consent + SMTP sending
 │   ├── settings/                # Pharmacy settings, delete account
 │   ├── safety/                  # Emergency triage layer
+│   ├── lang/                    # Language toggle (EN/HI) helpers
 │   ├── history/                 # Session history view
 │   ├── main/                    # Landing page
 │   │
 │   ├── templates/               # Jinja2 HTML templates
+│   │   ├── labs/                # trends.html, session_labs.html
+│   │   ├── appointments/        # list, detail, new
+│   │   └── sessions/            # dashboard, detail, new_session
 │   ├── static/css/custom.css    # Chat bubbles, match highlights
 │   └── uploads/                 # Uploaded PDFs + generated reports
 │
 ├── data/
-│   └── disease_catalog.csv      # 50+ ICD-coded conditions
+│   ├── disease_catalog.csv      # Original 51 conditions
+│   └── disease_catalog_v2.csv   # 621 ICD-10 conditions (enriched)
 │
 ├── scripts/
 │   ├── init_db.py               # Create all DB tables
 │   ├── seed_disease_catalog.py  # Embed diseases + seed DB
+│   ├── enrich_disease_catalog.py # Generate descriptions via Ollama (~20 min)
 │   └── wait_for_db.py           # Docker: wait for Postgres
+│
+├── migrations/                  # Alembic migration versions
+│   └── versions/
+│       ├── 0001_initial_schema.py
+│       ├── 0002_appointments.py
+│       ├── 0003_preferred_language.py
+│       └── 0004_lab_values.py
 │
 ├── tests/
 │   ├── conftest.py
@@ -163,8 +197,8 @@ health-assistant/
 │   └── deploy.yml               # Deploy on merge to main
 │
 ├── Dockerfile
-├── docker compose.yml           # Local dev
-├── docker compose.prod.yml      # Production overrides
+├── docker-compose.yml           # Local dev
+├── docker-compose.prod.yml      # Production overrides
 ├── .dockerignore
 ├── .env.example
 ├── requirements.txt
@@ -203,11 +237,13 @@ cp .env.example .env
 ollama serve
 ollama pull llama3.2:3b
 
-# 6. Initialise the database
-python scripts/init_db.py
+# 6. Run database migrations
+flask db upgrade
 
-# 7. Seed the disease catalog
-#    Downloads sentence transformer model (~80MB) on first run
+# 7. Enrich and seed the disease catalog (621 conditions)
+#    Step 1 — generate descriptions via Ollama (~20 min, resumable)
+python scripts/enrich_disease_catalog.py
+#    Step 2 — embed and seed into DB
 python scripts/seed_disease_catalog.py
 
 # 8. Run the development server
@@ -254,7 +290,7 @@ docker compose down -v            # Stop + delete volumes (fresh start)
 | `OLLAMA_BASE_URL` | — | `http://localhost:11434` | Ollama API endpoint |
 | `OLLAMA_MODEL` | — | `llama3.2:3b` | Ollama model name |
 | `OLLAMA_TIMEOUT` | — | `60` | Seconds to wait for Ollama response |
-| `MIN_RETRIEVAL_SCORE` | — | `0.05` | Minimum FAISS score to return a RAG answer |
+| `GOOD_RETRIEVAL_THRESHOLD` | — | `0.25` | Score above which RAG answers from document; below uses general knowledge |
 | `SMTP_HOST` | — | `smtp.gmail.com` | SMTP server for email sending |
 | `SMTP_PORT` | — | `587` | SMTP port |
 | `SMTP_USER` | — | — | SMTP username (your Gmail address) |
@@ -279,13 +315,13 @@ python -c "import secrets; print(secrets.token_hex(32))"
 
 ### Two-Tower Retrieval
 
-Condition matching uses a semantic two-tower architecture:
+Condition matching uses a semantic two-tower architecture over **621 ICD-10 coded conditions** spanning 16 chapters:
 
 ```
-Patient intake text          Disease descriptions (50+ conditions)
+Patient intake text          Disease descriptions (621 conditions)
         ↓                               ↓
   sentence-transformers          sentence-transformers
-  (all-MiniLM-L6-v2)            (all-MiniLM-L6-v2)
+  (all-MiniLM-L6-v2)            (all-MiniLM-L6-v2, 384 dims)
         ↓                               ↓
    Query vector              Disease vectors (stored in DB)
         └──────── cosine similarity ────┘
@@ -298,9 +334,9 @@ Patient intake text          Disease descriptions (50+ conditions)
 
 Unlike TF-IDF, sentence transformers encode **meaning** — so "chest pressure" correctly matches "myocardial discomfort" even with no shared words.
 
-The embedding function is isolated in `app/twotower/retrieval.py` behind a single `_embed()` function — swap it for any other model without touching the pipeline.
-
 ### RAG Chat Pipeline
+
+The pipeline operates in two modes depending on how well the patient's question matches their uploaded documents:
 
 ```
 User question
@@ -311,16 +347,45 @@ Sentence transformer → query vector
       ↓
 FAISS search over confirmed document chunks
       ↓
-Citation-required policy (min score threshold)
+Score check (GOOD_RETRIEVAL_THRESHOLD = 0.25)
       ↓
-Top-N chunks → Ollama (llama3.2:3b) with strict system prompt
-      ↓
-Synthesized answer with [1][2][3] inline citations
-      ↓
-Citations saved to DB (RagRetrieval table)
+  ┌──────────────────────┬──────────────────────────┐
+  │   score >= 0.25      │     score < 0.25         │
+  │   DOC-GROUNDED       │   GENERAL KNOWLEDGE      │
+  │                      │                          │
+  │  Answer from chunks  │  Answer from Ollama      │
+  │  Cite with [1][2][3] │  general medical         │
+  │                      │  knowledge; document     │
+  │  Citations shown     │  used as context only    │
+  │                      │  No citations shown      │
+  └──────────────────────┴──────────────────────────┘
 ```
 
-The system prompt strictly instructs the LLM to answer **only** from provided chunks and cite every claim. If no relevant chunks are found, the response is always "I don't know based on the available documents."
+This means patients can ask both specific questions ("what was my creatinine?") and general questions ("what does high creatinine mean?") and get useful answers in both cases.
+
+### Lab Value Extraction
+
+When a patient confirms their uploaded PDF text, lab values are automatically extracted in the background:
+
+```
+Confirmed document chunks
+        ↓
+Ollama (structured JSON extraction prompt)
+        ↓  (fallback if Ollama offline)
+Regex pattern matcher
+        ↓
+Normalisation (40+ canonical names: HbA1c, LDL, Creatinine, TSH…)
+        ↓
+lab_values table
+(user_id, session_id, test_name, value, unit,
+ reference_range, status, report_date)
+        ↓
+/labs/trends — Chart.js cross-session line graphs
+```
+
+Supported categories: Blood Sugar, Lipids, Kidney, Liver, Blood Count, Thyroid, Vitamins, Electrolytes, Inflammatory markers.
+
+Status (High / Normal / Low) is extracted from the report and used to colour-code chart lines and surface alerts on the dashboard.
 
 ### Safety Layer
 
@@ -352,7 +417,8 @@ Push to any branch
   GitHub Actions: test.yml
   ├── flake8 lint
   ├── Postgres service (ephemeral)
-  ├── DB init + disease catalog seed
+  ├── DB migrations (flask db upgrade)
+  ├── Disease catalog seed
   └── pytest smoke tests
 
 Merge to main
@@ -386,8 +452,8 @@ git push origin main
 SECRET_KEY=<generated>
 FLASK_ENV=production
 UPLOAD_FOLDER=app/uploads
-OLLAMA_BASE_URL=<your ollama host or leave blank for fallback>
-MIN_RETRIEVAL_SCORE=0.05
+OLLAMA_BASE_URL=<your ollama host>
+GOOD_RETRIEVAL_THRESHOLD=0.25
 SMTP_USER=...
 SMTP_PASSWORD=...
 
@@ -397,17 +463,17 @@ SMTP_PASSWORD=...
 # Every merge to main now auto-deploys.
 ```
 
-> **Note on Ollama:** Railway's free tier (512MB RAM) cannot run Ollama. The app falls back to structured extraction when Ollama is unreachable. For full LLM answers in production, point `OLLAMA_BASE_URL` to a separate VPS running Ollama (minimum 4GB RAM).
+> **Note on Ollama:** Railway's free tier (512MB RAM) cannot run Ollama. The app falls back to structured extraction when Ollama is unreachable. For full LLM answers in production, point `OLLAMA_BASE_URL` to a separate VPS running Ollama (minimum 4GB RAM for llama3.2:3b).
 
 ---
 
 ## Roadmap
 
-- [ ] **PostgreSQL optimisations** — connection pooling, Flask-Migrate for schema migrations
-- [ ] **Ollama hosting** — dedicated VPS or Modal.com serverless inference
-- [ ] **Better LLM** — swap llama3.2:3b for a medical-tuned model (MedLlama, OpenBioLLM)
-- [ ] **Multi-document sessions** — upload multiple PDFs per session
+- [ ] **Redis for Flask-Limiter** — replace in-memory rate limit storage warning
+- [ ] **Doctor visit prep** — auto-generate "what to tell your doctor" one-pager before appointments
+- [ ] **Follow-up question suggestions** — suggest 3 doctor questions after each RAG response
 - [ ] **Async extraction** — Celery + Redis for background PDF processing
+- [ ] **Better LLM** — swap llama3.2:3b for a medical-tuned model (MedLlama, OpenBioLLM)
 - [ ] **HIPAA considerations** — encryption at rest, audit log export, BAA
 - [ ] **Admin dashboard** — usage stats, safety alert monitoring
 - [ ] **Mobile app** — React Native wrapper over the existing API
@@ -422,10 +488,11 @@ HealthAssist is an **informational tool only**.
 - It does **not provide diagnoses**
 - It does **not replace professional medical advice**
 - All condition matching results are based on **semantic similarity only**
+- Lab value extraction is automated and may not be 100% accurate — always verify against your original report
 - Always consult a qualified healthcare professional before making any health decisions
 
 In an emergency, call **911 (US) / 999 (UK) / 112 (EU)** immediately.
 
 ---
 
-*Built with Flask, PostgreSQL, sentence-transformers, FAISS, Ollama, ReportLab, and Docker.*
+*Built with Flask, PostgreSQL, sentence-transformers, FAISS, Ollama, faster-whisper, Chart.js, Flask-Babel, ReportLab, and Docker.*
