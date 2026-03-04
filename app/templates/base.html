@@ -1,36 +1,53 @@
 <!DOCTYPE html>
-<html lang="{{ current_lang or 'en' }}">
+<html lang="{{ current_lang or 'en' }}" class="">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>{% block title %}HealthAssist{% endblock %} — HealthAssist</title>
+
+  {# Apply dark mode BEFORE Tailwind loads to prevent flash of wrong theme #}
+  <script>
+    (function() {
+      const saved = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class' }
+  </script>
+
   <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}"/>
 
   {% if is_hindi %}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap"
-    rel="stylesheet"
-  >
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Noto Sans Devanagari', 'Inter', ui-sans-serif, system-ui, sans-serif;
-    }
+    body { font-family: 'Noto Sans Devanagari', 'Inter', ui-sans-serif, system-ui, sans-serif; }
   </style>
   {% endif %}
-</head>
-<body class="bg-slate-50 min-h-screen flex flex-col">
 
-{# ── Global emergency banner ──────────────────────────────────────────────── #}
+  <style>
+    /* Smooth theme transitions */
+    *, *::before, *::after {
+      transition: background-color 0.2s ease, border-color 0.2s ease, color 0.15s ease;
+    }
+    svg * { transition: none; }
+  </style>
+</head>
+
+<body class="bg-slate-50 dark:bg-[#0f0f0f] min-h-screen flex flex-col">
+
+{# ── Emergency banner ─────────────────────────────────────────────────────── #}
 {% with messages = get_flashed_messages(category_filter=['emergency']) %}
   {% if messages %}
-    <div class="bg-red-600 text-white text-center py-3 px-6
-                text-sm font-semibold shadow-lg z-50">
-      {% for message in messages %}
-        {{ message }}
-      {% endfor %}
+    <div class="bg-red-600 text-white text-center py-3 px-6 text-sm font-semibold shadow-lg z-50">
+      {% for message in messages %}{{ message }}{% endfor %}
       &nbsp;—&nbsp;
       <strong>{{ _('Call emergency services immediately: 911 / 999 / 112') }}</strong>
     </div>
@@ -38,72 +55,85 @@
 {% endwith %}
 
 {# ── Nav ──────────────────────────────────────────────────────────────────── #}
-<nav class="bg-white border-b border-slate-200 shadow-sm">
+<nav class="bg-white dark:bg-[#1c1c1c] border-b border-slate-200 dark:border-[#2a2a2a] shadow-sm">
   <div class="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
 
-    {# Logo #}
     <a href="{{ url_for('main.landing') }}"
-       class="font-bold text-blue-700 text-lg tracking-tight">
+       class="font-bold text-blue-700 dark:text-blue-400 text-lg tracking-tight">
       ⚕ HealthAssist
     </a>
 
-    {# Nav links #}
     <div class="flex items-center gap-4">
       {% if current_user.is_authenticated %}
         <a href="{{ url_for('sessions.dashboard') }}"
-           class="text-sm text-slate-600 hover:text-slate-900 transition-colors">
+           class="text-sm text-slate-600 dark:text-[#d4d4d4] hover:text-slate-900 dark:hover:text-[#f4f4f4] transition-colors">
           {{ _('Dashboard') }}
         </a>
         <a href="{{ url_for('history.history') }}"
-           class="text-sm text-slate-600 hover:text-slate-900 transition-colors">
+           class="text-sm text-slate-600 dark:text-[#d4d4d4] hover:text-slate-900 dark:hover:text-[#f4f4f4] transition-colors">
           {{ _('History') }}
         </a>
         <a href="{{ url_for('settings.settings') }}"
-           class="text-sm text-slate-600 hover:text-slate-900 transition-colors">
+           class="text-sm text-slate-600 dark:text-[#d4d4d4] hover:text-slate-900 dark:hover:text-[#f4f4f4] transition-colors">
           {{ _('Settings') }}
         </a>
 
         {# Language toggle #}
-        <div class="flex items-center gap-1 ml-1 border border-slate-200
-                    rounded-lg p-0.5 bg-slate-50">
+        <div class="flex items-center gap-1 ml-1 border border-slate-200 dark:border-[#333333]
+                    rounded-lg p-0.5 bg-slate-50 dark:bg-[#252525]">
           <a href="{{ url_for('lang.set_language', code='en') }}"
              class="px-2.5 py-1 rounded-md text-xs font-semibold transition-colors
-                    {% if current_lang == 'en' %}
-                      bg-white text-slate-800 shadow-sm
-                    {% else %}
-                      text-slate-400 hover:text-slate-600
-                    {% endif %}">
+                    {% if current_lang == 'en' %}bg-white dark:bg-[#3a3a3a] text-slate-800 dark:text-white shadow-sm
+                    {% else %}text-slate-400 hover:text-slate-600 dark:hover:text-slate-300{% endif %}">
             EN
           </a>
-          <a href="{{ url_for('lang.set_language', code='hi') }}"
-             title="हिंदी"
+          <a href="{{ url_for('lang.set_language', code='hi') }}" title="हिंदी"
              class="px-2.5 py-1 rounded-md text-xs font-semibold transition-colors
-                    {% if current_lang == 'hi' %}
-                      bg-white text-slate-800 shadow-sm
-                    {% else %}
-                      text-slate-400 hover:text-slate-600
-                    {% endif %}">
+                    {% if current_lang == 'hi' %}bg-white dark:bg-[#3a3a3a] text-slate-800 dark:text-white shadow-sm
+                    {% else %}text-slate-400 hover:text-slate-600 dark:hover:text-slate-300{% endif %}">
             हिं
           </a>
         </div>
 
-        <div class="h-4 w-px bg-slate-200"></div>
-        <span class="text-xs text-slate-400 hidden sm:block">
+        {# Dark mode toggle #}
+        <button onclick="toggleTheme()"
+                title="Toggle dark mode"
+                class="w-8 h-8 flex items-center justify-center rounded-lg
+                       border border-slate-200 dark:border-[#333333]
+                       bg-slate-50 dark:bg-[#252525]
+                       hover:bg-slate-100 dark:hover:bg-[#2e2e2e]
+                       transition-colors text-sm">
+          <span id="themeIcon"></span>
+        </button>
+
+        <div class="h-4 w-px bg-slate-200 dark:bg-[#2e2e2e]"></div>
+        <span class="text-xs text-slate-400 dark:text-[#737373] hidden sm:block">
           {{ current_user.email }}
         </span>
         <a href="{{ url_for('auth.logout') }}"
-           class="text-sm bg-slate-100 hover:bg-slate-200 text-slate-700
+           class="text-sm bg-slate-100 dark:bg-[#252525] hover:bg-slate-200
+                  dark:hover:bg-[#2e2e2e] text-slate-700 dark:text-[#d4d4d4]
                   px-3 py-1.5 rounded-md transition-colors font-medium">
           {{ _('Sign Out') }}
         </a>
+
       {% else %}
+        {# Dark mode toggle for logged-out pages #}
+        <button onclick="toggleTheme()"
+                title="Toggle dark mode"
+                class="w-8 h-8 flex items-center justify-center rounded-lg
+                       border border-slate-200 dark:border-[#333333]
+                       bg-slate-50 dark:bg-[#252525]
+                       hover:bg-slate-100 dark:hover:bg-[#2e2e2e]
+                       transition-colors text-sm">
+          <span id="themeIcon"></span>
+        </button>
         <a href="{{ url_for('auth.login') }}"
-           class="text-sm text-slate-600 hover:text-slate-900 transition-colors">
+           class="text-sm text-slate-600 dark:text-[#d4d4d4] hover:text-slate-900 dark:hover:text-[#f4f4f4] transition-colors">
           {{ _('Log In') }}
         </a>
         <a href="{{ url_for('auth.signup') }}"
-           class="text-sm bg-blue-600 hover:bg-blue-700 text-white
-                  font-semibold px-4 py-1.5 rounded-md transition-colors">
+           class="text-sm bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-1.5 rounded-md transition-colors">
           {{ _('Sign Up') }}
         </a>
       {% endif %}
@@ -112,8 +142,8 @@
 </nav>
 
 {# ── Disclaimer bar ───────────────────────────────────────────────────────── #}
-<div class="bg-amber-50 border-b border-amber-200 py-1.5 px-4 text-center">
-  <p class="text-xs text-amber-700">
+<div class="bg-amber-50 dark:bg-[#1a1100] border-b border-amber-200 dark:border-[#2a1f00] py-1.5 px-4 text-center">
+  <p class="text-xs text-amber-700 dark:text-amber-400">
     ⚠ <strong>{{ _('Not medical advice.') }}</strong>
     {{ _('HealthAssist is an informational tool only.') }}
     {{ _('Always consult a qualified healthcare professional.') }}
@@ -128,13 +158,13 @@
       {% if category != 'emergency' %}
       <div class="rounded-lg px-4 py-3 text-sm font-medium
         {% if category == 'success' %}
-          bg-green-50 border border-green-200 text-green-800
+          bg-green-50 dark:bg-[#0a1a0a] border border-green-200 dark:border-[#1a3a1a] text-green-800 dark:text-green-300
         {% elif category == 'error' %}
-          bg-red-50 border border-red-200 text-red-800
+          bg-red-50 dark:bg-[#1a0a0a] border border-red-200 dark:border-[#3a1a1a] text-red-800 dark:text-red-300
         {% elif category == 'warning' %}
-          bg-amber-50 border border-amber-200 text-amber-800
+          bg-amber-50 dark:bg-[#1a1100] border border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-300
         {% else %}
-          bg-blue-50 border border-blue-200 text-blue-800
+          bg-blue-50 dark:bg-[#0a0f1a] border border-blue-200 dark:border-[#1a2a3a] text-blue-800 dark:text-blue-300
         {% endif %}">
         {{ message }}
       </div>
@@ -150,13 +180,29 @@
 </main>
 
 {# ── Footer ───────────────────────────────────────────────────────────────── #}
-<footer class="bg-white border-t border-slate-200 mt-auto">
-  <div class="max-w-5xl mx-auto px-4 py-4 flex items-center
-              justify-between text-xs text-slate-400">
+<footer class="bg-white dark:bg-[#1c1c1c] border-t border-slate-200 dark:border-[#2a2a2a] mt-auto">
+  <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between
+              text-xs text-slate-400 dark:text-[#737373]">
     <span>{{ _('© 2026 HealthAssist MVP — Informational tool only') }}</span>
     <span>{{ _('Not a medical device. Not a substitute for professional care.') }}</span>
   </div>
 </footer>
+
+<script>
+  function toggleTheme() {
+    const isDark = document.documentElement.classList.toggle('dark');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    updateIcon(isDark);
+  }
+
+  function updateIcon(isDark) {
+    const icon = document.getElementById('themeIcon');
+    if (icon) icon.textContent = isDark ? '☀️' : '🌙';
+  }
+
+  // Set correct icon on load
+  updateIcon(document.documentElement.classList.contains('dark'));
+</script>
 
 </body>
 </html>
